@@ -37,14 +37,15 @@ Key Features
 </h2>
 
 
-    Drag-and-Drop Editor: Build and modify your web pages with a simple drag-and-drop interface. No coding skills required.
+    
     SEO Optimization: Enhance your website’s visibility on search engines with our built-in SEO tools.
     Responsive Design: Ensure your website looks great on all devices with our responsive design features.
     Multilingual Support: Reach a global audience with support for multiple languages.
     Analytics and Reporting: Gain insights into your website’s performance with detailed analytics and reporting tools.
 
-Getting Started
-
+<h1>
+  Getting Started
+</h1>
 Integrating Anyweb CMS with your existing website is a straightforward process. Follow our comprehensive guides and tutorials, or reach out to our dedicated support team for assistance. We are here to help you every step of the way, ensuring a smooth and successful integration.
 
 Transform the way you manage your website today with Anyweb CMS. Experience the ease and efficiency of a system designed to meet all your content management needs.
