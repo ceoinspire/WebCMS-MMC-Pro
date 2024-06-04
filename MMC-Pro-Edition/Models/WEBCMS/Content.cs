@@ -72,6 +72,12 @@ public partial class Content
     [Column(TypeName = "date")]
     public DateTime? Date { get; set; }
 
+    public int? LoginUserId { get; set; }
+
+    [Column("IPAddress")]
+    [StringLength(500)]
+    public string Ipaddress { get; set; }
+
     [InverseProperty("Content")]
     public virtual ICollection<CmsContentSharedCategory> CmsContentSharedCategory { get; set; } = new List<CmsContentSharedCategory>();
 
