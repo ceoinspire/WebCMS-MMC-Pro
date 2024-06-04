@@ -1,0 +1,125 @@
+﻿{
+   "CodeGenerationMode": 4,
+   "ContextClassName": "Onedb",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "MMC_Pro_Edition",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[HRM].[Customers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[Department]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[Employee]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[EmployeeDesignation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[LoginHistory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[LoginUserDeviceDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[LoginUsers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[Persons]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[Supplier]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[MEDIA].[FileManager]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[AssignedRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[Roles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[Settings]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[Website]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[WebsiteData]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[WEBCMS].[CmsContentSharedCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[WEBCMS].[CmsEmail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[WEBCMS].[CmsEmailAttachments]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[WEBCMS].[Content]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[WEBCMS].[ContentCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[WEBCMS].[ContentType]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "developer-lap.Inspire_ERP2k23.dbo1",
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": false,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": true,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

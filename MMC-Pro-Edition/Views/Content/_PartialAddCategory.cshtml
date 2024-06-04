@@ -1,0 +1,65 @@
+﻿@model PagesViewModel
+
+<form id="addnew-category" method="post">
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-12">
+				<label>Content Heading</label>
+				<input id="contentCategory" name="contentCategory" type="text" placeholder="Content Category" class="form-control">
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-12">
+				<label>Content Type</label>
+				<select id="contenttypeSelect" name="contenttypeSelect" class="form-control">
+					@foreach (var item in Model.ContentTypeVM)
+					{
+						<option value="@item.Id">
+							@item.Name
+						</option>
+					}
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-12">
+				<button id="createCategory" class="btn btn-success">Submit</button>
+			</div>
+		</div>
+	</div>
+</form>
+<script>
+	$('#addnew-category').submit(function (e) {
+		e.preventDefault();
+		var formData = {
+			cTitle: $('#contentCategory').val(),
+			cType: $('#contenttypeSelect').val()
+		}
+		$.ajax({
+			url: "/Content/CreateCategory/",
+			method: "POST",
+			data: formData,
+			success: function (result) {
+				debugger;
+				console.log(result);
+				if (result['statusCode'] === "200") {
+					setTimeout(function () {
+						$('.alert-success').css('display', 'block');
+						setTimeout(function () {
+							$('.alert-success').css('display', 'none');
+
+						}, 3000)
+					}, 1000)
+				
+				}
+			}
+		});
+
+
+	});
+</script>

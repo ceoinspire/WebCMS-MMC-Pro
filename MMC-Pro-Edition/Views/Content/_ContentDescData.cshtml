@@ -1,0 +1,118 @@
+﻿@model PagesViewModel
+<script src="~/global_assets/js/plugins/editors/ckeditor/ckeditor.js"></script>
+<script src="~/global_assets/js/plugins/forms/selects/select2.min.js"></script>
+<script src="~/global_assets/js/demo_pages/editor_ckeditor.js"></script>
+<div class="card shadow">
+	<div class="card-body">
+		<div class="col-md-11">
+			<form id="updatedesc">
+				<input type="hidden" id="contentId" name="contentId" value="@Model.ContentTypeSlug?.Id" />
+				<div class="row">
+					<div class="col-md-12">
+						<form action="#">
+							<div class="form-group">
+								<label class="form-group-label">Short Description</label>
+								<textarea id="shortDescription" class="editor-full" rows="3">@Model?.ContentTypeSlug?.ShortDescription</textarea>
+							</div>
+							<div class="form-group">
+								<label class="form-group-label">Description</label>
+								<textarea name="editor-full" id="description" class="editor-full" rows="3" cols="2">
+									@Model?.ContentTypeSlug?.Description
+								</textarea>
+							</div>
+
+							<div class="form-group">
+								<label class="form-group-label">Other Description</label>
+								<textarea id="otherDescription" class="editor-full" rows="3">@Model?.ContentTypeSlug?.OtherDescription</textarea>
+							</div>
+
+
+						</form>
+
+
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group">
+						<button id="descSubmit" type="submit" class="btn btn-success">Update Record</button>
+					</div>
+
+				</div>
+			</form>
+		</div>
+
+		<div class="col-md-1">
+			@foreach (var item in Model.ContentTypeSlug.PhotoList)
+			{
+				<div>
+					<img src="@item.URL" width="100">
+				</div>
+			}
+		</div>
+	</div>
+</div>
+<div id="bottom-right" class="">
+	<div class="alert alert-success alert-styled-right alert-arrow-right alert-dismissible" style="display:none">
+		<button id="contentSubmit" type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+		<span class="font-weight-semibold">Well done!</span> Data Updated Successfully
+	</div>
+</div>
+<style>
+	#bottom-right {
+		position: fixed;
+		bottom: 20px; /* You can adjust this value to change the vertical position */
+		right: 20px; /* You can adjust this value to change the horizontal position */
+	}
+</style>
+
+
+<script type="text/javascript">
+	CKEDITOR.replace('description');
+	CKEDITOR.replace('otherDescription');
+	CKEDITOR.replace('shortDescription');
+
+
+	$('#descSubmit').click(function (e) {
+		e.preventDefault();
+		debugger;
+		var desc = CKEDITOR.instances.description;
+		var otherDesc = CKEDITOR.instances.otherDescription;
+		var shortDesc = CKEDITOR.instances.shortDescription;
+
+		var formData = {
+			Description: desc.getData(),
+			ShortDescription: shortDesc.getData(),
+			OtherDescription: otherDesc.getData(),
+			Id: $('input[name=contentId]').val()
+
+		}
+		$('#contentSubmit').html("<div class=\"spinner-border text-warning m-6\" role=\"status\"></div>");
+		$.ajax({
+			url: "/Content/UpdateDescContent/",
+			type: "POST",
+			data: formData,
+			success: function (result) {
+				if (result['statusCode'] === '200') {
+					setTimeout(function () {
+						$('.alert-success').css('display', 'block');
+						setTimeout(function () {
+							$('.alert-success	').css('display', 'none');
+
+						}, 1500)
+					}, 0)
+				}
+				else {
+					setTimeout(function () {
+						$('.alert').css('display', 'block');
+						setTimeout(function () {
+							$('.alert').css('display', 'none');
+
+						}, 1500)
+					}, 0)
+				}
+
+
+			}
+		})
+	});
+</script>

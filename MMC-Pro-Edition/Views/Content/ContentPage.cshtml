@@ -1,0 +1,70 @@
+﻿
+@model PagesViewModel
+
+@{
+	ViewBag.Title = "All Purpose CMS System";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header page-header-light">
+
+
+	<div class="page-header-content header-elements-md-inline">
+		<div class="page-title d-flex">
+		
+		</div>
+		<div class="header-elements d-none">
+			<div class="d-flex justify-content-center">
+				<a href="#" id="addContent" onclick="AddNewContent()" class="btn btn-link btn-float font-size-sm font-weight-semibold text-default acontent">
+					<i class="icon-plus-circle2 text-pink-300"></i>
+					<span>AddNew Content</span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+		<div class="d-flex">
+			<div class="breadcrumb">
+				<a href="/" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+				<span class="breadcrumb-item active">Content List</span>
+			</div>
+			<div class="breadcrumb pl-5">
+				<span id="itemcount" class="breadcrumb-item"></span>
+			</div>
+			<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+
+		</div>
+
+	
+	</div>
+
+	
+</div>
+<div class="content">
+	<!-- Basic responsive table -->
+	<div class="card shadow">
+		<div class="card-header header-elements-inline">
+			<h5 class="card-title"></h5>
+			<div class="header-elements">
+				<div class="list-icons">
+					<a class="list-icons-item" data-action="collapse"></a>
+					<a class="list-icons-item" data-action="reload"></a>
+					<a class="list-icons-item" data-action="remove"></a>
+				</div>
+			</div>
+		</div>
+
+		<div id="contentList" class="card-body table-responsive">
+		</div>
+
+	</div>
+	
+</div>
+<script>
+	$.get("/Content/GetContentList", function (data) {
+		$('#contentList').html(data);
+	});
+</script>
+@section jq{
+
+}

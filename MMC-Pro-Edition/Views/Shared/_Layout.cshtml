@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<partial name="/Views/Home/_PartialHead.cshtml"></partial>
+</head>
+
+<body class="navbar-top">
+	<partial name="~/Views/Shared/_BsModal.cshtml" />
+
+	<!-- Main navbar -->
+	<div class="navbar navbar-expand-md navbar-dark  navbar-static fixed-top">
+		<partial name="/Views/Home/_PartialMainNavBar.cshtml"></partial>
+	</div>
+	<!-- /main navbar -->
+	<!-- Page content -->
+	<div class="page-content">
+		<!-- Main sidebar -->
+		<div class="sidebar sidebar-dark sidebar-main sidebar-expand-md">
+		<partial name="/Views/Home/_PartialSideBar.cshtml"></partial>
+		</div>
+		<!-- /main sidebar -->
+		<div class="content-wrapper">
+		@RenderBody()
+			<partial name="/Views/Home/_PartialFooter.cshtml" />
+		</div>
+	</div>
+	<div style="display:none" class="pace-demo">
+		<div class="theme_xbox">
+			<div class="pace_progress" data-progress-text="60%" data-progress="60"></div>
+			<div class="pace_activity"></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-6">
+			<div style="display:none" class="alert alert-primary alert-styled-left alert-dismissible bottom-right">
+				<button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+				<span class="font-weight-semibold">Morning!</span> We're glad to <a href="#" class="alert-link">see you again</a> and wish you a nice day.
+			</div>
+
+			<div style="display:none" class="alert alert-danger alert-styled-left alert-dismissible bottom-right">
+				<button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+				<span class="font-weight-semibold">Oh snap!</span> Change a few things up and <a href="#" class="alert-link">try submitting again</a>.
+			</div>
+
+			<div style="display:none" class="alert alert-success alert-styled-left alert-arrow-left alert-dismissible bottom-right">
+				<button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+				<span class="font-weight-semibold">Well done!</span> You successfully read <a href="#" class="alert-link">this important</a> alert message.
+			</div>
+		</div>
+	</div>
+	<style>
+		.alert {
+			position: fixed;
+			bottom: 50px;
+			right: 20px;
+			z-index: 1000;
+			display: none; /* Hide initially, show with JavaScript */
+		}
+
+			.alert + .alert {
+				margin-top: 10px;
+			}
+	</style>
+	@* <style>
+	#bottom-right {
+	position: fixed;
+	bottom: 40px; /* You can adjust this value to change the vertical position */
+	right: 60px; /* You can adjust this value to change the horizontal position */
+	}
+
+	</style> *@
+	<!-- /page content -->
+	@RenderSection("jq", true);
+	<script>
+		var idleTime = 0;
+
+		$(document).ready(function () {
+			// Increment idle time on user activity
+			$(document).on('mousemove keydown scroll', function () {
+				idleTime = 0;
+			});
+
+			// Check idle time every minute
+			setInterval(function () {
+				//debugger;
+				idleTime++;
+				if (idleTime >= 300) { // 5 minutes of inactivity (adjust as needed)
+					// Perform logout or any other action you want on inactivity timeout
+					alert('Logging out due to inactivity');
+					// Redirect to logout endpoint
+					window.location.href = '/Accounts/Logout'; // Replace with your actual logout endpoint
+				}
+				else{
+					var remainingTime = formatTime(5*60 - idleTime);
+					$('#timerDisplay').text(remainingTime);
+				}
+			}, 1000); // 1 minute intervals (adjust as needed)
+
+
+			function formatTime(seconds) {
+				var mins = Math.floor(seconds / 60);
+				var secs = seconds % 60;
+				if (secs < 10) {
+					secs = '0' + secs;
+				}
+				return mins + ':' + secs;
+			}
+
+		});
+		$(window).on('beforeunload', function () {
+			// You can perform cleanup or logout actions here
+			// For example, clear the session on browser close
+			// You might want to confirm with the user before logging out
+			alert('Session will be closed on browser close');
+			// Perform logout or clear session
+			window.location.href = '/Account/Logout'; // Replace with your actual logout endpoint
+		});
+		// function AlertSuccess() {
+		// 	setTimeout(function () {
+		// 		$('.alert-success').css('display', 'block');
+		// 	}, 1000)
+		// }
+	</script>
+</body>
+</html>

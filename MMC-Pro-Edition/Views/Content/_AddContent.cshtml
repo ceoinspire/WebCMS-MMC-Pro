@@ -1,0 +1,36 @@
+﻿
+@model PagesViewModel
+
+<form id="addnew-content" onsubmit="AddContent(event)"  method="post">
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-12">
+				<label>Content Heading</label>
+				<input id="contentTitle" name="contentTitle" type="text" placeholder="Content Heading" class="form-control">
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-12">
+				<label>Content Type</label>
+				<select id="contenttypeSelect" name="contenttypeSelect" class="form-control">
+					@foreach (var item in Model.ContentTypeVM)
+					{
+						<option value="@item.Id">
+							@item.Name
+						</option>
+					}
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-12">
+				<button id="createContent" class="btn btn-success">Submit</button>
+			</div>
+		</div>
+	</div>
+</form>

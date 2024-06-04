@@ -1,0 +1,213 @@
+﻿@model PagesViewModel
+@{
+	ViewData["Title"] = "EditContent";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="page-header page-header-light">
+	<div class="page-header-content header-elements-md-inline">
+		<div class="page-title d-flex">
+		</div>
+
+		<div class="header-elements d-none">
+			<div class="d-flex justify-content-center">
+
+				<a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-default">
+					<i class="icon-calculator text-pink-300"></i>
+					<span>Invoices</span>
+				</a>
+				<a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-default">
+					<i class="icon-calendar5 text-pink-300"></i>
+					<span>Schedule</span>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+		<div class="d-flex">
+			<div class="breadcrumb">
+				<a href="/" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+				<span class="breadcrumb-item active">Edit Content</span>
+			</div>
+
+			<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+
+		</div>
+
+		<div class="header-elements d-none">
+			<div class="breadcrumb justify-content-center">
+				<a href="#" class="breadcrumb-elements-item">
+					<i class="icon-comment-discussion mr-2"></i>
+					Support
+				</a>
+
+				<div class="breadcrumb-elements-item dropdown p-0">
+					<a href="#" class="breadcrumb-elements-item dropdown-toggle" data-toggle="dropdown">
+						<i class="icon-gear mr-2"></i>
+						Settings
+					</a>
+
+					<div class="dropdown-menu dropdown-menu-right">
+						<a href="#" class="dropdown-item"><i class="icon-user-lock"></i> Account security</a>
+						<a href="#" class="dropdown-item"><i class="icon-statistics"></i> Analytics</a>
+						<a href="#" class="dropdown-item"><i class="icon-accessibility"></i> Accessibility</a>
+						<div class="dropdown-divider"></div>
+						<a href="#" class="dropdown-item"><i class="icon-gear"></i> All settings</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+<div class="content">
+	<!-- Tabbed nav -->
+	<div class="card shadow">
+		<div class="card-header header-elements-inline">
+			<h5 class="card-title"></h5>
+			<div class="header-elements">
+				<div class="list-icons">
+					<a class="list-icons-item" data-action="collapse"></a>
+					<a class="list-icons-item" data-action="reload"></a>
+					<a class="list-icons-item" data-action="remove"></a>
+				</div>
+			</div>
+		</div>
+
+		<div class="card-body">
+
+
+			<div class="navbar navbar-expand-xl navbar-dark bg-green navbar-component rounded-top mb-0">
+
+
+				<div class="d-xl-none">
+					<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-demo-dark">
+						<i class="icon-menu"></i>
+					</button>
+				</div>
+
+				<div class="navbar-collapse collapse" id="navbar-demo-dark">
+					<ul class="nav navbar-nav">
+						<li class="nav-item dropdown">
+							<a id="tabone" href="#tab-dark-1" class="navbar-nav-link active">
+								<i class="icon-cube3 mr-2"></i>
+								Basic Content
+							</a>
+						</li>
+
+						<li class="nav-item dropdown">
+							<a id="tabtwo" href="#tab-dark-2" class="navbar-nav-link" data-toggle="">
+								<i class="icon-puzzle4 mr-2"></i>
+								Descriptions
+							</a>
+						</li>
+
+						<li class="nav-item dropdown">
+							<a id="photo" href="#tab-dark-3" class="navbar-nav-link " data-toggle="">
+								<i class="icon-gallery mr-2"></i>
+								Photos
+							</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a id="childItems" href="#tab-dark-4" class="navbar-nav-link " data-toggle="">
+								<i class="icon-strategy mr-2"></i>
+								Child Items
+							</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a href="#tab-dark-5" class="navbar-nav-link " data-toggle="">
+								<i class="icon-link mr-2"></i>
+								Linked Items
+							</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a href="#tab-dark-6" class="navbar-nav-link " data-toggle="">
+								<i class="icon-file-check mr-2"></i>
+								File Manager
+							</a>
+						</li>
+
+
+					</ul>
+
+
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<div class=" fade active show" id="tab-1">
+		</div>
+		
+	</div>
+
+
+
+
+
+	<!-- /tabbed nav -->
+</div>
+@section jq {
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			var ContentId = @Model?.ContentTypeSlug?.Id;
+			$.ajax({
+				url: "/Content/ContentData/" + ContentId,
+				type: "POST",
+				success: function (result) {
+					$('#tab-1').html(result);
+
+				}
+			})
+			$('#tabone').click(function () {
+				$.ajax({
+					url: "/Content/ContentData/" + ContentId,
+					type: "POST",
+					success: function (result) {
+						$('#tab-1').html(result);
+					}
+				})
+
+			})
+			$('#tabtwo').click(function () {
+				$.ajax({
+					url: "/Content/ContentDescData/" + ContentId,
+					type: "POST",
+					success: function (result) {
+						$('#tab-1').html(result);
+					}
+				})
+
+			})
+			$('#photo').click(function () {
+				$.ajax({
+					url: "/Content/GetPhotoUpdatePage/" + ContentId,
+					type: "POST",
+					success: function (result) {
+						$('#tab-1').html(result);
+					}
+				})
+
+			})
+			$('#childItems').click(function () {
+				$.ajax({
+					url: "/Content/GetChildItems/" + ContentId,
+					type: "POST",
+					success: function (result) {
+						$('#tab-1').html(result);
+					}
+				})
+
+			})
+
+
+		})
+	</script>
+}

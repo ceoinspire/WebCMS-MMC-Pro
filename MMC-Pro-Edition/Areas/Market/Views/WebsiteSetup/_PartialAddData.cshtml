@@ -1,0 +1,91 @@
+﻿@model MMC_Pro_Edition.Areas.Market.ViewModels.WebsiteModels
+<form id="addnew-data" action="/Action/Controler" method="post">
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-12">
+				<label>Key</label>
+				<input id="title" type="text" placeholder="Data Title without Spacing" class="form-control">
+			</div>
+			<div class="col-sm-12">
+				<input type="hidden" value="@Model.WebsiteId" id="WebsiteId"/>
+				<label>Value</label>
+				<input id="value" type="text" placeholder="Data Value" class="form-control">
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-12">
+				<button id="adddata" class="btn bg-success form-control"> Create Content Type</button>
+			</div>
+		</div>
+	</div>
+</form>
+
+
+<div id="bottom-right" class="">
+	<div class="alert alert-success alert-styled-right alert-arrow-right alert-dismissible" style="display:none">
+		<button id="contentSubmit" type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+		<span class="font-weight-semibold">Well done!</span> Data Updated Successfully
+	</div>
+</div>
+<div id="bottom-right">
+	<div class="alert alert-danger alert-styled-right alert-dismissible" style="display:none">
+		<button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+		<span class="font-weight-semibold">Oh snap!</span> Change a few things up and <a href="#" class="alert-link">try submitting again</a>.
+	</div>
+</div>
+
+<style>
+	#bottom-right {
+		position: fixed;
+		bottom: 20px; /* You can adjust this value to change the vertical position */
+		right: 20px; /* You can adjust this value to change the horizontal position */
+	}
+
+</style>
+
+<script type="text/javascript">
+	$('#addnew-data').submit(function (e) {
+		e.preventDefault();
+		var formData = {
+			WebsiteId: $('#WebsiteId').val(),
+			TItle: $('#title').val(),
+			Value: $('#value').val()
+		}
+		//$('#cTypesubmit').html('Loading....');
+		$.ajax({
+			url: "/CreateWebsiteData",
+			method: "POST",
+			data: formData,
+			success: function (result) {
+				debugger;
+				if (result["statusCode"] === "200") {
+					setTimeout(function () {
+						$('.alert-success').css('display', 'block');
+						setTimeout(function () {
+
+							$('#cTypesubmit').html('Submit');
+							$('.alert-success').css('display', 'none');
+							location.reload();
+
+						}, 3000)
+					}, 1000)
+				}
+				else {
+					setTimeout(function () {
+						$('.alert-danger').css('display', 'block');
+						$('#cTypesubmit').html("Loading....");
+						setTimeout(function () {
+							$('#cTypesubmit').html('Submit');
+							$('.alert-danger').css('display', 'none');
+						}, 3000)
+					}, 1000)
+				}
+			}
+		});
+
+	});
+
+
+</script>

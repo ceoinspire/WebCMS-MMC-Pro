@@ -1,0 +1,214 @@
+﻿@model PagesViewModel
+<!-- Blog post -->
+<div class="timeline-row">
+
+	<div class="card shadow">
+
+
+		<div class="card-body">
+			<div class="card-img-actions mb-3">
+				<img style="max-height:400px" class="card-img img-fluid" src="@Model.ContentTypeSlug?.HeaderPhoto" alt="">
+				<div class="card-img-actions-overlay card-img">
+					<a href="#" onclick="headerclick()" class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round">
+						<i class="icon-link"></i>
+					</a>
+				</div>
+			</div>
+
+
+			<input type="file" id="headerPhoto" onchange="" style="display: none">
+
+		</div>
+
+
+	</div>
+</div>
+
+
+<div class="row">
+
+
+	@if (Model.ContentTypeSlug.PhotoList != null)
+	{
+		@foreach (var item in Model?.ContentTypeSlug?.PhotoList)
+		{
+
+			<div class="col-md-3">
+
+				<!-- Top placement -->
+				<div class="card shadow">
+					<div class="card-img-actions">
+						<img style="min-height:200px" class="card-img-top img-fluid" src="@item.URL" alt="">
+						<div class="card-img-actions-overlay card-img-top">
+							<a href="@item.URL" class="btn btn-outline bg-white text-white border-white border-2" data-popup="lightbox">
+								Preview
+							</a>
+							<a href="/FileManager/RemoveListPhoto/@item.Id" class="removeList btn btn-outline bg-white text-white border-white border-2 ml-2">
+								Delete
+							</a>
+						</div>
+					</div>
+
+					<div class="card-body">
+						<h5 class="card-title">Top placement</h5>
+						<p class="card-text">@item.Caption</p>
+					</div>
+
+
+				</div>
+				<!-- /top placement -->
+
+			</div>
+
+		}
+	}
+
+	<div class="col-md-3" style="min-height:400px;max-height:400px">
+		<div class="card">
+			<div class="card-img-actions mx-1 mt-1">
+				<img class="card-img img-fluid" width="400" src="/global_assets/images/backgrounds/boxed_bg_retina.png" alt="">
+				<div class="card-img-actions-overlay card-img">
+					<a onclick="listPhotoClick()" id="listPhotoClick" href="#" class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round ml-2">
+						<h6 class="font-weight-semibold mr-2">Add New Photo</h6><i class="icon-link"></i>
+					</a>
+				</div>
+				<input type="file" id="listPhoto" onchange="" style="display: none">
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="bottom-right" class="">
+	<div class="alert alert-success alert-styled-right alert-arrow-right alert-dismissible" style="display:none">
+		<button id="contentSubmit" type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+		<span class="font-weight-semibold">Well done!</span> Data Updated Successfully
+	</div>
+</div>
+<div id="bottom-right">
+	<div class="alert alert-danger alert-styled-right alert-dismissible" style="display:none">
+		<button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+		<span class="font-weight-semibold">Oh snap!</span> Change a few things up and <a href="#" class="alert-link">try submitting again</a>.
+	</div>
+</div>
+
+<style>
+	#bottom-right {
+		position: fixed;
+		bottom: 20px; /* You can adjust this value to change the vertical position */
+		right: 20px; /* You can adjust this value to change the horizontal position */
+	}
+
+</style>
+<script>
+	function listPhotoClick() {
+		var lphoto = document.getElementById("listPhoto");
+		lphoto.click();
+	}
+	$('#listPhoto').change(function () {
+		debugger;
+		var formData = new FormData();
+		var file = this.files[0];
+		formData.append('file', file);
+		formData.append('ContentId', @Model?.ContentTypeSlug?.Id);
+
+		// Send the file to the server using AJAX
+		$.ajax({
+			url: '/FileManager/UploadListPhoto', // Replace with your server-side endpoint
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				if (response["statusCode"] === "200") {
+					setTimeout(function () {
+						$('.alert-success').css('display', 'block');
+						$('#cTypesubmit').html("Loading....");
+						setTimeout(function () {
+							$('#cTypesubmit').html('Submit');
+							$('.alert-success').css('display', 'none');
+							$('#photo').click();
+
+						}, 3000)
+					}, 1000)
+
+				}
+				else {
+					setTimeout(function () {
+						$('.alert-danger').css('display', 'block');
+						$('#cTypesubmit').html("Loading....");
+						setTimeout(function () {
+							$('#cTypesubmit').html('Submit');
+							$('.alert-danger').css('display', 'none');
+						}, 3000)
+					}, 1000)
+				}
+
+			},
+			error: function () {
+				alert('Image upload failed');
+			}
+		});
+	});
+
+	$('.removeList').click(function (e) {
+		debugger;
+		e.preventDefault();
+		var link = $(this).attr('href');
+		$.ajax({
+			url: link,
+			type: 'POST',
+			success: function (result) {
+				debugger;
+				if (result['statusCode'] === "200") {
+					setTimeout(function () {
+						$('.alert-success').css('display', 'block');
+						setTimeout(function () {
+							$('.alert-success').css('display', 'none');
+							$('#photo').click();
+
+						}, 3000)
+					}, 1000)
+				}
+
+			}
+		})
+	})
+
+
+
+
+
+
+
+	function headerclick() {
+		var headerPhoto = document.getElementById("headerPhoto");
+		headerPhoto.click();
+	}
+	$('#headerPhoto').change(function () {
+		debugger;
+		var formData = new FormData();
+		var file = this.files[0];
+		formData.append('file', file);
+		formData.append('ContentId', @Model?.ContentTypeSlug?.Id);
+
+		// Send the file to the server using AJAX
+		$.ajax({
+			url: '/FileManager/UploadHeaderImage', 
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				// Display the uploaded image
+				debugger;
+				$('#photo').click();
+
+			},
+			error: function () {
+				alert('Image upload failed');
+			}
+		});
+	});
+
+
+</script>

@@ -1,0 +1,248 @@
+﻿@model PagesViewModel
+
+
+<div class="row">
+	<div class="col-lg-8">
+		<div class="card shadow">
+			<div class="card-body border-top-0 rounded-0 rounded-bottom tab-content mb-0">
+				<div class="container-fluid">
+						<form id="updateContent">
+							<input type="hidden" id="contentId" name="contentId" value="@Model.ContentTypeSlug?.Id" />
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label class="form-group-label">Title</label>
+										<input id="cTitle" name="cTitle" type="text" class="form-control" value="@Model?.ContentTypeSlug?.Name" placeholder="Title">
+									</div>
+									<div class="form-group">
+										<label class="form-group-label">Other Title</label>
+										<input id="oTitle" name="oTitle" type="text" class="form-control" value="@Model?.ContentTypeSlug?.OtherTitle" placeholder="Other Title">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="form-group-label">Priority</label>
+										<input id="priority" name="priority" type="text" class="form-control" value="@Model?.ContentTypeSlug?.Priority" placeholder="Priority">
+									</div>
+									<div class="form-group">
+										<label class="form-group-label">ICON</label>
+										<input id="icon" name="icon" type="text" class="form-control" value="@Model?.ContentTypeSlug?.Icon" placeholder="Icon">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="form-group-label">MetaDescription</label>
+										<input id="metadesc" name="metadesc" type="text" class="form-control" value="@Model?.ContentTypeSlug?.MetaDescription" placeholder="MetaDescription">
+									</div>
+									<div class="form-group">
+										<label class="form-group-label">Meta Title</label>
+										<input id="metaTitle" name="metaTitle" type="text" class="form-control" value="@Model?.ContentTypeSlug?.MetaTitle" placeholder="Meta Title">
+									</div>
+								</div>
+
+
+
+							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<label class="form-group-label">Content Slug</label>
+									<input id="contentSlug" name="contentSlug" type="text" class="form-control" value="@Model?.ContentTypeSlug?.ContentSlug" placeholder="Content Slug">
+								</div>
+							</div>
+
+
+
+
+							<div class="row">
+								<div class="form-group">
+									<button type="submit" class="btn btn-success">Update Record</button>
+								</div>
+
+							</div>
+						</form>
+
+
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="card shadow">
+			<div class="card-body">
+				<div class="form-group" style="">
+					<a href="#" onclick="openUploadDialog()">
+						<img src="@Model?.ContentTypeSlug?.ImageSource" height="200" width="300" style="float:right" />
+					</a>
+					<div id="imagePreview"></div>
+					<!-- Hidden file input for uploading an image -->
+					<input type="file" id="fileInput" onchange="" style="display: none">
+				</div>
+			</div>
+		</div>
+		<div class="card shadow">
+			<div class="card-body">
+				<div class="form-group" style="">
+					<h3>Select Category	</h3>
+					<div id="cat-section" class="form-group">
+						@foreach (var item in Model.Categories)
+						{
+							bool isChecked = Model.ContentTypeSlug.SharedCategory.Any(x => x.ContentId == Model.ContentTypeSlug.Id && x.CategoryId == item.Id);
+
+							if (isChecked)
+							{
+								<div  class="form-group-item"><input class="contentCat" checked	 type="checkbox" value="@item.Id" name="cat" id="cat" /><label>@item.Name</label></div>
+
+							}
+							else
+							{
+								<div class="form-group-item"><input class="contentCat" type="checkbox" value="@item.Id" name="cat" id="cat" /><label>@item.Name</label></div>
+
+							}
+
+
+
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+		
+
+	</div>
+</div>
+
+
+<div id="bottom-right" class="">
+	<div class="alert alert-success alert-styled-right alert-arrow-right alert-dismissible" style="display:none">
+		<button id="contentSubmit" type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+		<span class="font-weight-semibold">Well done!</span> Data Updated Successfully
+	</div>
+</div>
+<style>
+	#bottom-right {
+		position: fixed;
+		bottom: 20px; /* You can adjust this value to change the vertical position */
+		right: 20px; /* You can adjust this value to change the horizontal position */
+	}
+</style>
+
+<script type="text/javascript">
+	function openUploadDialog() {
+		var fileInput = document.getElementById("fileInput");
+		fileInput.click();
+	}
+	$('#fileInput').change(function () {
+		debugger;
+		var formData = new FormData();
+		var file = this.files[0];
+		formData.append('file', file);
+		formData.append('ContentId', @Model?.ContentTypeSlug?.Id);
+
+		// Send the file to the server using AJAX
+		$.ajax({
+			url: '/FileManager/UploadImage', // Replace with your server-side endpoint
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				// Display the uploaded image
+				location.reload();
+				$('#imagePreview').html('<img src="' + response.imageUrl + '" height="200" width="300">');
+			},
+			error: function () {
+				alert('Image upload failed');
+			}
+		});
+	});
+	$('.contentCat').click(function () {
+		debugger;
+		var checkedValues = [];
+		$('.contentCat:checked').each(function () {
+			checkedValues.push($(this).val());
+		});
+		var cId = @Model.ContentTypeSlug?.Id;
+		var formData = {
+			Category: checkedValues,
+			ContentId: cId
+	}
+		$.ajax({
+			url: '/Content/UpdateContentCategory',
+			type: 'POST',
+			data: formData,
+			success: function (result) {
+				debugger
+			},
+			error: function (xhr, status, error) {
+				debugger
+				// Handle error
+				console.error("Request failed: ", status, error);
+			}	
+		});
+	});
+
+	// $("#fileInput").change(function () {
+	// 	debugger;
+	// 	var fileName = $(this).val().split('\\').pop(); // Get the selected file's name
+	// 	alert("Selected file: " + fileName);
+	// 	// You can use AJAX to upload the file to the server or perform any other necessary actions.
+
+
+	// 	$.ajax({
+	// 		url: '/FileManager/Upload/', // Replace with the actual server endpoint URL
+	// 		type: 'POST',
+	// 		data: fileName,
+	// 		processData: false,
+	// 		contentType: false,
+	// 		success: function (response) {
+	// 			$("#response").html(response);
+	// 		},
+	// 		error: function () {
+	// 			$("#response").html("An error occurred.");
+	// 		}
+	// 	});
+	// });
+
+	$('#updateContent').submit(function (e) {
+		debugger;
+		e.preventDefault();
+		var formData = {
+			Name: $('input[name=cTitle]').val(),
+			otherTitle: $('input[name=oTitle]').val(),
+			Id: $('input[name=contentId]').val(),
+			Priority: $('input[name=priority]').val(),
+			Icon: $('input[name=icon]').val(),
+			MetaDescription: $('input[name=metadesc]').val(),
+			MetaTitle: $('input[name=metaTitle]').val(),
+			ContentSlug: $('input[name=contentSlug]').val()
+
+		}
+		$('#contentSubmit').html("<div class=\"spinner-border text-warning m-6\" role=\"status\"></div>");
+		$.ajax({
+			url: "/Content/UpdateBasicContent/",
+			type: "POST",
+			data: formData,
+			success: function (result) {
+				console.log(result);
+				if (result['statusCode'] === '200') {
+					setTimeout(function () {
+						$('.alert-success').css('display', 'block');
+						setTimeout(function () {
+							$('.alert-success').css('display', 'none');
+
+						}, 1500)
+					}, 0)
+				}
+
+
+			}
+		})
+	});
+</script>

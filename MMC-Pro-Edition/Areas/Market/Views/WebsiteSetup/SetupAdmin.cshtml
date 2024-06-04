@@ -1,0 +1,120 @@
+﻿@using MMC_Pro_Edition.Areas.Market.ViewModels
+@model WebsiteModels
+@{
+    ViewData["Title"] = "SetupAdmin";
+    Layout = "~/Views/Shared/_SetupLayout.cshtml";
+}
+
+<!-- Page header -->
+<div class="page-header page-header-light">
+	<div class="page-header-content header-elements-md-inline">
+		<div class="page-title d-flex">
+			<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Forms</span> - Wizard</h4>
+			<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+		</div>
+
+		<div class="header-elements d-none">
+			<div class="d-flex justify-content-center">
+				<a href="#" id="addWebsite" class="btn btn-link btn-float font-size-sm font-weight-semibold text-default">
+					<i class="icon-add icon-2x text-pink"></i>
+					<span>Add Website</span>
+				</a>
+		
+			</div>
+		</div>
+	</div>
+
+	<div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+		<div class="d-flex">
+			<div class="breadcrumb">
+				<a href="/WebsiteSetup/SetupAdmin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+				<span class="breadcrumb-item active">Setup</span>
+			</div>
+
+			<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+		</div>
+
+		<div class="header-elements d-none">
+			
+		</div>
+	</div>
+</div>
+<!-- /page header -->
+<!-- Content area -->
+<div class="content">
+
+	<!-- Basic responsive table -->
+	<div class="card shadow">
+		<div class="card-header header-elements-inline">
+			<h5 class="card-title">Websites</h5>
+			<div class="header-elements">
+				<div class="list-icons">
+					<a class="list-icons-item" data-action="collapse"></a>
+					<a class="list-icons-item" data-action="reload"></a>
+					<a class="list-icons-item" data-action="remove"></a>
+				</div>
+			</div>
+		</div>
+
+	
+
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>WebsiteId</th>
+						<th>WebsiteName</th>
+						<th>Desc</th>
+						<th>Date Created</th>
+						<th>Status</th>
+						<th class="text-center" style="width: 30px;"><i class="icon-menu-open2"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model.Websites)
+					{
+						<tr>
+							<td>Marth</td>
+							<td><a href="#">@item.WebsiteId</a></td>
+							<td>@item.WebsiteTitle</td>
+							<td>@item.WebsiteDescription</td>
+							<td><span class="badge badge-success">Active</span></td>
+							<td class="text-center">
+								<div class="list-icons">
+								<a href="/EditWebsite/@item.WebsiteId" class="list-icons-item" data-popup="tooltip" title="Edit" data-container="body">
+									<i class="icon-pencil7"></i>
+								</a>
+								<a href="#" class="list-icons-item" data-popup="tooltip" title="Remove" data-container="body">
+									<i class="icon-trash"></i>
+								</a>
+								<a href="#" class="list-icons-item" data-popup="tooltip" title="Options" data-container="body">
+									<i class="icon-cog6"></i>
+								</a>
+								</div>
+							</td>
+						</tr>
+					}
+					
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- /basic responsive table -->
+	
+</div>
+<!-- /content area -->
+<script>
+	$('#addWebsite').click(function (e) {
+		e.preventDefault();
+		$.ajax({
+			url: '/WebsiteSetup/AddWebsite',
+			type: 'POST',
+			success: function (result) {
+				$('.modal-title').html('AddWebsite');
+				$('.modal-body').html(result);
+				$('#modal_theme_success').modal();
+			}
+		})
+	})
+</script>

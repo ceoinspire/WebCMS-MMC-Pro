@@ -1,0 +1,360 @@
+﻿@using MMC_Pro_Edition.Areas.Market.ViewModels
+@model WebsiteModels
+
+@{
+	ViewData["Title"] = "EditWebsite";
+	Layout = "~/Views/Shared/_SetupLayout.cshtml";
+}
+
+
+<!-- Page header -->
+<div class="page-header page-header-light">
+	<div class="page-header-content header-elements-md-inline">
+		<div class="page-title d-flex">
+			<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Website</span> - Wizard</h4>
+			<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+		</div>
+
+		<div class="header-elements d-none">
+			<div class="d-flex justify-content-center">
+				<a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-default">
+					<i class="icon-bars-alt text-pink-300"></i>
+					<span>Statistics</span>
+				</a>
+				<a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-default">
+					<i class="icon-calculator text-pink-300"></i>
+					<span>Invoices</span>
+				</a>
+				<a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-default">
+					<i class="icon-calendar5 text-pink-300"></i>
+					<span>Schedule</span>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+		<div class="d-flex">
+			<div class="breadcrumb">
+				<a href="/" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+				<span class="breadcrumb-item active">Edit Website</span>
+			</div>
+
+			<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+		</div>
+
+		<div class="header-elements d-none">
+		</div>
+	</div>
+</div>
+<!-- /page header -->
+<!-- Content area -->
+<div class="content">
+	<div class="row">
+		<div class="col-md-3">
+			<div class="card shadow">
+				<div class="card-img-actions">
+					<img style="min-height:200px" class="card-img-top img-fluid" src="@Model.Website?.WebsiteLogoTwo" alt="">
+					<div class="card-img-actions-overlay card-img-top">
+
+						<a id="logotwoLink" onclick="logoTwoClick(event)" href="#" class=" btn btn-outline bg-white text-white border-white border-2 ml-2">
+							Change
+						</a>
+					</div>
+				</div>
+				<div class="card-body">
+					<h5 class="card-title">Other Logo</h5>
+					<p class="card-text"></p>
+					<input type="file" id="logoTwo" onchange="" style="display: none">
+
+				</div>
+			</div>
+		</div>
+
+
+		<div class="col-md-3">
+			<div class="card shadow">
+				<div class="card-img-actions">
+					<img style="min-height:200px" class="card-img-top img-fluid" src="@Model.Website?.WebsiteLogo" alt="">
+					<div class="card-img-actions-overlay card-img-top">
+
+						<a href="" onclick="MainLogo(event)" class="removeList btn btn-outline bg-white text-white border-white border-2 ml-2">
+							Change
+						</a>
+						<input type="file" id="mainlogo" onchange="" style="display: none">
+
+					</div>
+				</div>
+				<div class="card-body">
+					<h5 class="card-title">Main Logo</h5>
+					<p class="card-text"></p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card shadow">
+				<div class="card-img-actions">
+					<img style="min-height:200px" class="card-img-top img-fluid" src="@Model.Website?.FavIcon" alt="">
+					<div class="card-img-actions-overlay card-img-top">
+						<a href="" onclick="FavIcon(event)" class="removeList btn btn-outline bg-white text-white border-white border-2 ml-2">
+							Change
+						</a>
+						<input type="file" id="favIcon" onchange="" style="display: none">
+
+					</div>
+				</div>
+				<div class="card-body">
+					<h5 class="card-title">Fav Icon</h5>
+					<p class="card-text"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+</div>
+
+
+<script>
+	function logoTwoClick(event) {
+		event.preventDefault();
+		var lphoto = document.getElementById("logoTwo");
+		lphoto.click();
+	}
+	function MainLogo(event) {
+		event.preventDefault();
+		var lphoto = document.getElementById("mainlogo");
+		lphoto.click();
+	}
+	function FavIcon(event) {
+		event.preventDefault();
+		var lphoto = document.getElementById("favIcon");
+		lphoto.click();
+	}
+	$('#logoTwo').change(function () {
+		debugger;
+		var formData = new FormData();
+		var file = this.files[0];
+		formData.append('file', file);
+		formData.append('ContentId', @Model?.Website?.WebsiteId);
+
+		// Send the file to the server using AJAX
+		$.ajax({
+			url: '/FileManager/SaveLogoOne', // Replace with your server-side endpoint
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				// Display the uploaded image
+				debugger;
+				
+
+			},
+			error: function () {
+				alert('Image upload failed');
+			}
+		});
+	});
+	$('#mainlogo').change(function () {
+		debugger;
+		var formData = new FormData();
+		var file = this.files[0];
+		formData.append('file', file);
+		formData.append('ContentId', @Model?.Website?.WebsiteId);
+
+		// Send the file to the server using AJAX
+		$.ajax({
+			url: '/FileManager/SaveLogoMain', // Replace with your server-side endpoint
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				// Display the uploaded image
+				debugger;
+
+
+			},
+			error: function () {
+				alert('Image upload failed');
+			}
+		});
+	});
+	$('#favIcon').change(function () {
+		debugger;
+		var formData = new FormData();
+		var file = this.files[0];
+		formData.append('file', file);
+		formData.append('ContentId', @Model?.Website?.WebsiteId);
+
+		// Send the file to the server using AJAX
+		$.ajax({
+			url: '/FileManager/SaveFavIcon', // Replace with your server-side endpoint
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				// Display the uploaded image
+				debugger;
+
+
+			},
+			error: function () {
+				alert('Image upload failed');
+			}
+		});
+	});
+</script>
+
+
+
+
+
+
+
+<div class="content">
+		<!-- Text inputs -->
+		<div class="card shadow">
+			<div class="card-header header-elements-inline">
+				<h5 class="card-title">Update Website Details</h5>
+				<div class="header-elements">
+					<div class="list-icons">
+						<a class="list-icons-item" data-action="collapse"></a>
+						<a class="list-icons-item" data-action="reload"></a>
+						<a class="list-icons-item" data-action="remove"></a>
+					</div>
+				</div>
+			</div>
+		<form id="websiteinfoForm">
+			<input type="hidden" value="@Model.Website?.WebsiteId" id="WebsiteId" />
+			<div class="card-body">
+				<div class="form-group form-group-float">
+					<label class="form-group-float-label">Website Name</label>
+					<input id="name" type="text" class="form-control" value="@Model.Website?.WebsiteName" placeholder="Website Name">
+				</div>
+
+				<div class="form-group form-group-float">
+					<label class="form-group-float-label">Website Title</label>
+					<input id="title" type="text" class="form-control" value="@Model.Website?.WebsiteTitle" placeholder="Website Title">
+				</div>
+
+				<div class="form-group form-group-float">
+					<label class="form-group-float-label">Support Email</label>
+					<input id="supportEmail" type="text" class="form-control" value="@Model.Website?.SupportEmail" placeholder="Support Email">
+				</div>
+
+
+
+				<div class="form-group form-group-float">
+					<label class="form-group-float-label">Description</label>
+					<textarea id="description" rows="5" cols="5" class="form-control" placeholder="Description">@Model.Website?.WebsiteDescription</textarea>
+				</div>
+				<div class="form-group form-group-float">
+					<button class="btn btn-success">Submit</button>
+				</div>
+			</div>
+		
+		
+		</form>
+		</div>
+		<!-- /text inputs -->
+	
+
+
+</div>
+<script>
+	$('#websiteinfoForm').submit(function(e){
+		e.preventDefault();
+		var formData = {
+			Id: $('#WebsiteId').val(),
+			Name:$('#name').val(),
+			Title:$('#title').val(),
+			SupportEmail:$('#supportEmail').val(),
+			Desc: $('#description').val()
+		}
+		$.ajax({
+			url:'/WebsiteSetup/UpdateWebsite',
+			type:'POST',
+			data:formData,
+			success: function (result) {
+
+			}
+		})
+	})
+</script>
+
+
+
+<div class="content">
+	<a id="createData" class="btn btn-success" href="#">Add New</a>
+
+	<div class="row">
+		@if (Model.Website != null)
+		{
+			foreach (var item in Model.Website.WebsiteData)
+			{
+				<div class="col-md-4">
+
+					<!-- Left aligned buttons -->
+					<div class="card">
+						<div class="card-header header-elements-inline">
+							<h6 class="card-title">Left aligned buttons</h6>
+							<div class="header-elements">
+								<div class="list-icons">
+									<a class="list-icons-item" data-action="collapse"></a>
+									<a class="list-icons-item" data-action="reload"></a>
+									<a class="list-icons-item" data-action="remove"></a>
+								</div>
+							</div>
+						</div>
+
+						<div class="card-body">
+							<form action="#">
+								<div class="form-group">
+									<label>@item.Title</label>
+									<textarea rows="3" cols="3" class="form-control" placeholder="Value">@item?.Value</textarea>
+								</div>
+								<div class="d-flex justify-content-start align-items-center">
+									<button type="submit" class="btn bg-blue ml-3">Submit <i class="icon-paperplane ml-2"></i></button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!-- /left aligned buttons -->
+
+				</div>
+			}
+		}
+
+	</div>
+	
+
+
+	
+
+	
+</div>
+<!-- /form action components -->
+
+
+
+
+
+<script>
+	$('#createData').click(function(e){
+		e.preventDefault();
+		var Id = $('#WebsiteId').val();
+		$.ajax({
+			url:'/WebsiteData/AddDataView/'+Id,
+			type:'POST',
+			success:function(result){
+				$('.modal-title').html('Add Website Data');
+				$('.modal-body').html(result);
+				$('#modal_theme_success').modal();
+			}
+		})
+	})
+</script>

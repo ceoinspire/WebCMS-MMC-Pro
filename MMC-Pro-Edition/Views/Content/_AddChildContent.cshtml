@@ -1,0 +1,63 @@
+﻿
+@model PagesViewModel
+
+<form id="addnew-content" action="/Action/Controler" method="post">
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-12">
+				<label>Content Heading</label>
+				<input id="contentTitle" type="text" placeholder="Content Heading" class="form-control">
+			</div>
+		</div>
+	</div>
+	<input id="parentId" type="hidden" value="@Model.ContentId" />
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-12">
+				<label>Content Type</label>
+				<select id="contenttypeSelect" class="form-control">
+					@foreach (var item in Model.ContentTypeVM)
+					{
+						<option value="@item.Id">
+							@item.Name
+						</option>
+					}
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-12">
+				<button id="createContent" class="btn btn-success">Submit</button>
+			</div>
+		</div>
+	</div>
+</form>
+<script type="text/javascript">
+	$('#addnew-content').submit(function (e) {
+		e.preventDefault();
+		debugger;
+		var formData={
+			cTitle:$('#contentTitle').val(),
+			cType: $('#contenttypeSelect').val(),
+			parentId: $('#parentId').val()
+		}
+		$.ajax({
+			url: "/Content/CreateChildContent/",
+			method: "POST",
+			data: formData,
+			success: function (result) {
+				console.log(result);
+				$('#createContent').html('Loading');
+				setTimeout(function(){
+					$('#createContent').html('Submit');
+				
+				},1000)
+			}
+		});
+
+	});
+
+
+</script>
