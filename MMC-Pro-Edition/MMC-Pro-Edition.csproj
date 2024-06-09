@@ -21,6 +21,7 @@
   <ItemGroup>
     <Folder Include="Areas\Market\Data\" />
     <Folder Include="Areas\Market\Models\" />
+    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
 </Project>
