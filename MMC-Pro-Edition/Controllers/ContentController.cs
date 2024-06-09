@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MMC_Pro_Edition.Classes;
 using MMC_Pro_Edition.Models;
@@ -33,7 +34,9 @@ namespace MMC_Pro_Edition.Controllers
 		[Route("/Content/GetContentList")]
 		public IActionResult GetContentList()
 		{
-			vm.ContentTypeSlugs = _repo.GetContents();
+			int WebId = PagesViewModel.WebsiteId;
+
+            vm.ContentTypeSlugs = _repo.GetContents(WebId);
 			return PartialView("~/Views/Content/_GetContents.cshtml", vm);
 		}
 
@@ -46,7 +49,9 @@ namespace MMC_Pro_Edition.Controllers
 		[HttpPost]
 		public IActionResult CreateContent(string cTitle, string cType)
 		{
-			var result = _repo.CreateContent(cTitle, cType);
+			var userid = User.Claims.FirstOrDefault(c=>c.Type=="UserId");
+			int WebId = PagesViewModel.WebsiteId;
+			var result = _repo.CreateContent(cTitle, cType,Convert.ToInt32(userid.Value),WebId);
 			string[] res = result.Split(',');
 			if (res[0] == "true")
 			{
@@ -124,7 +129,9 @@ namespace MMC_Pro_Edition.Controllers
 		[HttpPost]
 		public IActionResult CreateChildContent(string cTitle, string cType, string parentId)
 		{
-			var result = _repo.CreateChildContent(cTitle, cType, parentId);
+            var userid = User.Claims.FirstOrDefault(c => c.Type == "UserId");
+            int WebId = PagesViewModel.WebsiteId;
+            var result = _repo.CreateChildContent(cTitle, cType, parentId, Convert.ToInt32(userid.Value), WebId);
 			if (result == true)
 			{
 

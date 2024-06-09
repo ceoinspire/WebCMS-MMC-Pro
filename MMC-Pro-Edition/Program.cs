@@ -38,9 +38,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+//app.UseMiddleware<SessionValidationMiddleware>();
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(

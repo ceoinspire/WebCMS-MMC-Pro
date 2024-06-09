@@ -65,7 +65,7 @@ namespace MMC_Pro_Edition.Repository
             }
             var authProperties = new AuthenticationProperties
             {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1),
+                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(1),
                 IsPersistent = true,
                 IssuedUtc = DateTimeOffset.Now,
                 RedirectUri = "/",

@@ -29,16 +29,12 @@ namespace MMC_Pro_Edition.Controllers
             if (enc!=null)
             {
                 await _account.SigninAsync(enc, HttpContext);
-
             }
             SetLoginVMStatic vmst = new SetLoginVMStatic();
 
             vmst.Name = enc.Person.FirstName + enc.Person.LastName;
             vmst.Email = enc.UserName;
             PagesViewModel.StaticLoginDetail = vmst;
-
-
-
             return Json(new { statusCode = "200" });
         }
         public async Task<IActionResult> Logout()

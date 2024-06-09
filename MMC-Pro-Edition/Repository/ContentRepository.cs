@@ -23,9 +23,9 @@ namespace MMC_Pro_Edition.Repository
 
 		#region GetContent
 		//Get List of Content
-		public List<ContentVM> GetContents()
+		public List<ContentVM> GetContents(int WebsiteId)
 		{
-			return _con.Content.Include("ContentType").Where(x => x.ParentId == null).Select(x => new ContentVM
+			return _con.Content.Include("ContentType").Where(x => x.ParentId == null && x.WebSiteId==WebsiteId).Select(x => new ContentVM
 			{
 				Id = x.Id,
 				Name = x.Name,
@@ -137,7 +137,7 @@ namespace MMC_Pro_Edition.Repository
 			}).ToList();
 		}
 		#region CreateContent
-		public string CreateContent(string cTitle, string cType)
+		public string CreateContent(string cTitle, string cType,int UserId,int WebsiteId)
 		{
 			Content c = new Content();
 
@@ -157,7 +157,8 @@ namespace MMC_Pro_Edition.Repository
 			c.MetaDescription = cTitle;
 			c.CreatedOn = DateTime.Now;
 			c.OtherTitle = cTitle;
-
+			c.LoginUserId = UserId;
+			c.WebSiteId = WebsiteId;
 			c.ContentSlug = _helper.CreateSlug(cTitle);
 			var contentType = _con.ContentType.Where(x => x.Id == int.Parse(cType)).FirstOrDefault();
 			c.ContentType = contentType;
@@ -172,7 +173,7 @@ namespace MMC_Pro_Edition.Repository
 				return "false,2";
 			}
 		}
-		public bool CreateChildContent(string cTitle, string cType, string parentId)
+		public bool CreateChildContent(string cTitle, string cType, string parentId,int UserId,int WebId)
 		{
 			int maxId = _con.Content.Max(fm => fm.Id) + 1;
 
@@ -186,6 +187,8 @@ namespace MMC_Pro_Edition.Repository
 			c.ParentId = int.Parse(parentId);
 			var row = cTitle.Split(' ');
 			c.ContentSlug = cTitle;
+			c.LoginUserId = UserId;
+			c.WebSiteId = WebId;
 			var contentType = _con.ContentType.Where(x => x.Id == int.Parse(cType)).FirstOrDefault();
 			c.ContentType = contentType;
 			_con.Content.Add(c);
@@ -254,7 +257,7 @@ namespace MMC_Pro_Edition.Repository
 				content.MetaTitle = model.MetaTitle;
 				content.MetaDescription = model.MetaDescription;
 				content.ContentSlug = model.ContentSlug;
-
+				content.ModifiedOn = DateTime.Now;
 				var resp = _con.SaveChanges();
 				return true;
 			}
@@ -276,6 +279,7 @@ namespace MMC_Pro_Edition.Repository
 				content.ShortDescription = model.ShortDescription;
 				content.OtherDescription = model.OtherDescription;
 				content.OtherShortDescription = model.OtherShortDescription;
+				content.ModifiedOn = DateTime.Now;
 				_con.SaveChanges();
 				return true;
 			}
@@ -319,6 +323,7 @@ namespace MMC_Pro_Edition.Repository
 			{
 				var content = _con.Content.Where(x => x.Id == Id).FirstOrDefault();
 				content.ImageSource = URL;
+				content.ModifiedOn = DateTime.Now;
 				_con.SaveChanges();
 				return true;
 			}
@@ -336,6 +341,7 @@ namespace MMC_Pro_Edition.Repository
 			{
 				var content = _con.Content.Where(x => x.Id == Id).FirstOrDefault();
 				content.HeaderPhoto = URL;
+				content.ModifiedOn = DateTime.Now;
 				_con.SaveChanges();
 				return true;
 			}
