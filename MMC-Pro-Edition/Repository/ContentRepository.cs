@@ -220,7 +220,7 @@ namespace MMC_Pro_Edition.Repository
 				ContentType c = new ContentType();
 				c.Id = maxId;
 				c.Name = cTitle;
-				c.TypeSlug = _helper.CreateSlug(cTitle);
+				c.TypeSlug = cTitle.ToLower();
 
 				_con.ContentType.Add(c);
 				var res = _con.SaveChanges();
@@ -427,7 +427,7 @@ namespace MMC_Pro_Edition.Repository
 			{ Id=x.Id,
 			Name=x.Name,
 			 Slug=x.Slug
-
+			  ,TypeName=x.Type.Name
 			}).ToList();
 		}
 
@@ -445,7 +445,7 @@ namespace MMC_Pro_Edition.Repository
 			if (Ctype == null)
 			{
 				int maxId;
-				if (_con.ContentType.Any())
+				if (_con.ContentCategory.Any())
 				{
 					maxId = _con.ContentCategory.Max(fm => fm.Id) + 1;
 				}
@@ -457,7 +457,7 @@ namespace MMC_Pro_Edition.Repository
 				c.Id = maxId;
 				c.Name = cTitle;
 				c.TypeId = int.Parse(cType);
-				c.Slug = _helper.CreateSlug(cTitle);
+				c.Slug = cTitle.ToLower();
 
 				_con.ContentCategory.Add(c);
 				var res = _con.SaveChanges();

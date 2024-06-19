@@ -140,7 +140,7 @@
 		formData.append('ContentId', @Model?.Website?.WebsiteId);
 
 		// Send the file to the server using AJAX
-		$.ajax({
+		$.ajax({	
 			url: '/FileManager/SaveLogoOne', // Replace with your server-side endpoint
 			type: 'POST',
 			data: formData,

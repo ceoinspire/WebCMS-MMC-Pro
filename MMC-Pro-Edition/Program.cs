@@ -21,7 +21,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme + "WEBCMS").AddCookie(
 	CookieAuthenticationDefaults.AuthenticationScheme + "WEBCMS", option =>
 	{
-		option.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+		option.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 		option.SlidingExpiration = false;
 		option.LoginPath = "/Accounts/Login";
 		option.AccessDeniedPath = "/Accounts/Failure";
@@ -41,7 +41,7 @@ app.UseStaticFiles();
 //app.UseMiddleware<SessionValidationMiddleware>();
 app.UseRouting();
 app.UseAuthorization();
-
+app.UseSession();
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");
