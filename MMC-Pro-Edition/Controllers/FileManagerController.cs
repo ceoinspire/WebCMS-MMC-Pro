@@ -152,6 +152,7 @@ namespace MMC_Pro_Edition.Controllers
 
 			return Content("No file selected for upload.");
 		}
+	
 		private string SaveImageAndGetUrl(IFormFile file)
 		{
 			// Check if the file is not null and has content
@@ -190,6 +191,7 @@ namespace MMC_Pro_Edition.Controllers
 			// If the file is not valid, return null or an empty string
 			return null;
 		}
+	
 	}
 
 }

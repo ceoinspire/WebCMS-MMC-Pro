@@ -9,6 +9,10 @@
 				<label>Content Heading</label>
 				<input id="contentType" type="text" placeholder="Content Type" value="@Model.ContentType.Name" class="form-control">
 			</div>
+			<div class="col-sm-12">
+				<label>Content Type Slug</label>
+				<input id="contentTypeslug" type="text" placeholder="Content Type" value="@Model.ContentType.ContentTypeSlug" class="form-control">
+			</div>
 		</div>
 	</div>
 	<div class="form-group">
@@ -50,7 +54,8 @@
 		debugger;
 		var formData = {
 			cTitle: $('#contentType').val(),
-			Id:$('#cId').val()
+			Id:$('#cId').val(),
+			TypeSlug:$('#contentTypeslug').val()
 		}
 		$.ajax({
 			url: "/Content/EditType/",

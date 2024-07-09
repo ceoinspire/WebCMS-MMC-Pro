@@ -50,7 +50,30 @@ namespace MMC_Pro_Edition.Controllers
         {
             return View();
         }
-    
+
+        [Route("/Users/ActiveUnActive")]
+        public IActionResult ActiveUnActive(LoginVM model)
+        {
+            try
+            {
+				bool isSaved = _account.ActiveDeactiveUser(model);
+				if (isSaved)
+				{
+					return Json(new { statusCode = "200" });
+				}
+				else
+				{
+					return Json(new { statusCode = "300" });
+				}
+			}
+            catch (Exception e)
+            {
+				return Json(new { statusCode = "300",Message=e.Message });
+			}
+        
+
+			
+        }
     
     
     

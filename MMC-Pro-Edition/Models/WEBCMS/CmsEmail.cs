@@ -27,6 +27,26 @@ public partial class CmsEmail
     [Column(TypeName = "date")]
     public DateTime? DateCreated { get; set; }
 
+    [StringLength(500)]
+    public string FirstName { get; set; }
+
+    [StringLength(500)]
+    public string LastName { get; set; }
+
+    [StringLength(500)]
+    public string FullName { get; set; }
+
+    [StringLength(500)]
+    public string Mobile { get; set; }
+
+    [StringLength(500)]
+    public string LandLine { get; set; }
+
+    public bool? IsSend { get; set; }
+
+    [StringLength(500)]
+    public string StatusMessage { get; set; }
+
     [InverseProperty("Email")]
     public virtual ICollection<CmsEmailAttachments> CmsEmailAttachments { get; set; } = new List<CmsEmailAttachments>();
 

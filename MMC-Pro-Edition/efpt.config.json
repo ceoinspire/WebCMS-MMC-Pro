@@ -16,6 +16,14 @@
    "T4TemplatePath": null,
    "Tables": [
       {
+         "Name": "[HRM].[Cities]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[Countries]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[HRM].[Customers]",
          "ObjectType": 0
       },
@@ -29,6 +37,10 @@
       },
       {
          "Name": "[HRM].[EmployeeDesignation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[LaneAddresses]",
          "ObjectType": 0
       },
       {
@@ -88,6 +100,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[WEBCMS].[CMSLeadContacts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[WEBCMS].[Comments]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[WEBCMS].[Content]",
          "ObjectType": 0
       },
@@ -97,6 +117,10 @@
       },
       {
          "Name": "[WEBCMS].[ContentType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[WEBCMS].[Reviews]",
          "ObjectType": 0
       }
    ],

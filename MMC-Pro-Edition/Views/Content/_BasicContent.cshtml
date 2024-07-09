@@ -6,63 +6,77 @@
 		<div class="card shadow">
 			<div class="card-body border-top-0 rounded-0 rounded-bottom tab-content mb-0">
 				<div class="container-fluid">
-						<form id="updateContent">
-							<input type="hidden" id="contentId" name="contentId" value="@Model.ContentTypeSlug?.Id" />
-							<div class="row">
-								<div class="col-md-12">
-									<div class="form-group">
-										<label class="form-group-label">Title</label>
-										<input id="cTitle" name="cTitle" type="text" class="form-control" value="@Model?.ContentTypeSlug?.Name" placeholder="Title">
-									</div>
-									<div class="form-group">
-										<label class="form-group-label">Other Title</label>
-										<input id="oTitle" name="oTitle" type="text" class="form-control" value="@Model?.ContentTypeSlug?.OtherTitle" placeholder="Other Title">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-6">
-									<div class="form-group">
-										<label class="form-group-label">Priority</label>
-										<input id="priority" name="priority" type="text" class="form-control" value="@Model?.ContentTypeSlug?.Priority" placeholder="Priority">
-									</div>
-									<div class="form-group">
-										<label class="form-group-label">ICON</label>
-										<input id="icon" name="icon" type="text" class="form-control" value="@Model?.ContentTypeSlug?.Icon" placeholder="Icon">
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label class="form-group-label">MetaDescription</label>
-										<input id="metadesc" name="metadesc" type="text" class="form-control" value="@Model?.ContentTypeSlug?.MetaDescription" placeholder="MetaDescription">
-									</div>
-									<div class="form-group">
-										<label class="form-group-label">Meta Title</label>
-										<input id="metaTitle" name="metaTitle" type="text" class="form-control" value="@Model?.ContentTypeSlug?.MetaTitle" placeholder="Meta Title">
-									</div>
-								</div>
-
-
-
-							</div>
-
-							<div class="row">
+					<form id="updateContent">
+						<input type="hidden" id="contentId" name="contentId" value="@Model.ContentTypeSlug?.Id" />
+						<div class="row">
+							<div class="col-md-12">
 								<div class="form-group">
-									<label class="form-group-label">Content Slug</label>
-									<input id="contentSlug" name="contentSlug" type="text" class="form-control" value="@Model?.ContentTypeSlug?.ContentSlug" placeholder="Content Slug">
+									<label class="form-group-label">Title</label>
+									<input id="cTitle" name="cTitle" type="text" class="form-control" value="@Model?.ContentTypeSlug?.Name" placeholder="Title">
 								</div>
-							</div>
-
-
-
-
-							<div class="row">
 								<div class="form-group">
-									<button type="submit" class="btn btn-success">Update Record</button>
+									<label class="form-group-label">Other Title</label>
+									<input id="oTitle" name="oTitle" type="text" class="form-control" value="@Model?.ContentTypeSlug?.OtherTitle" placeholder="Other Title">
 								</div>
-
 							</div>
-						</form>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="form-group-label">Priority</label>
+									<input id="priority" name="priority" type="text" class="form-control" value="@Model?.ContentTypeSlug?.Priority" placeholder="Priority">
+								</div>
+								<div class="form-group">
+									<label class="form-group-label">ICON</label>
+									<input id="icon" name="icon" type="text" class="form-control" value="@Model?.ContentTypeSlug?.Icon" placeholder="Icon">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="form-group-label">MetaDescription</label>
+									<input id="metadesc" name="metadesc" type="text" class="form-control" value="@Model?.ContentTypeSlug?.MetaDescription" placeholder="MetaDescription">
+								</div>
+								<div class="form-group">
+									<label class="form-group-label">Meta Title</label>
+									<input id="metaTitle" name="metaTitle" type="text" class="form-control" value="@Model?.ContentTypeSlug?.MetaTitle" placeholder="Meta Title">
+								</div>
+							</div>
+
+
+
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="form-group-label">Date @Model.ContentTypeSlug.Date</label>
+									<input id="date" name="date" type="date" class="form-control" value="@Model?.ContentTypeSlug?.Date">
+								</div>
+							</div>
+							<div class="col-md-6">
+
+								<div class="form-group">
+									<label class="form-group-label">meta Keyword</label>
+									<input id="metaKeyword" name="metaKeyword" type="text" class="form-control" value="@Model?.ContentTypeSlug?.MetaKeyword" placeholder="Meta Keyword">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group">
+								<label class="form-group-label">Content Slug</label>
+								<input id="contentSlug" name="contentSlug" type="text" class="form-control" value="@Model?.ContentTypeSlug?.ContentSlug" placeholder="Content Slug">
+							</div>
+						</div>
+
+
+
+
+						<div class="row">
+							<div class="form-group">
+								<button type="submit" class="btn btn-success">Update Record</button>
+							</div>
+
+						</div>
+					</form>
 
 
 
@@ -95,7 +109,7 @@
 
 							if (isChecked)
 							{
-								<div  class="form-group-item"><input class="contentCat" checked	 type="checkbox" value="@item.Id" name="cat" id="cat" /><label>@item.Name</label></div>
+								<div class="form-group-item"><input class="contentCat" checked type="checkbox" value="@item.Id" name="cat" id="cat" /><label>@item.Name</label></div>
 
 							}
 							else
@@ -112,8 +126,8 @@
 			</div>
 		</div>
 
-		
-		
+
+
 
 	</div>
 </div>
@@ -172,7 +186,7 @@
 		var formData = {
 			Category: checkedValues,
 			ContentId: cId
-	}
+		}
 		$.ajax({
 			url: '/Content/UpdateContentCategory',
 			type: 'POST',
@@ -184,7 +198,7 @@
 				debugger
 				// Handle error
 				console.error("Request failed: ", status, error);
-			}	
+			}
 		});
 	});
 
@@ -221,7 +235,10 @@
 			Icon: $('input[name=icon]').val(),
 			MetaDescription: $('input[name=metadesc]').val(),
 			MetaTitle: $('input[name=metaTitle]').val(),
-			ContentSlug: $('input[name=contentSlug]').val()
+			ContentSlug: $('input[name=contentSlug]').val(),
+			Date: $('input[name=date]').val(),
+			MetaKeyword: $('input[name=metaKeyword]').val()
+
 
 		}
 		$('#contentSubmit').html("<div class=\"spinner-border text-warning m-6\" role=\"status\"></div>");

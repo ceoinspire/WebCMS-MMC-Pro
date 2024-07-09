@@ -38,10 +38,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-//app.UseMiddleware<SessionValidationMiddleware>();
 app.UseRouting();
 app.UseAuthorization();
 app.UseSession();
+app.UseMiddleware<SessionValidationMiddleware>();
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");

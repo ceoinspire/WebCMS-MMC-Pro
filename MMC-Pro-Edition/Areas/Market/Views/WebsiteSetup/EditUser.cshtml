@@ -1,0 +1,366 @@
+﻿@using MMC_Pro_Edition.ViewModel
+@model PagesViewModel
+
+@{
+	ViewData["Title"] = "EditWebsite";
+	Layout = "~/Views/Shared/_SetupLayout.cshtml";
+}
+
+<div class="page-header page-header-light">
+	<div class="page-header-content header-elements-md-inline">
+		<div class="page-title d-flex">
+		</div>
+
+		<div class="header-elements d-none">
+			<div class="d-flex justify-content-center">
+
+				<a href="/UserSetup" id="" class="btn btn-link btn-float font-size-sm font-weight-semibold text-default">
+					<i class="icon-users text-pink-300"></i>
+					<span>UserSection</span>
+				</a>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+		<div class="d-flex">
+			<div class="breadcrumb">
+				<a href="/" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+				<span class="breadcrumb-item active">Manage Login users</span>
+			</div>
+
+			<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+
+		</div>
+
+		<div class="header-elements d-none">
+			<div class="breadcrumb justify-content-center">
+				<a href="#" class="breadcrumb-elements-item">
+					<i class="icon-comment-discussion mr-2"></i>
+					Support
+				</a>
+
+				<div class="breadcrumb-elements-item dropdown p-0">
+					<a href="#" class="breadcrumb-elements-item dropdown-toggle" data-toggle="dropdown">
+						<i class="icon-gear mr-2"></i>
+						Settings
+					</a>
+
+					<div class="dropdown-menu dropdown-menu-right">
+						<a href="#" class="dropdown-item"><i class="icon-user-lock"></i> Account security</a>
+						<a href="#" class="dropdown-item"><i class="icon-statistics"></i> Analytics</a>
+						<a href="#" class="dropdown-item"><i class="icon-accessibility"></i> Accessibility</a>
+						<div class="dropdown-divider"></div>
+						<a href="#" class="dropdown-item"><i class="icon-gear"></i> All settings</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+
+
+<!-- Content area -->
+<div class="content">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- 2 columns form -->
+	<div class="card shadow">
+		<div class="card-header header-elements-inline">
+			<h5 class="card-title">Multiple columns</h5>
+			<div class="header-elements">
+				<div class="list-icons">
+					<a class="list-icons-item" data-action="collapse"></a>
+					<a class="list-icons-item" data-action="reload"></a>
+					<a class="list-icons-item" data-action="remove"></a>
+				</div>
+			</div>
+		</div>
+
+		<div class="card-body">
+			<form>
+				<div class="form-group row">
+					<div class="col-lg-10">
+						<div class="media mt-0">
+							<div class="media-body">
+								<span>IsActive: </span><span>
+									@if (Convert.ToBoolean(Model.LoginUser.IsActive))
+									{
+										<input id="active-status" type="checkbox" checked />
+									}
+									else
+									{
+										<input id="active-status" type="checkbox" />
+									}
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<a href="#">
+							<img src="@Model.LoginUser.Person.ImageUrl" width="100" height="100" class="rounded-round" alt="">
+						</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<fieldset>
+							<legend class="font-weight-semibold"><i class="icon-user mr-2"></i> Login details</legend>
+							<div class="form-group row">
+								<label class="col-lg-3 col-form-label">Login Email:</label>
+								<div class="col-lg-9">
+									<input type="text" class="form-control" id="email" value="@Model.LoginUser.UserName" placeholder="@Model.LoginUser.UserName">
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label class="col-lg-3 col-form-label">Password:</label>
+								<div class="col-lg-9">
+									<input type="password" id="password" class="form-control" placeholder="Your strong password">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-lg-3 col-form-label">Social Security</label>
+								<div class="col-lg-9">
+									<input type="text" id="ss" class="form-control" value="@Model.LoginUser.Person?.SocialSecurity" placeholder="Your Social Security Number">
+								</div>
+							</div>
+
+						</fieldset>
+					</div>
+
+					<div class="col-md-6">
+						<fieldset>
+							<legend class="font-weight-semibold"><i class="icon-reading mr-2"></i> Personal details</legend>
+
+							<div class="form-group row">
+								<label class="col-lg-3 col-form-label">Your name:</label>
+								<div class="col-lg-9">
+									<div class="row">
+										<div class="col-md-6">
+											<input type="text" id="firstName" placeholder="First name" value="@Model.LoginUser.Person.FirstName" class="form-control">
+										</div>
+
+										<div class="col-md-6">
+											<input type="text" id="lastName" placeholder="Last name" value="@Model.LoginUser.Person.LastName" class="form-control">
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label class="col-lg-3 col-form-label">CNIC:</label>
+								<div class="col-lg-9">
+									<input type="text" id="cnic" placeholder="Your CNIC" value="@Model.LoginUser?.Person?.Cnic" class="form-control">
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label class="col-lg-3 col-form-label">Phone #:</label>
+								<div class="col-lg-9">
+									<input type="text" id="mobile" placeholder="92-333-4048470" value="@Model.LoginUser.Person.MobileNumber" class="form-control">
+								</div>
+							</div>
+
+
+						</fieldset>
+
+					</div>
+				</div>
+
+				<div class="text-right">
+					<button id="update-profile" type="submit" class="btn btn-primary">Submit form <i class="icon-paperplane ml-2"></i></button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script>
+		$('#update-profile').click(function(e){
+			e.preventDefault();
+			var id = @Model.LoginUser.Id;
+			var formData = {
+				Email: $('#email').val(),
+				Password: $('#password').val(),
+				SocialSecurity: $('#ss').val(),
+				FirstName: $('#firstName').val(),
+				LastName: $('#lastName').val(),
+				CNIC: $('#cnic').val(),
+				Mobile: $('#mobile').val(),
+				Id: id
+			}
+			console.log(formData);
+			$.ajax({
+				url:'/User/UpdateProfile',
+				method:'POST',
+				data:formData,
+				success:function(result){
+
+				}
+			})
+		})
+		
+
+	</script>
+	<script>
+		document.getElementById('mobile').addEventListener('input', function (e) {
+			var value = e.target.value.replace(/-/g, ''); // Remove existing dashes
+			if (value.length > 2) {
+				value = value.slice(0, 2) + '-' + value.slice(2);
+			}
+			if (value.length > 6) {
+				value = value.slice(0, 6) + '-' + value.slice(6);
+			}
+			e.target.value = value;
+		});
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- /2 columns form -->
+	<!-- Touchspin spinners -->
+	<div class="mb-3">
+		<h6 class="mb-0 font-weight-semibold">
+			Address
+		</h6>
+		<span class="text-muted d-block">Update your Address Record</span>
+	</div>
+
+	<div class="row pb-5">
+
+		@foreach (var item in Model.LoginUser.Person.Addresses)
+		{
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header header-elements-inline">
+						<h5 class="card-title">@item.AddressType</h5>
+						<div class="header-elements">
+							<div class="list-icons">
+								<a class="list-icons-item" data-action="collapse"></a>
+								<a class="list-icons-item" data-action="reload"></a>
+								<a class="list-icons-item" data-action="remove"></a>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="form-group">
+							<label>Lane Address 1 </label>
+							<input type="text" value="@item.LaneAddressOne" placeholder="Lane Address 1" class="form-control">
+						</div>
+						<div class="form-group">
+							<label>Lane Address 2 </label>
+							<input type="text" value="@item.LaneAddressTwo" placeholder="Lane Address 2" class="form-control">
+						</div>
+						<div class="form-group">
+							<label>Area </label>
+							<input type="text" value="@item.Area" placeholder="Area" class="form-control">
+						</div>
+						<div class="form-group">
+							<label>Famous Place </label>
+							<input type="text" value="@item.FamousPlace" placeholder="Famous Place" class="form-control">
+						</div>
+						<div class="form-group">
+							<label>Your state:</label>
+							<select class="form-control form-control-select2" data-fouc>
+								<optgroup label="Alaskan/Hawaiian Time Zone">
+									<option value="AK">Alaska</option>
+									<option value="HI">Hawaii</option>
+								</optgroup>
+								<optgroup label="Pacific Time Zone">
+									<option value="CA">California</option>
+									<option value="NV">Nevada</option>
+									<option value="WA">Washington</option>
+								</optgroup>
+								<optgroup label="Mountain Time Zone">
+									<option value="AZ">Arizona</option>
+									<option value="CO">Colorado</option>
+									<option value="WY">Wyoming</option>
+								</optgroup>
+								<optgroup label="Central Time Zone">
+									<option value="AL">Alabama</option>
+									<option value="AR">Arkansas</option>
+									<option value="KY">Kentucky</option>
+								</optgroup>
+								<optgroup label="Eastern Time Zone">
+									<option value="CT">Connecticut</option>
+									<option value="DE">Delaware</option>
+									<option value="FL">Florida</option>
+								</optgroup>
+							</select>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		}
+
+
+
+
+	</div>
+	<!-- /touchspin spinners -->
+</div>
+<!-- /content area -->
+<script>
+	$('#active-status').change(function () {
+		var status = '';
+		var loginId = @Model.LoginUser.Id;
+		var isChecked = $(this).is(':checked');
+
+		if (isChecked) {
+			status = 'Active';
+		}
+		else {
+			status = 'InActive';
+		}
+		var formData = {
+			Status: status,
+			Id: loginId
+		}
+		$.ajax({
+			url: '/Users/ActiveUnActive',
+			method: 'POST',
+			data: formData,
+			success: function (result) {
+				debugger
+				if (result['statusCode'] === '200') {
+
+				}
+				else {
+
+				}
+			}
+		})
+	});
+</script>

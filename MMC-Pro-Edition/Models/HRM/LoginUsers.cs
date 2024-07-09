@@ -24,8 +24,16 @@ public partial class LoginUsers
 
     public int? SettingsId { get; set; }
 
+    public bool? IsActive { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? CreatedOn { get; set; }
+
     [InverseProperty("Login")]
     public virtual ICollection<AssignedRoles> AssignedRoles { get; set; } = new List<AssignedRoles>();
+
+    [InverseProperty("LoginUser")]
+    public virtual ICollection<Content> Content { get; set; } = new List<Content>();
 
     [InverseProperty("LoginUser")]
     public virtual ICollection<LoginHistory> LoginHistory { get; set; } = new List<LoginHistory>();

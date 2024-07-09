@@ -33,11 +33,17 @@ public partial class Persons
     [StringLength(50)]
     public string Email { get; set; }
 
+    [Column("ImageURL")]
+    public string ImageUrl { get; set; }
+
     [InverseProperty("Person")]
     public virtual ICollection<Customers> Customers { get; set; } = new List<Customers>();
 
     [InverseProperty("Person")]
     public virtual ICollection<Employee> Employee { get; set; } = new List<Employee>();
+
+    [InverseProperty("Person")]
+    public virtual ICollection<LaneAddresses> LaneAddresses { get; set; } = new List<LaneAddresses>();
 
     [InverseProperty("Person")]
     public virtual ICollection<LoginUsers> LoginUsers { get; set; } = new List<LoginUsers>();

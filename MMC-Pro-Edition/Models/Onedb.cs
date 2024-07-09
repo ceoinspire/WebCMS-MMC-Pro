@@ -15,17 +15,25 @@ public partial class Onedb : DbContext
 
     public virtual DbSet<AssignedRoles> AssignedRoles { get; set; }
 
+    public virtual DbSet<Cities> Cities { get; set; }
+
     public virtual DbSet<CmsContentSharedCategory> CmsContentSharedCategory { get; set; }
 
     public virtual DbSet<CmsEmail> CmsEmail { get; set; }
 
     public virtual DbSet<CmsEmailAttachments> CmsEmailAttachments { get; set; }
 
+    public virtual DbSet<CmsleadContacts> CmsleadContacts { get; set; }
+
+    public virtual DbSet<Comments> Comments { get; set; }
+
     public virtual DbSet<Content> Content { get; set; }
 
     public virtual DbSet<ContentCategory> ContentCategory { get; set; }
 
     public virtual DbSet<ContentType> ContentType { get; set; }
+
+    public virtual DbSet<Countries> Countries { get; set; }
 
     public virtual DbSet<Customers> Customers { get; set; }
 
@@ -37,6 +45,8 @@ public partial class Onedb : DbContext
 
     public virtual DbSet<FileManager> FileManager { get; set; }
 
+    public virtual DbSet<LaneAddresses> LaneAddresses { get; set; }
+
     public virtual DbSet<LoginHistory> LoginHistory { get; set; }
 
     public virtual DbSet<LoginUserDeviceDetail> LoginUserDeviceDetail { get; set; }
@@ -44,6 +54,8 @@ public partial class Onedb : DbContext
     public virtual DbSet<LoginUsers> LoginUsers { get; set; }
 
     public virtual DbSet<Persons> Persons { get; set; }
+
+    public virtual DbSet<Reviews> Reviews { get; set; }
 
     public virtual DbSet<Roles> Roles { get; set; }
 
@@ -64,6 +76,13 @@ public partial class Onedb : DbContext
             entity.HasOne(d => d.Login).WithMany(p => p.AssignedRoles).HasConstraintName("FK_AssignedRoles_LoginUsers");
 
             entity.HasOne(d => d.Role).WithMany(p => p.AssignedRoles).HasConstraintName("FK_AssignedRoles_Roles");
+        });
+
+        modelBuilder.Entity<Cities>(entity =>
+        {
+            entity.Property(e => e.CityId).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Country).WithMany(p => p.Cities).HasConstraintName("FK_Cities_Countries");
         });
 
         modelBuilder.Entity<CmsContentSharedCategory>(entity =>
@@ -89,11 +108,25 @@ public partial class Onedb : DbContext
             entity.HasOne(d => d.Email).WithMany(p => p.CmsEmailAttachments).HasConstraintName("FK_CmsEmailAttachments_CmsEmail");
         });
 
+        modelBuilder.Entity<CmsleadContacts>(entity =>
+        {
+            entity.Property(e => e.LeadContactId).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<Comments>(entity =>
+        {
+            entity.Property(e => e.CommentId).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Review).WithMany(p => p.Comments).HasConstraintName("FK_Comments_Reviews");
+        });
+
         modelBuilder.Entity<Content>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
 
             entity.HasOne(d => d.ContentType).WithMany(p => p.Content).HasConstraintName("FK_Content_ContentType");
+
+            entity.HasOne(d => d.LoginUser).WithMany(p => p.Content).HasConstraintName("FK_Content_LoginUsers");
 
             entity.HasOne(d => d.WebSite).WithMany(p => p.Content).HasConstraintName("FK_Content_Website");
         });
@@ -110,6 +143,11 @@ public partial class Onedb : DbContext
         modelBuilder.Entity<ContentType>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<Countries>(entity =>
+        {
+            entity.Property(e => e.CountryId).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<Customers>(entity =>
@@ -151,6 +189,15 @@ public partial class Onedb : DbContext
             entity.HasOne(d => d.Content).WithMany(p => p.FileManager).HasConstraintName("FK_FileManager_Content");
         });
 
+        modelBuilder.Entity<LaneAddresses>(entity =>
+        {
+            entity.Property(e => e.AddressId).ValueGeneratedNever();
+
+            entity.HasOne(d => d.City).WithMany(p => p.LaneAddresses).HasConstraintName("FK_LaneAddresses_Cities");
+
+            entity.HasOne(d => d.Person).WithMany(p => p.LaneAddresses).HasConstraintName("FK_LaneAddresses_Persons");
+        });
+
         modelBuilder.Entity<LoginHistory>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
@@ -178,6 +225,13 @@ public partial class Onedb : DbContext
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.SocialSecurity).IsFixedLength();
+        });
+
+        modelBuilder.Entity<Reviews>(entity =>
+        {
+            entity.Property(e => e.ReviewId).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Content).WithMany(p => p.Reviews).HasConstraintName("FK_Reviews_Content");
         });
 
         modelBuilder.Entity<Roles>(entity =>

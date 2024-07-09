@@ -17,7 +17,11 @@ namespace MMC_Pro_Edition.ViewModel
 		public ContentVM? ContentTypeSlug { get; set; }
 		public List<ContentCategoryVM>? Categories { get; set; }
 		public int? ContentId { get; set; }
-	}
+        public List<LoginVM> LoginUsers { get; set; }
+        public LoginVM LoginUser { get; set; }
+
+
+    }
 
 
 
@@ -45,7 +49,8 @@ namespace MMC_Pro_Edition.ViewModel
 		public string ContentSlug { get; set; }
 		public string FwdUrl { get; set; }
 		public string MetaKeyword { get; set; }
-		public List<MediaManager> PhotoList { get; set; }
+        public DateTime? Date { get; set; }
+        public List<MediaManager> PhotoList { get; set; }
 		public ContentTypeVM ContentTypeVM { get; set; }
         public ChildContentVM ChildContent { get; set; }
         public List<CMSContentSharecCategoryVM>? SharedCategory { get; set; }
@@ -104,8 +109,9 @@ namespace MMC_Pro_Edition.ViewModel
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
+        public string ContentTypeSlug { get; set; }
 
-	}
+    }
 	public class ContentCategoryVM
 	{
 		public int Id { get; set; }
@@ -141,12 +147,15 @@ namespace MMC_Pro_Edition.ViewModel
 	public class LoginVM
 	{
 		public int Id { get; set; }
-		public string? UserName { get; set; }
+        public string? Name { get; set; }
+        public string? UserName { get; set; }
 		public string? Password { get; set; }
 		public string? ValidationToken { get; set; }
+		public bool? IsActive { get; set; }
 		public List<RolesVM>? Roles { get; set; }
 		public int? PersonId { get; set; }
-        public PersonVM Person { get; set; }
+		public string? Status { get; set; }
+		public PersonVM Person { get; set; }
     }
 	public class PersonVM
 	{
@@ -159,8 +168,9 @@ namespace MMC_Pro_Edition.ViewModel
 
         public string? Cnic { get; set; }
         public string? SocialSecurity { get; set; }
-
-        public string? Email { get; set; }
+		public string ImageUrl { get; set; }
+		public string? Email { get; set; }
+        public List<LaneAddressesVM>? Addresses { get; set; }
     }
 	public class SetLoginVMStatic
 	{
@@ -169,10 +179,42 @@ namespace MMC_Pro_Edition.ViewModel
 		public string? Email { get; set; }
 
 	}
+	public  class LaneAddressesVM
+	{
+		public int AddressId { get; set; }
+		public string? LaneAddressOne { get; set; }
+		public string? LaneAddressTwo { get; set; }
+		public string? Area { get; set; }
+		public string? FamousPlace { get; set; }
+
+		public int? PersonId { get; set; }
+
+		public CitiesVM? City { get; set; }
+        public int CityId { get; set; }
+
+        public string? AddressType { get; set; }
+
+
+	}
+	public  class CitiesVM
+	{
+		public int CityId { get; set; }
+		public string? CityName { get; set; }
+		public CountriesVM? Country { get; set; }
+        public int CountryId { get; set; }
+    }
+	public  class CountriesVM
+	{
+		public int CountryId { get; set; }
+		public string? CountryName { get; set; }
+	}
+
+
 	public class RolesVM
 	{
 		public int Id { get; set; }
 		public string? Name { get; set; }
 	}
+	
 	#endregion
 }

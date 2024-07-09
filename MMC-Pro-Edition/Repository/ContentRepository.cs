@@ -54,6 +54,8 @@ namespace MMC_Pro_Edition.Repository
 				Name = x.Name,
 				Icon = x.Icon,
 				MetaTitle = x.MetaTitle,
+				 MetaKeyword=x.MetaKeyword,
+				 Date=x.Date,
 				Priority = x.Priority,
 				HeaderPhoto = x.HeaderPhoto,
 				ContentSlug = x.ContentSlug,
@@ -95,7 +97,8 @@ namespace MMC_Pro_Edition.Repository
 			return _con.Content.Include("ContentType").Where(x => x.Id == Id).Select(w => new ContentTypeVM
 			{
 				Id = w.ContentType.Id,
-				Name = w.ContentType.Name
+				Name = w.ContentType.Name,
+				ContentTypeSlug=w.ContentType.TypeSlug,
 			}).ToList();
 
 		}
@@ -258,6 +261,8 @@ namespace MMC_Pro_Edition.Repository
 				content.MetaDescription = model.MetaDescription;
 				content.ContentSlug = model.ContentSlug;
 				content.ModifiedOn = DateTime.Now;
+				content.Date = model.Date;
+				content.MetaKeyword = model.MetaKeyword;
 				var resp = _con.SaveChanges();
 				return true;
 			}
@@ -295,15 +300,17 @@ namespace MMC_Pro_Edition.Repository
 			return _con.ContentType.Where(x => x.Id == Id).Select(z => new ContentTypeVM()
 			{
 				Id = z.Id,
-				Name = z.Name
+				Name = z.Name,
+				 ContentTypeSlug=z.TypeSlug
 			}).FirstOrDefault();
 		}
-		public bool EditContentType(int Id, string cTitle)
+		public bool EditContentType(int Id, string cTitle,string typeSlug)
 		{
 			var content = _con.ContentType.Where(x => x.Id == Id).FirstOrDefault();
 			if (content != null)
 			{
 				content.Name = cTitle;
+				content.TypeSlug = typeSlug;
 				var res = _con.SaveChanges();
 				if (res == 1)
 				{

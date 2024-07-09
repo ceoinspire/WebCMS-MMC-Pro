@@ -1,0 +1,79 @@
+﻿
+
+<form id="addnew-User"  method="post">
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-12">
+				<label>FirstName</label>
+				<input id="firstName" name="firstName" type="text" placeholder="User First Name" autocomplete="off" class="form-control">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<label>Last Name</label>
+				<input id="lastName" name="lastName" type="text" placeholder="User Last Name" autocomplete="off" class="form-control">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<label>Email</label>
+				<input id="email" name="email" type="text" placeholder="Customer Email" autocomplete="off" class="form-control">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<label>Mobile</label>
+				<input id="mobile" name="mobile" type="text" placeholder="Customer Mobile" autocomplete="off" class="form-control">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<label>Password</label>
+				<input id="password" name="password" type="password" placeholder="Password" autocomplete="off" class="form-control">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<label>Image URl</label>
+				<input id="imageUrl" name="imageUrl" type="file"  class="form-control">
+			</div>
+		</div>
+	</div>
+
+
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-12">
+				<button id="createUser" class="btn btn-success">Create User</button>
+			</div>
+		</div>
+	</div>
+</form>
+<script>
+	$('#addnew-User').submit(function(e){
+		e.preventDefault();
+		debugger
+	var formData = new FormData();
+	formData.append('firstName', $('#firstName').val());
+	formData.append('lastName', $('#lastName').val());
+	formData.append('email', $('#email').val());
+	formData.append('mobile', $('#mobile').val());
+	formData.append('password', $('#password').val());
+	formData.append('imageUrl', $('#imageUrl')[0].files[0]);
+	$.ajax({
+	url: '/Setup/CreateUser',
+	type: 'POST',
+	data: formData,
+	contentType: false,
+	processData: false,
+	success: function (response) {
+	// Handle success
+	console.log('Success:', response);
+	},
+	error: function (error) {
+	// Handle error
+	console.log('Error:', error);
+	}
+	});
+	})
+</script>

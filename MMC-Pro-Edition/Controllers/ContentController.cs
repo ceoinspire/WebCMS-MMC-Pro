@@ -216,9 +216,9 @@ namespace MMC_Pro_Edition.Controllers
 			return PartialView("~/Views/Content/_EditContentType.cshtml", vm);
 		}
 
-		public IActionResult EditType(int Id, string cTitle)
+		public IActionResult EditType(int Id, string cTitle,string TypeSlug)
 		{
-			var res = _repo.EditContentType(Id, cTitle);
+			var res = _repo.EditContentType(Id, cTitle, TypeSlug);
 			if (res)
 			{
 				return Json(new { statusCode = "200" });

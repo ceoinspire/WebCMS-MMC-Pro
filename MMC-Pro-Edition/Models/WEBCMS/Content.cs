@@ -78,6 +78,8 @@ public partial class Content
     [StringLength(500)]
     public string Ipaddress { get; set; }
 
+    public bool? IsPublished { get; set; }
+
     [InverseProperty("Content")]
     public virtual ICollection<CmsContentSharedCategory> CmsContentSharedCategory { get; set; } = new List<CmsContentSharedCategory>();
 
@@ -87,6 +89,13 @@ public partial class Content
 
     [InverseProperty("Content")]
     public virtual ICollection<FileManager> FileManager { get; set; } = new List<FileManager>();
+
+    [ForeignKey("LoginUserId")]
+    [InverseProperty("Content")]
+    public virtual LoginUsers LoginUser { get; set; }
+
+    [InverseProperty("Content")]
+    public virtual ICollection<Reviews> Reviews { get; set; } = new List<Reviews>();
 
     [ForeignKey("WebSiteId")]
     [InverseProperty("Content")]
