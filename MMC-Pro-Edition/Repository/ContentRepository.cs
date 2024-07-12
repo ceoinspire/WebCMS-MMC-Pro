@@ -25,7 +25,7 @@ namespace MMC_Pro_Edition.Repository
 		//Get List of Content
 		public List<ContentVM> GetContents(int WebsiteId)
 		{
-			return _con.Content.Include("ContentType").Where(x => x.ParentId == null && x.WebSiteId==WebsiteId).Select(x => new ContentVM
+			return _con.Content.Include("ContentType").Where(x => x.ParentId == null && x.WebSiteId == WebsiteId).Select(x => new ContentVM
 			{
 				Id = x.Id,
 				Name = x.Name,
@@ -54,8 +54,8 @@ namespace MMC_Pro_Edition.Repository
 				Name = x.Name,
 				Icon = x.Icon,
 				MetaTitle = x.MetaTitle,
-				 MetaKeyword=x.MetaKeyword,
-				 Date=x.Date,
+				MetaKeyword = x.MetaKeyword,
+				Date = x.Date,
 				Priority = x.Priority,
 				HeaderPhoto = x.HeaderPhoto,
 				ContentSlug = x.ContentSlug,
@@ -67,9 +67,12 @@ namespace MMC_Pro_Edition.Repository
 				OtherTitle = x.OtherTitle,
 				ShortDescription = x.ShortDescription,
 				Thumbnail = x.Thumbnail
-				, SharedCategory=_con.CmsContentSharedCategory.Where(w=>w.ContentId==Id).Select(y=>new CMSContentSharecCategoryVM
+				,
+				SharedCategory = _con.CmsContentSharedCategory.Where(w => w.ContentId == Id).Select(y => new CMSContentSharecCategoryVM
 				{
-					 CategoryId=y.CategoryId, ContentId=y.ContentId,Id=y.Id
+					CategoryId = y.CategoryId,
+					ContentId = y.ContentId,
+					Id = y.Id
 				}).ToList(),
 				PhotoList = _con.FileManager.Where(x => x.ContentId == Id).Select(w => new MediaManager
 				{
@@ -98,7 +101,7 @@ namespace MMC_Pro_Edition.Repository
 			{
 				Id = w.ContentType.Id,
 				Name = w.ContentType.Name,
-				ContentTypeSlug=w.ContentType.TypeSlug,
+				ContentTypeSlug = w.ContentType.TypeSlug,
 			}).ToList();
 
 		}
@@ -140,7 +143,7 @@ namespace MMC_Pro_Edition.Repository
 			}).ToList();
 		}
 		#region CreateContent
-		public string CreateContent(string cTitle, string cType,int UserId,int WebsiteId)
+		public string CreateContent(string cTitle, string cType, int UserId, int WebsiteId)
 		{
 			Content c = new Content();
 
@@ -158,6 +161,7 @@ namespace MMC_Pro_Edition.Repository
 			c.Name = cTitle;
 			c.MetaTitle = cTitle;
 			c.MetaDescription = cTitle;
+			c.MetaKeyword = cTitle;
 			c.CreatedOn = DateTime.Now;
 			c.OtherTitle = cTitle;
 			c.LoginUserId = UserId;
@@ -176,7 +180,7 @@ namespace MMC_Pro_Edition.Repository
 				return "false,2";
 			}
 		}
-		public bool CreateChildContent(string cTitle, string cType, string parentId,int UserId,int WebId)
+		public bool CreateChildContent(string cTitle, string cType, string parentId, int UserId, int WebId)
 		{
 			int maxId = _con.Content.Max(fm => fm.Id) + 1;
 
@@ -301,10 +305,10 @@ namespace MMC_Pro_Edition.Repository
 			{
 				Id = z.Id,
 				Name = z.Name,
-				 ContentTypeSlug=z.TypeSlug
+				ContentTypeSlug = z.TypeSlug
 			}).FirstOrDefault();
 		}
-		public bool EditContentType(int Id, string cTitle,string typeSlug)
+		public bool EditContentType(int Id, string cTitle, string typeSlug)
 		{
 			var content = _con.ContentType.Where(x => x.Id == Id).FirstOrDefault();
 			if (content != null)
@@ -405,10 +409,10 @@ namespace MMC_Pro_Edition.Repository
 				return false;
 			}
 		}
-		public bool UpdateLogoOne(int Id,string Url)
+		public bool UpdateLogoOne(int Id, string Url)
 		{
 			var res = _con.Website.Where(x => x.WebsiteId == Id).FirstOrDefault();
-			res.WebsiteLogoTwo=Url;
+			res.WebsiteLogoTwo = Url;
 			_con.SaveChanges();
 			return true;
 		}
@@ -431,10 +435,12 @@ namespace MMC_Pro_Edition.Repository
 		public List<ContentCategoryVM> GetAllCategories()
 		{
 			return _con.ContentCategory.Select(x => new ContentCategoryVM
-			{ Id=x.Id,
-			Name=x.Name,
-			 Slug=x.Slug
-			  ,TypeName=x.Type.Name
+			{
+				Id = x.Id,
+				Name = x.Name,
+				Slug = x.Slug
+			  ,
+				TypeName = x.Type.Name
 			}).ToList();
 		}
 
@@ -483,8 +489,8 @@ namespace MMC_Pro_Edition.Repository
 			}
 
 		}
-		
-		
+
+
 		public bool UpdateContentCategory(UpdateCategoryVM model)
 		{
 
@@ -496,7 +502,7 @@ namespace MMC_Pro_Edition.Repository
 					_con.CmsContentSharedCategory.RemoveRange(c);
 					_con.SaveChanges();
 				}
-				if (model.Category!=null)
+				if (model.Category != null)
 				{
 					var con = _dapper.CreateConnection();
 
@@ -507,27 +513,42 @@ namespace MMC_Pro_Edition.Repository
 					{
 						csc.Add(new CmsContentSharedCategory
 						{
-							  Id=maxId,
-							  CategoryId= int.Parse( item), ContentId=model.ContentId, CreatedOn=DateTime.Now
+							Id = maxId,
+							CategoryId = int.Parse(item),
+							ContentId = model.ContentId,
+							CreatedOn = DateTime.Now
 						});
 						maxId++;
 					}
 					_con.CmsContentSharedCategory.AddRange(csc);
 					_con.SaveChanges();
 				}
-			
+
 			}
 
 			return false;
 		}
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
 		#endregion
 
-
+		#region Reviews
+		public List<ReviewVM> GetReviewsbyContent(int Id)
+		{
+			var reviews = _con.Reviews.Where(x => x.ContentId == Id).Select(y=>new ReviewVM
+			{
+				ReviewId = y.ReviewId,
+				Rating = y.Rating,
+				Comment = y.Comment,
+				IsPublished = y.IsPublished,
+				CreatedOn = y.CreatedOn
+			}).ToList();
+			return reviews;
+		}
+		#endregion
 	}
 }

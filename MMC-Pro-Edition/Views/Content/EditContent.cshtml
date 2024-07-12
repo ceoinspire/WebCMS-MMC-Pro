@@ -124,9 +124,9 @@
 							</a>
 						</li>
 						<li class="nav-item dropdown">
-							<a href="#tab-dark-6" class="navbar-nav-link " data-toggle="">
+							<a id="reviews" href="#reviews" class="navbar-nav-link " data-toggle="">
 								<i class="icon-file-check mr-2"></i>
-								File Manager
+								Reviews
 							</a>
 						</li>
 
@@ -206,7 +206,18 @@
 				})
 
 			})
-
+			$('#reviews').click(function(){
+				debugger
+				$.ajax({
+					
+					url: "/Content/GetReviews/" + ContentId,
+					type: "POST",
+					success: function (result) {
+						debugger
+						$('#tab-1').html(result);
+					}
+				})
+			})
 
 		})
 	</script>

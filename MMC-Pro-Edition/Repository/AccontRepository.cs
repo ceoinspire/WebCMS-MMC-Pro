@@ -185,25 +185,25 @@ namespace MMC_Pro_Edition.Repository
 			{
 				UserName = x.UserName,
 				Id = x.Id,
-				IsActive=x.IsActive,
+				IsActive = x.IsActive,
 				Person = new PersonVM
 				{
 					FirstName = x.Person.FirstName,
 					LastName = x.Person.LastName,
 					MobileNumber = x.Person.MobileNumber,
 					Email = x.Person.Email,
-					Cnic = x.Person.Email, 
+					Cnic = x.Person.Cnic,
 					SocialSecurity = x.Person.SocialSecurity,
-					Id = x.Person.Id, ImageUrl=x.Person.ImageUrl,
+					Id = x.Person.Id, ImageUrl = x.Person.ImageUrl,
 					Addresses = _con.LaneAddresses.Include("City").Include("City.Country").Where(z => z.PersonId == x.Person.Id).Select(y => new LaneAddressesVM
 					{
-						 AddressId=y.AddressId,
-						 Area=y.Area,
-						  LaneAddressOne=y.LaneAddressOne,
-						  LaneAddressTwo=y.LaneAddressTwo,
-						   FamousPlace=y.FamousPlace,
-						    AddressType=y.AddressType,
-							City=new CitiesVM {  CityId=y.City.CityId, CityName=y.City.CityName,  Country=new CountriesVM {  CountryId=y.City.Country.CountryId, CountryName=y.City.Country.CountryName} }
+						AddressId = y.AddressId,
+						Area = y.Area,
+						LaneAddressOne = y.LaneAddressOne,
+						LaneAddressTwo = y.LaneAddressTwo,
+						FamousPlace = y.FamousPlace,
+						AddressType = y.AddressType,
+						City = new CitiesVM { CityId = y.City.CityId, CityName = y.City.CityName, Country = new CountriesVM { CountryId = y.City.Country.CountryId, CountryName = y.City.Country.CountryName } }
 					}).ToList()
 				}
 
@@ -223,6 +223,21 @@ namespace MMC_Pro_Edition.Repository
 			_con.SaveChanges();
 			return true;
 		}
-
+		public bool UpdateAccount(UpdateProfileVM model)
+		{
+			var user = _con.LoginUsers.Include("Person").Where(x => x.Id == model.Id).FirstOrDefault();
+			user.UserName = model.Email;
+			if (model.Password!=null)
+			{
+				user.Passwords =  EncryptionPasses.Encrypt(model.Password, PassesCore.INIT_VECTOR, PassesCore.PASS_PHRASE, PassesCore.KEY_SIZE);
+			}
+			user.Person.FirstName = model.FirstName;
+			user.Person.LastName = model.LastName;
+			user.Person.Email = model.Email;
+			user.Person.Cnic = model.CNIC;
+			user.Person.SocialSecurity = model.SocialSecurity;
+			_con.SaveChanges();
+			return true;
+		}
 	}
 }

@@ -74,7 +74,21 @@ namespace MMC_Pro_Edition.Controllers
 
 			
         }
-    
+        [Route("/User/UpdateProfile")]
+        public IActionResult UpdateUser(UpdateProfileVM model)
+        {
+            try
+            {
+                var res = _account.UpdateAccount(model);
+				return Json(new { statusCode = "200" });
+
+			}
+			catch (Exception e)
+            {
+				return Json(new { statusCode = "300", Message=e.Message });
+			}
+           
+        }
     
     
     }

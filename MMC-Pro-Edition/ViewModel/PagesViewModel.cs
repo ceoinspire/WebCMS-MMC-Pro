@@ -19,7 +19,7 @@ namespace MMC_Pro_Edition.ViewModel
 		public int? ContentId { get; set; }
         public List<LoginVM> LoginUsers { get; set; }
         public LoginVM LoginUser { get; set; }
-
+        public List<ReviewVM> Reviews { get; set; }
 
     }
 
@@ -215,6 +215,60 @@ namespace MMC_Pro_Edition.ViewModel
 		public int Id { get; set; }
 		public string? Name { get; set; }
 	}
-	
+	public class UpdateProfileVM
+	{
+        public int Id { get; set; }
+        public string? Password { get; set; }
+		public string? Email { get; set; }
+		public string? FirstName { get; set; }
+
+		public string? LastName { get; set; }
+
+		public string? Mobile { get; set; }
+
+		public string? CNIC { get; set; }
+		public string? SocialSecurity { get; set; }
+	}
 	#endregion
+	#region Reviews
+	public class ReviewVM
+	{
+		public int ReviewId { get; set; }
+
+		public string? Comment { get; set; }
+
+		public short? Rating { get; set; }
+		public DateTime? CreatedOn { get; set; }
+
+		public int? LoginUserId { get; set; }
+
+		public bool? IsPublished { get; set; }
+
+		public int? ApprovedBy { get; set; }
+		public string UserIp { get; set; }
+		public string UserBrowser { get; set; }
+
+		public int? ContentId { get; set; }
+        public List<CommentVM> Comments { get; set; }
+    }
+	public class CommentVM
+	{
+		public int CommentId { get; set; }
+
+		public string? Comment { get; set; }
+		public DateTime? CreatedOn { get; set; }
+
+		public int? LoginUser { get; set; }
+
+		public bool? IsPublished { get; set; }
+
+		public int? ApprovedBy { get; set; }
+		public string? UserIp { get; set; }
+		public string? UserBrowser { get; set; }
+
+		public int? ReviewId { get; set; }
+
+	}
 }
+	#endregion
+

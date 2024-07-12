@@ -230,7 +230,13 @@ namespace MMC_Pro_Edition.Controllers
 
 			}
 		}
-
+		//[Route("/Content/GetReviews/{ContentId}")]
+		public IActionResult GetReviews(int Id)
+		{
+			var res = _repo.GetReviewsbyContent(Id);
+			vm.Reviews = res;
+			return PartialView("~/Views/Content/_GetReviews.cshtml",vm);
+		}
 
 
 
