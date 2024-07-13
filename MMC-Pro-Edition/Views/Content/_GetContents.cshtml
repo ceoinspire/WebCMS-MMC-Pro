@@ -14,7 +14,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (var item in Model.ContentTypeSlugs.OrderBy(x=>x.Id))
+		@foreach (var item in Model.ContentTypeSlugs.OrderByDescending(x=>x.Id))
 		{
 			<tr>
 				<td>

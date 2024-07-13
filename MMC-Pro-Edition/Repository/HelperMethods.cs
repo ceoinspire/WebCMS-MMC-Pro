@@ -16,7 +16,7 @@ namespace MMC_Pro_Edition.Repository
 					string result = sanitized + "-" + random.Next(1000, 10000);
 					return result;
 				}
-				catch (Exception)
+				catch (Exception)	
 				{
 
 					throw;

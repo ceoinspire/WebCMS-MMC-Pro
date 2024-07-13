@@ -166,6 +166,8 @@ namespace MMC_Pro_Edition.Repository
 			c.OtherTitle = cTitle;
 			c.LoginUserId = UserId;
 			c.WebSiteId = WebsiteId;
+			c.Date = DateTime.Now;
+			c.ModifiedOn = DateTime.Now;
 			c.ContentSlug = _helper.CreateSlug(cTitle);
 			var contentType = _con.ContentType.Where(x => x.Id == int.Parse(cType)).FirstOrDefault();
 			c.ContentType = contentType;
@@ -507,7 +509,7 @@ namespace MMC_Pro_Edition.Repository
 					var con = _dapper.CreateConnection();
 
 					List<CmsContentSharedCategory> csc = new List<CmsContentSharedCategory>();
-					int maxId = _con.ContentCategory.Max(fm => fm.Id) + 1;
+					int maxId = _con.CmsContentSharedCategory.Max(fm => fm.Id) + 1;
 
 					foreach (var item in model.Category)
 					{
