@@ -7,10 +7,10 @@ namespace MMC_Pro_Edition.ViewModel
 	public class PagesViewModel
 	{
         public static int  WebsiteId { get; set; }
-        public static SetLoginVMStatic StaticLoginDetail { get; set; }
+       // public static SetLoginVMStatic StaticLoginDetail { get; set; }
 		public List<ContentVM>? ContentTypeSlugs { get; set; }
 		public List<ChildContentVM>? ChildContents { get; set; }
-
+		public List<CountriesVM> Countries { get; set; }
 		public List<ContentTypeVM>? ContentTypeVM { get; set; }
 		public ContentTypeVM? ContentType { get; set; }
 
@@ -177,8 +177,9 @@ namespace MMC_Pro_Edition.ViewModel
 		public string? UserName { get; set; }
 		public string? Name { get; set; }
 		public string? Email { get; set; }
+        public string? ImageUrl { get; set; }
 
-	}
+    }
 	public  class LaneAddressesVM
 	{
 		public int AddressId { get; set; }

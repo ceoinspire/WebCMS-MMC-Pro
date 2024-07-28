@@ -194,7 +194,8 @@ namespace MMC_Pro_Edition.Repository
 					Email = x.Person.Email,
 					Cnic = x.Person.Cnic,
 					SocialSecurity = x.Person.SocialSecurity,
-					Id = x.Person.Id, ImageUrl = x.Person.ImageUrl,
+					Id = x.Person.Id,
+					ImageUrl = x.Person.ImageUrl,
 					Addresses = _con.LaneAddresses.Include("City").Include("City.Country").Where(z => z.PersonId == x.Person.Id).Select(y => new LaneAddressesVM
 					{
 						AddressId = y.AddressId,
@@ -227,9 +228,9 @@ namespace MMC_Pro_Edition.Repository
 		{
 			var user = _con.LoginUsers.Include("Person").Where(x => x.Id == model.Id).FirstOrDefault();
 			user.UserName = model.Email;
-			if (model.Password!=null)
+			if (model.Password != null)
 			{
-				user.Passwords =  EncryptionPasses.Encrypt(model.Password, PassesCore.INIT_VECTOR, PassesCore.PASS_PHRASE, PassesCore.KEY_SIZE);
+				user.Passwords = EncryptionPasses.Encrypt(model.Password, PassesCore.INIT_VECTOR, PassesCore.PASS_PHRASE, PassesCore.KEY_SIZE);
 			}
 			user.Person.FirstName = model.FirstName;
 			user.Person.LastName = model.LastName;
@@ -239,5 +240,16 @@ namespace MMC_Pro_Edition.Repository
 			_con.SaveChanges();
 			return true;
 		}
+
+		public List<CountriesVM> Countries()
+		{
+			var res = _con.Countries.Select(x => new CountriesVM
+			{
+				CountryId = x.CountryId,
+				CountryName = x.CountryName
+			}).ToList();
+			return res;
+		}
+
 	}
 }

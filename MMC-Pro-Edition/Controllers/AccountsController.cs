@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using MMC_Pro_Edition.Models;
 using MMC_Pro_Edition.Repository;
 using MMC_Pro_Edition.ViewModel;
+using System.Text.Json;
 
 namespace MMC_Pro_Edition.Controllers
 {
@@ -29,12 +30,16 @@ namespace MMC_Pro_Edition.Controllers
             if (enc!=null)
             {
                 await _account.SigninAsync(enc, HttpContext);
-            }
-            SetLoginVMStatic vmst = new SetLoginVMStatic();
 
-            vmst.Name = enc.Person.FirstName + enc.Person.LastName;
-            vmst.Email = enc.UserName;
-            PagesViewModel.StaticLoginDetail = vmst;
+                SetLoginVMStatic vmst = new SetLoginVMStatic();
+                vmst.Name = enc.Person.FirstName + enc.Person.LastName;
+                vmst.Email = enc.UserName;
+                vmst.ImageUrl = enc.Person.ImageUrl;
+                byte[] userarray = JsonSerializer.SerializeToUtf8Bytes(vmst);
+                HttpContext.Session.Set("LoginUser",userarray);
+              
+            }
+           
             return Json(new { statusCode = "200" });
         }
         public async Task<IActionResult> Logout()

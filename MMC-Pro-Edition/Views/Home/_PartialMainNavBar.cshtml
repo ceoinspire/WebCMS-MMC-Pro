@@ -22,10 +22,13 @@
 		</li>
 	</ul>
 	<div id="logoutTimer">Session will expire in: <span id="timerDisplay">5:00</span></div>
+	@{
+		var user = Context.Session.Get("LoginUser");
 
+	}
 	<span class="navbar-text ml-md-3">
 		<span class="badge badge-mark border-orange-300 mr-2"></span>
-		Morning, @PagesViewModel.StaticLoginDetail?.Name!
+		Morning, PagesViewModel.StaticLoginDetail?.Name!
 	</span>
 
 	<ul class="navbar-nav ml-md-auto">

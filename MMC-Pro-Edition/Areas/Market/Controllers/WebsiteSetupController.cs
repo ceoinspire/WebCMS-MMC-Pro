@@ -119,6 +119,8 @@ namespace MMC_Pro_Edition.Areas.Market.Controllers
 		{
 			var res = _ac.GetUserId(Id);
 			pvm.LoginUser = res;
+			
+			pvm.Countries= _ac.Countries();
 			return View("/Areas/Market/Views/WebsiteSetup/EditUser.cshtml",pvm);
 		}
 	}

@@ -545,7 +545,7 @@ namespace MMC_Pro_Edition.Repository
 			{
 				ReviewId = y.ReviewId,
 				Rating = y.Rating,
-				Comment = y.Comment,
+				Comment = y.CommentReview,
 				IsPublished = y.IsPublished,
 				CreatedOn = y.CreatedOn
 			}).ToList();

@@ -15,7 +15,7 @@ public partial class Reviews
     public int ReviewId { get; set; }
 
     [StringLength(1000)]
-    public string Comment { get; set; }
+    public string CommentReview { get; set; }
 
     public short? Rating { get; set; }
 
