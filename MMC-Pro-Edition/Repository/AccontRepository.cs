@@ -241,6 +241,14 @@ namespace MMC_Pro_Edition.Repository
 			return true;
 		}
 
+		public bool UpdateProfilePhoto(FileUploadVM model)
+		{
+			string ImageUrl = new FileRepository().SaveImageMethod(model.File);
+			var user = _con.LoginUsers.Include("Person").Where(x => x.Id == Convert.ToInt32(model.ContentId)).FirstOrDefault();
+			user.Person.ImageUrl = ImageUrl;
+			_con.SaveChanges();
+			return true;
+		}
 		public List<CountriesVM> Countries()
 		{
 			var res = _con.Countries.Select(x => new CountriesVM

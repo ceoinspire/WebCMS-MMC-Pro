@@ -94,7 +94,12 @@ namespace MMC_Pro_Edition.Controllers
 			}
            
         }
-    
+        
+        public IActionResult UpdateProfile(FileUploadVM model)
+        {
+            var res = _account.UpdateProfilePhoto(model);
+            return Json(new { statusCode = "200" });
+        }
     
     }
 }

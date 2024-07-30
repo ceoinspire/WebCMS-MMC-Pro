@@ -112,15 +112,48 @@
 						</div>
 					</div>
 					<div class="col-lg-2">
-						<a id="changeImg" href="#">
+						<a id="changeImg" href="#" >
 							<img src="@Model.LoginUser.Person.ImageUrl" width="100" height="100" class="rounded-round" alt="">
 						</a>
 					</div>
 				</div>
+				<input type="file" id="profileimg" style="display: none">
 				<script>
+					function openUploadDialog() {
+						
+					}
 					$('#changeImg').click(function (e) {
 						e.preventDefault();
+						var fileInput = document.getElementById("profileimg");
+						fileInput.click();
 
+					});
+					$(document).ready(function () {
+				
+					$('#profileimg').change(function () {
+						debugger;
+						var formData = new FormData();
+						var file = this.files[0];
+						formData.append('file', file);
+						formData.append('ContentId', @Model?.LoginUser?.Id);
+
+						// Send the file to the server using AJAX
+						$.ajax({
+							url: '/Accounts/UpdateProfile', // Replace with your server-side endpoint
+							type: 'POST',
+							data: formData,
+							processData: false,
+							contentType: false,
+							success: function (response) {
+								// Display the uploaded image
+								location.reload();
+								$('#imagePreview').html('<img src="' + response.imageUrl + '" height="200" width="300">');
+							},
+							error: function () {
+								alert('Image upload failed');
+							}
+						});
+					});
 					});
 				</script>
 				<div class="row">
