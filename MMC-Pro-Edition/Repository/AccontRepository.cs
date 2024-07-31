@@ -55,8 +55,8 @@ namespace MMC_Pro_Edition.Repository
 		{
 			List<Claim> Claims = new List<Claim> {
 				new Claim("UserId",u.Id.ToString()),
-				new Claim("UserName",u.Person.FirstName),
-				new Claim("UserEmail", u.UserName),
+				new Claim("UserName",u.Person.FirstName??""),
+				new Claim("UserEmail", u.UserName??""),
 				new Claim("ThemeStyle", "1"),
 				new Claim(ClaimTypes.NameIdentifier,u.UserName),
 				};
@@ -67,7 +67,7 @@ namespace MMC_Pro_Edition.Repository
 			}
 			var authProperties = new AuthenticationProperties
 			{
-				ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(5),
+				ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30),
 				IsPersistent = true,
 				IssuedUtc = DateTimeOffset.Now,
 				RedirectUri = "/",

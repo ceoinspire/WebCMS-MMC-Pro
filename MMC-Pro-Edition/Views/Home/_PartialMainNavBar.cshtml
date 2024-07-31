@@ -1,4 +1,6 @@
-﻿<div class="navbar-brand">
+﻿@using System.Text.Json
+
+<div class="navbar-brand">
 	<a href="index.html" class="d-inline-block">
 		<img src="../../../../global_assets/images/logo_light.png" alt="">
 	</a>
@@ -23,12 +25,12 @@
 	</ul>
 	<div id="logoutTimer">Session will expire in: <span id="timerDisplay">5:00</span></div>
 	@{
-		var user = Context.Session.Get("LoginUser");
-
+		byte[] userarray = Context.Session.Get("LoginUser");
+		var us = JsonSerializer.Deserialize<MMC_Pro_Edition.ViewModel.LoginVM>(userarray);
 	}
 	<span class="navbar-text ml-md-3">
 		<span class="badge badge-mark border-orange-300 mr-2"></span>
-		Morning, PagesViewModel.StaticLoginDetail?.Name!
+		 @MMC_Pro_Edition.ViewModel.TimeHelper.GetGreeting(), @us?.Person?.FirstName  @us?.Person?.LastName!
 	</span>
 
 	<ul class="navbar-nav ml-md-auto">

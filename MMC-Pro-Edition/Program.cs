@@ -14,14 +14,14 @@ builder.Services.AddScoped<ContentRepository>();
 builder.Services.AddSession(options =>
 {
 	options.Cookie.Name = "WEBCMS";
-	options.IdleTimeout = TimeSpan.FromMinutes(1);
+	options.IdleTimeout = TimeSpan.FromMinutes(30);
 	options.Cookie.HttpOnly = true;
 	options.Cookie.IsEssential = true;
 });
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme + "WEBCMS").AddCookie(
 	CookieAuthenticationDefaults.AuthenticationScheme + "WEBCMS", option =>
 	{
-		option.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+		option.ExpireTimeSpan = TimeSpan.FromMinutes(30);
 		option.SlidingExpiration = false;
 		option.LoginPath = "/Accounts/Login";
 		option.AccessDeniedPath = "/Accounts/Failure";

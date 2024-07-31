@@ -6,10 +6,13 @@ using MMC_Pro_Edition.Models;
 using MMC_Pro_Edition.Repository;
 using MMC_Pro_Edition.ViewModel;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
+using MMC_Pro_Edition.Classes;
 
 namespace MMC_Pro_Edition.Controllers
 {
-    public class AccountsController : Controller
+	
+	public class AccountsController : Controller
     {
         private readonly AccontRepository _account;
         private readonly IConfiguration _config;
@@ -31,12 +34,12 @@ namespace MMC_Pro_Edition.Controllers
             {
                 await _account.SigninAsync(enc, HttpContext);
 
-                SetLoginVMStatic vmst = new SetLoginVMStatic();
-                vmst.Name = enc.Person.FirstName + enc.Person.LastName;
-                vmst.Email = enc.UserName;
-                vmst.ImageUrl = enc.Person.ImageUrl;
-                byte[] userarray = JsonSerializer.SerializeToUtf8Bytes(vmst);
-                HttpContext.Session.Set("LoginUser",userarray);
+                //SetLoginVMStatic vmst = new SetLoginVMStatic();
+                //vmst.Name = enc.Person.FirstName + enc.Person.LastName;
+                //vmst.Email = enc.UserName;
+                //vmst.ImageUrl = enc.Person.ImageUrl;
+                byte[] userarray = JsonSerializer.SerializeToUtf8Bytes(enc);
+                HttpContext.Session.Set("LoginUser", userarray);
               
             }
            
@@ -50,13 +53,11 @@ namespace MMC_Pro_Edition.Controllers
             // Redirect to the home page or any other desired page after logout
             return RedirectToAction("Index", "Home");
         }
-    
-        public IActionResult UserProfile()
+		public IActionResult UserProfile()
         {
             return View();
         }
-
-        [Route("/Users/ActiveUnActive")]
+		[Route("/Users/ActiveUnActive")]
         public IActionResult ActiveUnActive(LoginVM model)
         {
             try
@@ -79,7 +80,7 @@ namespace MMC_Pro_Edition.Controllers
 
 			
         }
-        [Route("/User/UpdateProfile")]
+		[Route("/User/UpdateProfile")]
         public IActionResult UpdateUser(UpdateProfileVM model)
         {
             try

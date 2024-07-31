@@ -8,6 +8,7 @@ using MMC_Pro_Edition.ViewModel;
 
 namespace MMC_Pro_Edition.Areas.Market.Controllers
 {
+
 	[Area("Market")]
 	public class WebsiteSetupController : Controller
 	{

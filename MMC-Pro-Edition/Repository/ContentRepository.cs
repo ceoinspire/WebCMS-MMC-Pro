@@ -41,6 +41,24 @@ namespace MMC_Pro_Edition.Repository
 				}).FirstOrDefault()
 			}).ToList();
 		}
+		public List<ContentVM> GetContents(int WebsiteId,int UserId)
+		{
+			return _con.Content.Include("ContentType").Where(x => x.ParentId == null && x.WebSiteId == WebsiteId &&x.LoginUserId==UserId).Select(x => new ContentVM
+			{
+				Id = x.Id,
+				Name = x.Name,
+				ContentSlug = x.ContentSlug,
+				Thumbnail = x.Thumbnail,
+				CreatedOn = x.CreatedOn,
+				MetaTitle = x.MetaTitle,
+				MetaDescription = x.MetaDescription,
+				ContentTypeVM = _con.ContentType.Where(W => W.Id == x.ContentTypeId).Select(v => new ContentTypeVM
+				{
+					Id = v.Id,
+					Name = v.Name
+				}).FirstOrDefault()
+			}).ToList();
+		}
 		public int ContentCount()
 		{
 			return _con.Content.Count();
@@ -146,7 +164,7 @@ namespace MMC_Pro_Edition.Repository
 		public string CreateContent(string cTitle, string cType, int UserId, int WebsiteId)
 		{
 			Content c = new Content();
-
+			
 			var counting = _con.Content.Count();
 			if (counting == 0)
 			{
@@ -166,7 +184,7 @@ namespace MMC_Pro_Edition.Repository
 			c.OtherTitle = cTitle;
 			c.LoginUserId = UserId;
 			c.WebSiteId = WebsiteId;
-			c.Date = DateTime.Now;
+			c.Date = DateTime.Now.Date;
 			c.ModifiedOn = DateTime.Now;
 			c.ContentSlug = _helper.CreateSlug(cTitle);
 			var contentType = _con.ContentType.Where(x => x.Id == int.Parse(cType)).FirstOrDefault();

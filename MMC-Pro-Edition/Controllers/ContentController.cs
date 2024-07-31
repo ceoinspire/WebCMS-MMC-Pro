@@ -5,6 +5,9 @@ using MMC_Pro_Edition.Classes;
 using MMC_Pro_Edition.Models;
 using MMC_Pro_Edition.Repository;
 using MMC_Pro_Edition.ViewModel;
+using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MMC_Pro_Edition.Controllers
 {
@@ -35,8 +38,26 @@ namespace MMC_Pro_Edition.Controllers
 		public IActionResult GetContentList()
 		{
 			int WebId = PagesViewModel.WebsiteId;
+			var userid = User.Claims.FirstOrDefault(c => c.Type == "UserId");
+			var res = HttpContext.Session.Get("LoginId");
+			
+				byte[] userarray = HttpContext.Session.Get("LoginUser");
+				var us = JsonSerializer.Deserialize<MMC_Pro_Edition.ViewModel.LoginVM>(userarray);
+			if (us.Roles.Any(x=>x.Name=="User") && us.Roles.Count == 1)
+			{
+				vm.ContentTypeSlugs = _repo.GetContents(WebId, us.Id);
 
-            vm.ContentTypeSlugs = _repo.GetContents(WebId);
+			}
+			else if (us.Roles.Any(x=>x.Name=="User") && us.Roles.Any(x => x.Name == "Power User"))
+			{
+				vm.ContentTypeSlugs = _repo.GetContents(WebId,us.Id);
+
+			}
+			else if (us.Roles.Any(x => x.Name == "Admin"))
+			{
+				vm.ContentTypeSlugs = _repo.GetContents(WebId);
+			}
+			
 			return PartialView("~/Views/Content/_GetContents.cshtml", vm);
 		}
 
