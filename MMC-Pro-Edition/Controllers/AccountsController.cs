@@ -34,10 +34,7 @@ namespace MMC_Pro_Edition.Controllers
             {
                 await _account.SigninAsync(enc, HttpContext);
 
-                //SetLoginVMStatic vmst = new SetLoginVMStatic();
-                //vmst.Name = enc.Person.FirstName + enc.Person.LastName;
-                //vmst.Email = enc.UserName;
-                //vmst.ImageUrl = enc.Person.ImageUrl;
+            
                 byte[] userarray = JsonSerializer.SerializeToUtf8Bytes(enc);
                 HttpContext.Session.Set("LoginUser", userarray);
               

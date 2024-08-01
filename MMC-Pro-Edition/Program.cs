@@ -25,6 +25,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 		option.SlidingExpiration = false;
 		option.LoginPath = "/Accounts/Login";
 		option.AccessDeniedPath = "/Accounts/Failure";
+		
 	});
 var app = builder.Build();
 

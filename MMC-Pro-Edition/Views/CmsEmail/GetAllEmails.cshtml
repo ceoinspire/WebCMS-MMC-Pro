@@ -59,6 +59,10 @@
 }
 
 <script>
-
+	$(document).ready(function () {
+		$.get('/cmsemail/EmailList', function (data) {
+			$('#emailList').html(data);
+		});
+	});
 
 </script>

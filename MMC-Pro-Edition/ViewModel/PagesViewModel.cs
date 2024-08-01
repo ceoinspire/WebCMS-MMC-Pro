@@ -6,8 +6,8 @@ namespace MMC_Pro_Edition.ViewModel
 {
 	public class PagesViewModel
 	{
-        public static int  WebsiteId { get; set; }
-       // public static SetLoginVMStatic StaticLoginDetail { get; set; }
+		public static int WebsiteId { get; set; }
+		// public static SetLoginVMStatic StaticLoginDetail { get; set; }
 		public List<ContentVM>? ContentTypeSlugs { get; set; }
 		public List<ChildContentVM>? ChildContents { get; set; }
 		public List<CountriesVM> Countries { get; set; }
@@ -17,10 +17,10 @@ namespace MMC_Pro_Edition.ViewModel
 		public ContentVM? ContentTypeSlug { get; set; }
 		public List<ContentCategoryVM>? Categories { get; set; }
 		public int? ContentId { get; set; }
-        public List<LoginVM> LoginUsers { get; set; }
-        public LoginVM LoginUser { get; set; }
-        public List<ReviewVM> Reviews { get; set; }
-
+		public List<LoginVM> LoginUsers { get; set; }
+		public LoginVM LoginUser { get; set; }
+		public List<ReviewVM> Reviews { get; set; }
+        public List<CMSEmailVM> Emails { get; set; } 
     }
 
 
@@ -49,12 +49,12 @@ namespace MMC_Pro_Edition.ViewModel
 		public string ContentSlug { get; set; }
 		public string FwdUrl { get; set; }
 		public string MetaKeyword { get; set; }
-        public DateTime? Date { get; set; }
-        public List<MediaManager> PhotoList { get; set; }
+		public DateTime? Date { get; set; }
+		public List<MediaManager> PhotoList { get; set; }
 		public ContentTypeVM ContentTypeVM { get; set; }
-        public ChildContentVM ChildContent { get; set; }
-        public List<CMSContentSharecCategoryVM>? SharedCategory { get; set; }
-    }
+		public ChildContentVM ChildContent { get; set; }
+		public List<CMSContentSharecCategoryVM>? SharedCategory { get; set; }
+	}
 	public class ChildContentVM
 	{
 		public int ChildContentId { get; set; }
@@ -109,9 +109,9 @@ namespace MMC_Pro_Edition.ViewModel
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
-        public string ContentTypeSlug { get; set; }
+		public string ContentTypeSlug { get; set; }
 
-    }
+	}
 	public class ContentCategoryVM
 	{
 		public int Id { get; set; }
@@ -130,9 +130,9 @@ namespace MMC_Pro_Edition.ViewModel
 	#endregion
 	public class UpdateCategoryVM
 	{
-        public List<string>? Category { get; set; }
-        public int? ContentId { get; set; }
-    }
+		public List<string>? Category { get; set; }
+		public int? ContentId { get; set; }
+	}
 
 
 	public class FileUploadVM
@@ -147,8 +147,8 @@ namespace MMC_Pro_Edition.ViewModel
 	public class LoginVM
 	{
 		public int Id { get; set; }
-        public string? Name { get; set; }
-        public string? UserName { get; set; }
+		public string? Name { get; set; }
+		public string? UserName { get; set; }
 		public string? Password { get; set; }
 		public string? ValidationToken { get; set; }
 		public bool? IsActive { get; set; }
@@ -156,31 +156,24 @@ namespace MMC_Pro_Edition.ViewModel
 		public int? PersonId { get; set; }
 		public string? Status { get; set; }
 		public PersonVM Person { get; set; }
-    }
+	}
 	public class PersonVM
 	{
-        public int Id { get; set; }
-        public string? FirstName { get; set; }
+		public int Id { get; set; }
+		public string? FirstName { get; set; }
 
-        public string? LastName { get; set; }
+		public string? LastName { get; set; }
 
-        public string? MobileNumber { get; set; }
+		public string? MobileNumber { get; set; }
 
-        public string? Cnic { get; set; }
-        public string? SocialSecurity { get; set; }
+		public string? Cnic { get; set; }
+		public string? SocialSecurity { get; set; }
 		public string ImageUrl { get; set; }
 		public string? Email { get; set; }
-        public List<LaneAddressesVM>? Addresses { get; set; }
-    }
-	public class SetLoginVMStatic
-	{
-		public string? UserName { get; set; }
-		public string? Name { get; set; }
-		public string? Email { get; set; }
-        public string? ImageUrl { get; set; }
+		public List<LaneAddressesVM>? Addresses { get; set; }
+	}
 
-    }
-	public  class LaneAddressesVM
+	public class LaneAddressesVM
 	{
 		public int AddressId { get; set; }
 		public string? LaneAddressOne { get; set; }
@@ -191,20 +184,20 @@ namespace MMC_Pro_Edition.ViewModel
 		public int? PersonId { get; set; }
 
 		public CitiesVM? City { get; set; }
-        public int CityId { get; set; }
+		public int CityId { get; set; }
 
-        public string? AddressType { get; set; }
+		public string? AddressType { get; set; }
 
 
 	}
-	public  class CitiesVM
+	public class CitiesVM
 	{
 		public int CityId { get; set; }
 		public string? CityName { get; set; }
 		public CountriesVM? Country { get; set; }
-        public int CountryId { get; set; }
-    }
-	public  class CountriesVM
+		public int CountryId { get; set; }
+	}
+	public class CountriesVM
 	{
 		public int CountryId { get; set; }
 		public string? CountryName { get; set; }
@@ -218,8 +211,8 @@ namespace MMC_Pro_Edition.ViewModel
 	}
 	public class UpdateProfileVM
 	{
-        public int Id { get; set; }
-        public string? Password { get; set; }
+		public int Id { get; set; }
+		public string? Password { get; set; }
 		public string? Email { get; set; }
 		public string? FirstName { get; set; }
 
@@ -250,8 +243,8 @@ namespace MMC_Pro_Edition.ViewModel
 		public string UserBrowser { get; set; }
 
 		public int? ContentId { get; set; }
-        public List<CommentVM> Comments { get; set; }
-    }
+		public List<CommentVM> Comments { get; set; }
+	}
 	public class CommentVM
 	{
 		public int CommentId { get; set; }
@@ -270,6 +263,43 @@ namespace MMC_Pro_Edition.ViewModel
 		public int? ReviewId { get; set; }
 
 	}
-}
 	#endregion
+
+	#region CmsEmailVM
+	public class CMSEmailVM
+	{
+		public int EmailId { get; set; }
+		public int? WebsiteId { get; set; }
+		public string EmailSubject { get; set; }
+		public string EmailSender { get; set; }
+		public string EmailBody { get; set; }
+		public DateTime? DateCreated { get; set; }
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		public string FullName { get; set; }
+		public string Mobile { get; set; }
+		public string LandLine { get; set; }
+		public bool? IsSend { get; set; }
+		public string StatusMessage { get; set; }
+		public virtual Website Website { get; set; }
+		public List<CMSEmailAttachmentVM> Attachments { get; set; }
+	}
+
+	public class CMSEmailAttachmentVM
+	{
+		public int AttachmentId { get; set; }
+
+		public int? EmailId { get; set; }
+
+		public string AttachmentUrl { get; set; }
+	}
+
+	#endregion
+
+
+}
+
+
+
+
 
