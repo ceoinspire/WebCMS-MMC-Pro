@@ -14,8 +14,19 @@ public partial class Content
     [Key]
     public int Id { get; set; }
 
-    [StringLength(100)]
+    [StringLength(1000)]
     public string Name { get; set; }
+
+    [StringLength(1000)]
+    public string Tagline { get; set; }
+
+    public string OverView { get; set; }
+
+    [StringLength(500)]
+    public string VideoLink { get; set; }
+
+    [StringLength(1000)]
+    public string Note { get; set; }
 
     public string Description { get; set; }
 
@@ -35,9 +46,10 @@ public partial class Content
 
     public int? ContentTypeId { get; set; }
 
+    [StringLength(1500)]
     public string OtherTitle { get; set; }
 
-    [StringLength(500)]
+    [StringLength(1500)]
     public string MetaDescription { get; set; }
 
     public string ShortDescription { get; set; }
@@ -51,7 +63,7 @@ public partial class Content
     [StringLength(50)]
     public string Icon { get; set; }
 
-    [StringLength(50)]
+    [StringLength(1500)]
     public string MetaTitle { get; set; }
 
     [StringLength(500)]
@@ -89,6 +101,9 @@ public partial class Content
 
     [InverseProperty("Content")]
     public virtual ICollection<FileManager> FileManager { get; set; } = new List<FileManager>();
+
+    [InverseProperty("Content")]
+    public virtual ICollection<LinkedContentItems> LinkedContentItems { get; set; } = new List<LinkedContentItems>();
 
     [ForeignKey("LoginUserId")]
     [InverseProperty("Content")]

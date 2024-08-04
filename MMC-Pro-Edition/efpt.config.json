@@ -120,6 +120,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[WEBCMS].[LinkedContentItems]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[WEBCMS].[Reviews]",
          "ObjectType": 0
       }

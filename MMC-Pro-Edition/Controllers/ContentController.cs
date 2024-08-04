@@ -164,6 +164,40 @@ namespace MMC_Pro_Edition.Controllers
 			}
 		}
 
+		[Route("/Content/GetlinkedItems/{ContentId}")]
+		public IActionResult GetlinkedItems(int ContentId)
+		{
+			vm.ContentTypeSlugs = _repo.GetContents(1);
+			vm.ContentId = ContentId;
+			vm.ContentTypeVM = _repo.ContentType();
+			vm.LinkedItems = _repo.LinkedItems(ContentId);
+			return PartialView("~/Views/Content/_GetLinkedItems.cshtml", vm);
+		}
+	
+		public IActionResult AddLinkedItem(int ContentId, int LinkItemId)
+		{
+			_repo.AddLinkedContentItem(LinkItemId, ContentId);
+			return Json(new { statusCode = "200" });
+		}
+		public IActionResult RemoveLinkedItem(int Id)
+		{
+			var res = _repo.RemoveLinkedItem(Id);
+			if (res)
+			{
+				return Json(new { statusCode = "200" });
+
+			}
+			return Json(new { statusCode = "300" });
+		}
+
+
+
+
+
+
+
+
+
 		[Route("/Content/GetContentTypes")]
 		public IActionResult GetContentTypes()
 		{
@@ -251,6 +285,7 @@ namespace MMC_Pro_Edition.Controllers
 
 			}
 		}
+		
 		//[Route("/Content/GetReviews/{ContentId}")]
 		public IActionResult GetReviews(int Id)
 		{

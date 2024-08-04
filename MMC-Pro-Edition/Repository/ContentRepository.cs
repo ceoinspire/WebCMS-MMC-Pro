@@ -73,7 +73,7 @@ namespace MMC_Pro_Edition.Repository
 				Icon = x.Icon,
 				MetaTitle = x.MetaTitle,
 				MetaKeyword = x.MetaKeyword,
-				Date = x.Date,
+				Date = x.Date, Note=x.Note,VideoLink=x.VideoLink,OverView=x.OverView,Tagline=x.Tagline,
 				Priority = x.Priority,
 				HeaderPhoto = x.HeaderPhoto,
 				ContentSlug = x.ContentSlug,
@@ -159,6 +159,44 @@ namespace MMC_Pro_Edition.Repository
 					Name = v.Name
 				}).FirstOrDefault()
 			}).ToList();
+		}
+
+		public void AddLinkedContentItem(int linkitemId,int contentId)
+		{
+			int maxId = 0;
+			
+			if (_con.LinkedContentItems.Any())
+			{
+				maxId = _con.LinkedContentItems.Max(fm => fm.LinkedItemId) + 1;
+			}
+			else
+			{
+				maxId = 1;
+			}
+			LinkedContentItems lci = new LinkedContentItems();
+			lci.LinkedItemId = maxId;
+			lci.LiniedContentId = linkitemId;
+			lci.ContentId = contentId;
+			lci.Priority = 1;
+			_con.LinkedContentItems.Add(lci);
+			_con.SaveChanges();
+		}
+		public List<LinkedContent> LinkedItems(int ContentId)
+		{
+			using (var con =_dapper.CreateConnection())
+			{
+				string query = $"SELECT c.Id,c.Name,c.ContentSlug,lci.LinkedItemId FROM WEBCMS.LinkedContentItems lci " +
+					$"JOIN WEBCMS.Content c on lci.LiniedContentId = c.Id where ContentId={ContentId}";
+				var res = con.Query<LinkedContent>(query).ToList();
+				return res;
+			}
+		}
+		public bool RemoveLinkedItem(int Id)
+		{
+			var item = _con.LinkedContentItems.Where(x => x.LinkedItemId == Id).FirstOrDefault();
+			_con.LinkedContentItems.Remove(item);
+			_con.SaveChanges();
+			return true;
 		}
 		#region CreateContent
 		public string CreateContent(string cTitle, string cType, int UserId, int WebsiteId)
@@ -308,6 +346,10 @@ namespace MMC_Pro_Edition.Repository
 				content.ShortDescription = model.ShortDescription;
 				content.OtherDescription = model.OtherDescription;
 				content.OtherShortDescription = model.OtherShortDescription;
+				content.Note = model.Note;
+				content.Tagline = model.Tagline;
+				content.OverView = model.OverView;
+				content.VideoLink = model.VideoLink;
 				content.ModifiedOn = DateTime.Now;
 				_con.SaveChanges();
 				return true;
@@ -388,15 +430,24 @@ namespace MMC_Pro_Edition.Repository
 			try
 			{
 				var content = _con.Content.Include(c => c.FileManager).FirstOrDefault(x => x.Id == ContentId);
+                int maxId = 0;
+				if (_con.FileManager.Any())
+				{
+					maxId = _con.FileManager.Max(fm => fm.Id) + 1;
 
-				if (content != null)
+                }
+				else
+				{
+					maxId = 1;
+				}
+                if (content != null)
 				{
 					var newFileManager = new FileManager
 					{
 						Url = Link,
 						Caption = content.Name
 					};
-					int maxId = _con.FileManager.Max(fm => fm.Id) + 1;
+				
 
 					newFileManager.Id = maxId;
 					content.FileManager.Add(newFileManager);
@@ -477,7 +528,7 @@ namespace MMC_Pro_Edition.Repository
 			var Ctype = _con.ContentCategory.Where(x => x.Name == cTitle).FirstOrDefault();
 			if (Ctype == null)
 			{
-				int maxId;
+				int maxId=0;
 				if (_con.ContentCategory.Any())
 				{
 					maxId = _con.ContentCategory.Max(fm => fm.Id) + 1;
@@ -527,7 +578,18 @@ namespace MMC_Pro_Edition.Repository
 					var con = _dapper.CreateConnection();
 
 					List<CmsContentSharedCategory> csc = new List<CmsContentSharedCategory>();
-					int maxId = _con.CmsContentSharedCategory.Max(fm => fm.Id) + 1;
+
+					int maxId = 0;
+
+					if (_con.CmsContentSharedCategory.Any())
+					{
+                       maxId= _con.CmsContentSharedCategory.Max(fm => fm.Id) + 1;
+                    }
+					else
+					{
+						maxId = 1;
+					}
+					
 
 					foreach (var item in model.Category)
 					{
@@ -563,7 +625,7 @@ namespace MMC_Pro_Edition.Repository
 			{
 				ReviewId = y.ReviewId,
 				Rating = y.Rating,
-				Comment = y.CommentReview,
+				Comment = y.ReviewComment,
 				IsPublished = y.IsPublished,
 				CreatedOn = y.CreatedOn
 			}).ToList();

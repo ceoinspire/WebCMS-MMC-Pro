@@ -1,0 +1,151 @@
+﻿@model PagesViewModel
+<div class="card shadow">
+	<div class="card-body">
+		<div class="row">
+			<div class="col-lg-2">
+
+				<select class="form-control">
+					<option value="">-- Select an item --</option>
+					@foreach (var item in Model.ContentTypeVM)
+					{
+						<option value="@item.Id">@item.Name</option>
+					}
+				</select>
+			</div>
+			<div class="col-lg-8">
+				<select class="form-control itemSelect" style="" id="mainitems">
+					<option>-- Select an item --</option>
+					@foreach (var item in Model.ContentTypeSlugs.Where(x=>x.Id!=Model.ContentId))
+					{
+						<option value="@item.Id">@item.Name</option>
+					}
+				</select>
+			</div>
+			<div class="col-2">
+				<a id="addlinkedContent" href="#" class="btn btn-success">Add New</a>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function () {
+		$('.itemSelect').select2({
+			placeholder: "Select an item",
+			allowClear: true
+		});
+	});
+</script>
+
+<div class="card shadow">
+	<div class="card-body">
+		<table class="table table-hover table-striped table-responsive-lg">
+			<thead class="table-success bg-indigo">
+				<tr>
+					<th>Content Title</th>
+					<th>Content Type</th>
+					<th>Meta Title</th>
+					<th>Created On</th>
+
+					<th>Status</th>
+					<th class="text-center" style="width: 30px;"><i class="icon-menu-open2"></i></th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model.LinkedItems)
+				{
+				<tr>
+					<td>
+						<strong>@item.Name</strong>
+					</td>
+					<td>
+						<span class="badge badge-info">@item.Name</span>
+
+					</td>
+					<td>	</td>
+					<td>
+
+					</td>
+
+					<td>
+						<span class="badge badge-success">Active</span>
+					</td>
+					<td class="text-center">
+						<div class="list-icons">
+							<div class="dropdown">
+								<a href="#" class="list-icons-item" data-toggle="dropdown">
+									<i class="icon-menu9"></i>
+								</a>
+
+								<div class="dropdown-menu dropdown-menu-right">
+									<a href="/Content/RemoveLinkedContent/@item.LinkedItemId" data-value="@item.LinkedItemId" class="remove dropdown-item"><i class="icon-database-remove"></i> Unlink</a>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+				}
+
+
+			</tbody>
+		</table>
+
+	</div>
+</div>
+
+
+
+
+<div id="bottom-right" class="">
+	<div class="alert alert-success alert-styled-right alert-arrow-right alert-dismissible" style="display:none">
+		<button id="contentSubmit" type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+		<span class="font-weight-semibold">Well done!</span> Data Updated Successfully
+	</div>
+</div>
+<div id="bottom-right">
+	<div class="alert alert-danger alert-styled-right alert-dismissible" style="display:none">
+		<button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+		<span class="font-weight-semibold">Oh snap!</span> Change a few things up and <a href="#" class="alert-link">try submitting again</a>.
+	</div>
+</div>
+
+<style>
+	#bottom-right {
+		position: fixed;
+		bottom: 20px; /* You can adjust this value to change the vertical position */
+		right: 20px; /* You can adjust this value to change the horizontal position */
+	}
+</style>
+<script type="text/javascript">
+	$('#addlinkedContent').click(function (e) {
+		e.preventDefault();
+		var contentId = @Model.ContentId;
+		var mainId = $('#mainitems').val();
+		var formData = {
+			ContentId:contentId,
+			LinkItemId:mainId
+		}
+		console.log(mainId);
+		$.ajax({
+			url: '/Content/AddLinkedItem/',
+			method: 'POST',
+			data:formData,
+			success: function (data) {
+				SuccessMessage();
+				$('#linkedItems').click();
+			}
+		})
+	})
+	$('.remove').click(function (e) {
+		e.preventDefault();
+		var Id = $(this).attr('data-value');
+		$.ajax({
+			url:'/Content/RemoveLinkedItem/'+Id,
+			method:'POST',
+			success: function (data) {
+				SuccessMessage();
+				$('#linkedItems').click();
+			}
+		})
+		console.log(id);
+	});
+</script>

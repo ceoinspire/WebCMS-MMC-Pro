@@ -118,7 +118,7 @@
 							</a>
 						</li>
 						<li class="nav-item dropdown">
-							<a href="#tab-dark-5" class="navbar-nav-link " data-toggle="">
+							<a href="#" id="linkedItems" class="navbar-nav-link " data-toggle="">
 								<i class="icon-link mr-2"></i>
 								Linked Items
 							</a>
@@ -169,7 +169,7 @@
 					$('#tab-1').html(result);
 
 				}
-			})
+			});
 			$('#tabone').click(function () {
 				$.ajax({
 					url: "/Content/ContentData/" + ContentId,
@@ -209,11 +209,22 @@
 					}
 				})
 
-			})
-			$('#reviews').click(function(){
+			});
+			$('#linkedItems').click(function () {
+				$.ajax({
+					url: "/Content/GetlinkedItems/" + ContentId,
+					type: "POST",
+					success: function (result) {
+						debugger
+						$('#tab-1').html(result);
+					}
+				});
+			});
+
+			$('#reviews').click(function () {
 				debugger
 				$.ajax({
-					
+
 					url: "/Content/GetReviews/" + ContentId,
 					type: "POST",
 					success: function (result) {
@@ -221,7 +232,7 @@
 						$('#tab-1').html(result);
 					}
 				})
-			})
+			});
 
 		})
 	</script>

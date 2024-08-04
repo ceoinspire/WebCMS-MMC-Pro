@@ -10,6 +10,28 @@
 				<div class="row">
 					<div class="col-md-12">
 						<form action="#">
+							<div class="row">
+								
+								<div class="col-lg-6 form-group">
+									<label class="form-group-label">Content Note</label>
+									<textarea id="note" class="form-control" rows="3">@Model?.ContentTypeSlug?.Note</textarea>
+								</div>
+								<div class="col-lg-6  form-group">
+									<label class="form-group-label">Overview</label>
+									<textarea id="oview" class="form-control" rows="3">@Model?.ContentTypeSlug?.OverView</textarea>
+								</div>
+							</div>
+						<div class="row">
+								<div class="col-lg-6 form-group">
+									<label class="form-group-label">Tagline</label>
+									<textarea id="tline" class="form-control" rows="3">@Model?.ContentTypeSlug?.Tagline</textarea>
+								</div>
+								<div class="col-lg-6 form-group">
+									<label class="form-group-label">Video link</label>
+									<input id="vlink" class="form-control" value="@Model?.ContentTypeSlug?.VideoLink" />
+								</div>
+						</div>
+						
 							<div class="form-group">
 								<label class="form-group-label">Short Description</label>
 								<textarea id="shortDescription" class="editor-full" rows="3">@Model?.ContentTypeSlug?.ShortDescription</textarea>
@@ -25,7 +47,10 @@
 								<label class="form-group-label">Other Description</label>
 								<textarea id="otherDescription" class="editor-full" rows="3">@Model?.ContentTypeSlug?.OtherDescription</textarea>
 							</div>
-
+							<div class="form-group">
+								<label class="form-group-label">Other Short Description</label>
+								<textarea id="othershortDescription" class="editor-full" rows="3">@Model?.ContentTypeSlug?.OtherShortDescription</textarea>
+							</div>
 
 						</form>
 
@@ -70,7 +95,9 @@
 	CKEDITOR.replace('description');
 	CKEDITOR.replace('otherDescription');
 	CKEDITOR.replace('shortDescription');
+	CKEDITOR.replace('othershortDescription');
 
+	
 
 	$('#descSubmit').click(function (e) {
 		e.preventDefault();
@@ -78,11 +105,20 @@
 		var desc = CKEDITOR.instances.description;
 		var otherDesc = CKEDITOR.instances.otherDescription;
 		var shortDesc = CKEDITOR.instances.shortDescription;
+		var othershortDesc = CKEDITOR.instances.othershortDescription;
+
 
 		var formData = {
+			Note:$('#note').val(),
+			OverView: $('#oview').val(),
+			Tagline:$('#tline').val(),
+			Videolink: $('#vlink').val(),
+
 			Description: desc.getData(),
 			ShortDescription: shortDesc.getData(),
 			OtherDescription: otherDesc.getData(),
+			OtherShortDescription: othershortDesc.getData(),
+
 			Id: $('input[name=contentId]').val()
 
 		}

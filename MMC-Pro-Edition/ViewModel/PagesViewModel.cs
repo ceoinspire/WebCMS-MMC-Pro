@@ -12,7 +12,8 @@ namespace MMC_Pro_Edition.ViewModel
 		public List<ChildContentVM>? ChildContents { get; set; }
 		public List<CountriesVM> Countries { get; set; }
 		public List<ContentTypeVM>? ContentTypeVM { get; set; }
-		public ContentTypeVM? ContentType { get; set; }
+        public List<LinkedContent> LinkedItems { get; set; }
+        public ContentTypeVM? ContentType { get; set; }
 
 		public ContentVM? ContentTypeSlug { get; set; }
 		public List<ContentCategoryVM>? Categories { get; set; }
@@ -30,6 +31,12 @@ namespace MMC_Pro_Edition.ViewModel
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
+		public string Tagline { get; set; }
+
+		public string OverView { get; set; }
+
+		public string VideoLink { get; set; }
+		public string Note { get; set; }
 		public string Description { get; set; }
 		public string ImageSource { get; set; }
 		public string Thumbnail { get; set; }
@@ -54,7 +61,9 @@ namespace MMC_Pro_Edition.ViewModel
 		public ContentTypeVM ContentTypeVM { get; set; }
 		public ChildContentVM ChildContent { get; set; }
 		public List<CMSContentSharecCategoryVM>? SharedCategory { get; set; }
+		public List<LinkedContent> LinkedContentItems { get; set; }
 	}
+	
 	public class ChildContentVM
 	{
 		public int ChildContentId { get; set; }
@@ -97,6 +106,82 @@ namespace MMC_Pro_Edition.ViewModel
 		public int? ContentId { get; set; }
 		public string ContentSlug { get; set; }
 	}
+	public class LinkedContent
+	{
+		public int Id { get; set; }
+        public int LinkedItemId { get; set; }
+        public string Name { get; set; }
+		public string Tagline { get; set; }
+
+		public string OverView { get; set; }
+
+		public string VideoLink { get; set; }
+		public string Note { get; set; }
+		public string Description { get; set; }
+		public string ImageSource { get; set; }
+		public string Thumbnail { get; set; }
+		public DateTime? CreatedOn { get; set; }
+		public DateTime? ModifiedOn { get; set; }
+		public int? WebSiteId { get; set; }
+		public int? ContentTypeId { get; set; }
+		public string OtherTitle { get; set; }
+		public string MetaDescription { get; set; }
+		public string ShortDescription { get; set; }
+		public string OtherShortDescription { get; set; }
+		public string OtherDescription { get; set; }
+		public int? Priority { get; set; }
+		public string Icon { get; set; }
+		public string MetaTitle { get; set; }
+		public string HeaderPhoto { get; set; }
+		public string ContentSlug { get; set; }
+		public string FwdUrl { get; set; }
+		public string MetaKeyword { get; set; }
+		public DateTime? Date { get; set; }
+        public List<LinkChildVM> ChildContent { get; set; }
+    }
+	public class LinkChildVM
+	{
+		public int ChildContentId { get; set; }
+		public string ContentTitle { get; set; }
+
+		public string OtherTitle { get; set; }
+
+		public int? Priority { get; set; }
+		public DateTime? CreatedOn { get; set; }
+
+		public DateTime? Date { get; set; }
+
+		public DateTime? ModifiedOn { get; set; }
+
+		public int? Author { get; set; }
+
+		public string Shortdescription { get; set; }
+
+		public string Description { get; set; }
+
+		public string OtherShortDescription { get; set; }
+
+		public string Icon { get; set; }
+
+		public string ImageSource { get; set; }
+
+		public string Thumbnail { get; set; }
+
+		public int? WebsiteId { get; set; }
+
+		public string MetaTitle { get; set; }
+
+		public string MetaDescription { get; set; }
+
+		public string MetaKeywords { get; set; }
+
+		public string HeaderPhoto { get; set; }
+		public string FwdUrl { get; set; }
+
+		public int? ContentId { get; set; }
+		public string ContentSlug { get; set; }
+	}
+
 	public class MediaManager
 	{
 		public int Id { get; set; }

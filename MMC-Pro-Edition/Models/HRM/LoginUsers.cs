@@ -45,6 +45,9 @@ public partial class LoginUsers
     [InverseProperty("LoginUsers")]
     public virtual Persons Person { get; set; }
 
+    [InverseProperty("LoginUser")]
+    public virtual ICollection<Reviews> Reviews { get; set; } = new List<Reviews>();
+
     [ForeignKey("SettingsId")]
     [InverseProperty("LoginUsers")]
     public virtual Settings Settings { get; set; }

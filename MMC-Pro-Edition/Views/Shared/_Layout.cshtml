@@ -84,10 +84,7 @@
 			setInterval(function () {
 				//debugger;
 				idleTime++;
-				if (idleTime >= 300) { // 5 minutes of inactivity (adjust as needed)
-					// Perform logout or any other action you want on inactivity timeout
-					alert('Logging out due to inactivity');
-					// Redirect to logout endpoint
+				if (idleTime >= 500) { // 5 minutes of inactivity (adjust as needed)
 					window.location.href = '/Accounts/Logout'; // Replace with your actual logout endpoint
 				}
 				else{
@@ -111,7 +108,6 @@
 			// You can perform cleanup or logout actions here
 			// For example, clear the session on browser close
 			// You might want to confirm with the user before logging out
-			alert('Session will be closed on browser close');
 			// Perform logout or clear session
 			window.location.href = '/Account/Logout'; // Replace with your actual logout endpoint
 		});
@@ -120,6 +116,16 @@
 		// 		$('.alert-success').css('display', 'block');
 		// 	}, 1000)
 		// }
+
+		function SuccessMessage() {
+			setTimeout(function () {
+				$('.alert-success').css('display', 'block');
+				setTimeout(function () {
+					$('.alert-success').css('display', 'none');
+
+				}, 1500)
+			}, 0)
+		}
 	</script>
 </body>
 </html>

@@ -47,6 +47,8 @@ public partial class Onedb : DbContext
 
     public virtual DbSet<LaneAddresses> LaneAddresses { get; set; }
 
+    public virtual DbSet<LinkedContentItems> LinkedContentItems { get; set; }
+
     public virtual DbSet<LoginHistory> LoginHistory { get; set; }
 
     public virtual DbSet<LoginUserDeviceDetail> LoginUserDeviceDetail { get; set; }
@@ -198,6 +200,13 @@ public partial class Onedb : DbContext
             entity.HasOne(d => d.Person).WithMany(p => p.LaneAddresses).HasConstraintName("FK_LaneAddresses_Persons");
         });
 
+        modelBuilder.Entity<LinkedContentItems>(entity =>
+        {
+            entity.Property(e => e.LinkedItemId).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Content).WithMany(p => p.LinkedContentItems).HasConstraintName("FK_LinkedContentItems_Content");
+        });
+
         modelBuilder.Entity<LoginHistory>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
@@ -232,6 +241,8 @@ public partial class Onedb : DbContext
             entity.Property(e => e.ReviewId).ValueGeneratedNever();
 
             entity.HasOne(d => d.Content).WithMany(p => p.Reviews).HasConstraintName("FK_Reviews_Content");
+
+            entity.HasOne(d => d.LoginUser).WithMany(p => p.Reviews).HasConstraintName("FK_Reviews_LoginUsers");
         });
 
         modelBuilder.Entity<Roles>(entity =>

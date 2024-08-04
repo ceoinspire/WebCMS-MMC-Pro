@@ -15,7 +15,7 @@ public partial class Reviews
     public int ReviewId { get; set; }
 
     [StringLength(1000)]
-    public string CommentReview { get; set; }
+    public string ReviewComment { get; set; }
 
     public short? Rating { get; set; }
 
@@ -43,4 +43,8 @@ public partial class Reviews
     [ForeignKey("ContentId")]
     [InverseProperty("Reviews")]
     public virtual Content Content { get; set; }
+
+    [ForeignKey("LoginUserId")]
+    [InverseProperty("Reviews")]
+    public virtual LoginUsers LoginUser { get; set; }
 }
