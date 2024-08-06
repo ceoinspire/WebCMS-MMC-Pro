@@ -108,7 +108,8 @@ namespace MMC_Pro_Edition.ViewModel
 	}
 	public class LinkedContent
 	{
-		public int Id { get; set; }
+        public string Key { get; set; }
+        public int Id { get; set; }
         public int LinkedItemId { get; set; }
         public string Name { get; set; }
 		public string Tagline { get; set; }

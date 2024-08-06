@@ -175,7 +175,7 @@ namespace MMC_Pro_Edition.Repository
 			}
 			LinkedContentItems lci = new LinkedContentItems();
 			lci.LinkedItemId = maxId;
-			lci.LiniedContentId = linkitemId;
+			lci.LinkedContentId = linkitemId;
 			lci.ContentId = contentId;
 			lci.Priority = 1;
 			_con.LinkedContentItems.Add(lci);
@@ -186,7 +186,7 @@ namespace MMC_Pro_Edition.Repository
 			using (var con =_dapper.CreateConnection())
 			{
 				string query = $"SELECT c.Id,c.Name,c.ContentSlug,lci.LinkedItemId FROM WEBCMS.LinkedContentItems lci " +
-					$"JOIN WEBCMS.Content c on lci.LiniedContentId = c.Id where ContentId={ContentId}";
+					$"JOIN WEBCMS.Content c on lci.LinkedContentId = c.Id where ContentId={ContentId}";
 				var res = con.Query<LinkedContent>(query).ToList();
 				return res;
 			}

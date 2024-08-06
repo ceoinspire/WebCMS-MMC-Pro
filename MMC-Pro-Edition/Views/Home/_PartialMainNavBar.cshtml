@@ -1,5 +1,6 @@
 ﻿@using System.Text.Json
 
+
 <div class="navbar-brand">
 	<a href="index.html" class="d-inline-block">
 		<img src="../../../../global_assets/images/logo_light.png" alt="">
@@ -24,8 +25,15 @@
 		</li>
 	</ul>
 	<div id="logoutTimer">Session will expire in: <span id="timerDisplay">5:00</span></div>
+	 
 	@{
 		byte[] userarray = Context.Session.Get("LoginUser");
+		if (userarray == null)
+		{
+
+			Context.Response.Redirect("/Account/Logout");
+			return;
+		}
 		var us = JsonSerializer.Deserialize<MMC_Pro_Edition.ViewModel.LoginVM>(userarray);
 	}
 	<span class="navbar-text ml-md-3">

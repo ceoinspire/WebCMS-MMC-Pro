@@ -14,13 +14,13 @@ public partial class LinkedContentItems
     [Key]
     public int LinkedItemId { get; set; }
 
-    public int? LiniedContentId { get; set; }
+    public int? LinkedContentId { get; set; }
 
     public int? ContentId { get; set; }
 
     public int? Priority { get; set; }
 
-    [ForeignKey("ContentId")]
+    [ForeignKey("LinkedContentId")]
     [InverseProperty("LinkedContentItems")]
-    public virtual Content Content { get; set; }
+    public virtual Content LinkedContent { get; set; }
 }

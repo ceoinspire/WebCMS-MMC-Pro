@@ -204,7 +204,7 @@ public partial class Onedb : DbContext
         {
             entity.Property(e => e.LinkedItemId).ValueGeneratedNever();
 
-            entity.HasOne(d => d.Content).WithMany(p => p.LinkedContentItems).HasConstraintName("FK_LinkedContentItems_Content");
+            entity.HasOne(d => d.LinkedContent).WithMany(p => p.LinkedContentItems).HasConstraintName("FK_LinkedContentItems_Content");
         });
 
         modelBuilder.Entity<LoginHistory>(entity =>

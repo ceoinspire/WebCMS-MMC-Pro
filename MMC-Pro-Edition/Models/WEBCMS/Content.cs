@@ -102,7 +102,7 @@ public partial class Content
     [InverseProperty("Content")]
     public virtual ICollection<FileManager> FileManager { get; set; } = new List<FileManager>();
 
-    [InverseProperty("Content")]
+    [InverseProperty("LinkedContent")]
     public virtual ICollection<LinkedContentItems> LinkedContentItems { get; set; } = new List<LinkedContentItems>();
 
     [ForeignKey("LoginUserId")]
