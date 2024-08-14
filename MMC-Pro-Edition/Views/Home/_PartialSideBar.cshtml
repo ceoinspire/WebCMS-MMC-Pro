@@ -17,7 +17,6 @@
 		byte[] userarray = Context.Session.Get("LoginUser");
 		if (userarray == null)
 		{
-
 			Context.Response.Redirect("/Account/Logout");
 			return;
 		}
