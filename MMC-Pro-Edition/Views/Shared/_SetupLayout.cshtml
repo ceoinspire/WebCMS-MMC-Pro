@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Text.Json
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<partial name="/Views/Home/_PartialHead.cshtml"></partial>
@@ -7,12 +8,33 @@
 
 <body class="navbar-top">
 	<partial name="~/Views/Shared/_BsModal.cshtml" />
+	<div  style="display:none" class="alert alert-danger alert-styled-left alert-dismissible bottom-right">
+		<button  type="button" class="close" data-dismiss="alert"><span >&times;</span></button>
+		<span  class="font-weight-semibold">Oh snap!</span> Change a few things up and <a  href="#" class="alert-link">try submitting again</a>.
+	</div>
 
+	<div  style="display:none" class="alert alert-success alert-styled-left alert-arrow-left alert-dismissible bottom-right">
+		<button  type="button" class="close" data-dismiss="alert"><span >&times;</span></button>
+		<span  class="font-weight-semibold">Well done!</span> You successfully read <a  href="#" class="alert-link">this important</a> alert message.
+	</div>
+	<style>
+		.alert {
+			position: fixed;
+			bottom: 50px;
+			right: 20px;
+			z-index: 1000;
+			display: none; /* Hide initially, show with JavaScript */
+		}
+
+			.alert + .alert {
+				margin-top: 10px;
+			}
+	</style>
 	<!-- Main navbar -->
-	<div class="navbar navbar-expand-md navbar-dark bg-orange navbar-static fixed-top">
+	<div class="navbar navbar-expand-md navbar-light navbar-static fixed-top">
 		<div class="navbar-brand">
 			<a href="index.html" class="d-inline-block">
-				<img src="../../../../global_assets/images/logo_light.png" alt="">
+				<img src="/global_assets/images/logo_dark.png" alt="">
 			</a>
 		</div>
 
@@ -33,10 +55,19 @@
 					</a>
 				</li>
 			</ul>
+			@{
+				byte[] userarray = Context.Session.Get("LoginUser");
+				if (userarray == null)
+				{
 
+					Context.Response.Redirect("/Account/Logout");
+					return;
+				}
+				var us = JsonSerializer.Deserialize<MMC_Pro_Edition.ViewModel.LoginVM>(userarray);
+			}
 			<span class="navbar-text ml-md-3">
 				<span class="badge badge-mark border-orange-300 mr-2"></span>
-				Morning, Victoria!
+				@MMC_Pro_Edition.ViewModel.TimeHelper.GetGreeting(), @us?.Person?.FirstName  @us?.Person?.LastName!
 			</span>
 
 			<ul class="navbar-nav ml-md-auto">

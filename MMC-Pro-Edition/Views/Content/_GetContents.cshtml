@@ -18,7 +18,10 @@
 		{
 			<tr>
 				<td>
-					<strong>@item.Name</strong>
+					<a href="/Content/EditContent/@item.Id">
+						<strong>@item.Name</strong>
+					</a>
+				
 				</td>
 				<td>
 					<span class="badge badge-info">@item.ContentTypeVM?.Name</span>
@@ -40,7 +43,6 @@
 							<div class="dropdown-menu dropdown-menu-right">
 								<a href="/Content/EditContent/@item.Id" class="dropdown-item"><i class="icon-database-edit2"></i> Edit</a>
 								<a  href="/Content/DeleteContent/@item.Id" class="remove dropdown-item"><i class="icon-database-remove"></i> Delete</a>
-								<a href="#" class="dropdown-item"><i class="icon-file-word"></i> Export to .doc</a>
 							</div>
 						</div>
 					</div>

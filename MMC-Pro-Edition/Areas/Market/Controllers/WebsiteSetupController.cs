@@ -81,6 +81,22 @@ namespace MMC_Pro_Edition.Areas.Market.Controllers
 			var res = _repo.CreateDataType(WebsiteId,Title, Value);
 			return Json(new {statusCode="200" });
 		}
+		[Route("UpdateWebsiteData")]
+		public IActionResult UpdateWebsiteData(int itemId, string itemValue)
+		{
+			var res = _repo.UpdateWebsiteData(itemId, itemValue);
+			if (res)
+			{
+				return Json(new { statusCode = "200" });
+			}
+			else
+			{
+				return Json(new { statusCode = "300" });
+			}
+		
+		}
+
+
 
 		[Route("/UserSetup")]
 		public IActionResult UserSetup()

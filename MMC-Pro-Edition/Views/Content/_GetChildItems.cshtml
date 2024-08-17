@@ -1,9 +1,7 @@
-﻿
-@model PagesViewModel
+﻿@model PagesViewModel
 <div class="card shadow">
 	<div class="card-body">
 		<div class="col-10">
-
 		</div>
 		<div class="col-2">
 			<a id="addchildContent" href="#" class="btn btn-success">Add New</a>
@@ -33,7 +31,9 @@
 				{
 					<tr>
 						<td>
-							<strong>@item.Name</strong>
+							<a target="_blank" href="/Content/EditContent/@item.Id">
+								<strong>@item.Name</strong>
+							</a>
 						</td>
 						<td>
 							<span class="badge badge-info">@item.ContentTypeVM.Name</span>
@@ -53,9 +53,8 @@
 									</a>
 
 									<div class="dropdown-menu dropdown-menu-right">
-										<a href="/Content/EditContent/@item.Id" class="dropdown-item"><i class="icon-database-edit2"></i> Edit</a>
+										<a target="_blank" href="/Content/EditContent/@item.Id" class="dropdown-item"><i class="icon-database-edit2"></i> Edit</a>
 										<a href="/Content/DeleteContent/@item.Id" class="remove dropdown-item"><i class="icon-database-remove"></i> Delete</a>
-										<a href="#" class="dropdown-item"><i class="icon-file-word"></i> Export to .doc</a>
 									</div>
 								</div>
 							</div>
@@ -98,7 +97,7 @@
 	$('#addchildContent').click(function () {
 		debugger;
 		$.ajax({
-			url: "/Content/AddChildContent/"+@Model.ContentId,
+			url: "/Content/AddChildContent/" + @Model.ContentId,
 			type: "POST",
 			success: function (data) {
 				$('.modal-title').html('Add Child Item');

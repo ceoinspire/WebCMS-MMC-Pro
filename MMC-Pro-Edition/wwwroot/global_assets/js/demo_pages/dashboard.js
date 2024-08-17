@@ -3761,7 +3761,7 @@ var Dashboard = function () {
         initCharts: function() {
 
             // Sparklines
-            _chartSparkline('#new-visitors', 'line', 30, 35, 'basis', 750, 2000, '#26A69A');
+            _chartSparkline('#new-visitors', 'line', 25, 35, 'basis', 750, 2000, '#26A69A');
             _chartSparkline('#new-sessions', 'line', 30, 35, 'basis', 750, 2000, '#FF7043');
             _chartSparkline('#total-online', 'line', 30, 35, 'basis', 750, 2000, '#5C6BC0');
             _chartSparkline('#server-load', 'area', 30, 50, 'basis', 750, 2000, 'rgba(255,255,255,0.5)');

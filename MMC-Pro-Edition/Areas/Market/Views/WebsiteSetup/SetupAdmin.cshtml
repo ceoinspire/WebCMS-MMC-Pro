@@ -65,7 +65,6 @@
 						<th>WebsiteId</th>
 						<th>WebsiteName</th>
 						<th>Desc</th>
-						<th>Date Created</th>
 						<th>Status</th>
 						<th class="text-center" style="width: 30px;"><i class="icon-menu-open2"></i></th>
 					</tr>
@@ -74,10 +73,11 @@
 					@foreach (var item in Model.Websites)
 					{
 						<tr>
-							<td>Marth</td>
+							
 							<td><a href="#">@item.WebsiteId</a></td>
 							<td>@item.WebsiteTitle</td>
 							<td>@item.WebsiteDescription</td>
+
 							<td><span class="badge badge-success">Active</span></td>
 							<td class="text-center">
 								<div class="list-icons">

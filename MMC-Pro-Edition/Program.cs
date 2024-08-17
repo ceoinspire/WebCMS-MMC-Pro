@@ -11,6 +11,7 @@ builder.Services.AddDbContext<Onedb>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("connectionString")));
 builder.Services.AddTransient<DapperContext, DapperContext>();
 builder.Services.AddScoped<ContentRepository>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession(options =>
 {
 	options.Cookie.Name = "WEBCMS";

@@ -106,7 +106,21 @@ namespace MMC_Pro_Edition.Areas.Market.Repository
 			return true;
 		}
 
-
+		public bool UpdateWebsiteData(int id,string value)
+		{
+			try
+			{
+				var res = _con.WebsiteData.Where(x => x.WebsiteDataId == id).FirstOrDefault();
+				res.Value = value;
+				_con.SaveChanges();
+				return true;
+			}
+			catch (Exception e)
+			{
+				return false;
+				
+			}
+		}
 
 
 

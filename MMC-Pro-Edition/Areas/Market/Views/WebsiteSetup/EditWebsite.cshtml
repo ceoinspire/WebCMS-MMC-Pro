@@ -17,18 +17,7 @@
 
 		<div class="header-elements d-none">
 			<div class="d-flex justify-content-center">
-				<a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-default">
-					<i class="icon-bars-alt text-pink-300"></i>
-					<span>Statistics</span>
-				</a>
-				<a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-default">
-					<i class="icon-calculator text-pink-300"></i>
-					<span>Invoices</span>
-				</a>
-				<a href="#" class="btn btn-link btn-float font-size-sm font-weight-semibold text-default">
-					<i class="icon-calendar5 text-pink-300"></i>
-					<span>Schedule</span>
-				</a>
+		
 			</div>
 		</div>
 	</div>
@@ -117,96 +106,101 @@
 
 
 <script>
-	function logoTwoClick(event) {
-		event.preventDefault();
-		var lphoto = document.getElementById("logoTwo");
-		lphoto.click();
-	}
-	function MainLogo(event) {
-		event.preventDefault();
-		var lphoto = document.getElementById("mainlogo");
-		lphoto.click();
-	}
-	function FavIcon(event) {
-		event.preventDefault();
-		var lphoto = document.getElementById("favIcon");
-		lphoto.click();
-	}
-	$('#logoTwo').change(function () {
-		debugger;
-		var formData = new FormData();
-		var file = this.files[0];
-		formData.append('file', file);
-		formData.append('ContentId', @Model?.Website?.WebsiteId);
+	$(document).ready(function () {
 
-		// Send the file to the server using AJAX
-		$.ajax({	
-			url: '/FileManager/SaveLogoOne', // Replace with your server-side endpoint
-			type: 'POST',
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (response) {
-				// Display the uploaded image
-				debugger;
-				
 
-			},
-			error: function () {
-				alert('Image upload failed');
-			}
+		function logoTwoClick(event) {
+			event.preventDefault();
+			var lphoto = document.getElementById("logoTwo");
+			lphoto.click();
+		}
+		function MainLogo(event) {
+			event.preventDefault();
+			var lphoto = document.getElementById("mainlogo");
+			lphoto.click();
+		}
+		function FavIcon(event) {
+			event.preventDefault();
+			var lphoto = document.getElementById("favIcon");
+			lphoto.click();
+		}
+		$('#logoTwo').change(function () {
+			debugger;
+			var formData = new FormData();
+			var file = this.files[0];
+			formData.append('file', file);
+			formData.append('ContentId', @Model?.Website?.WebsiteId);
+
+			// Send the file to the server using AJAX
+			$.ajax({
+				url: '/FileManager/SaveLogoOne', // Replace with your server-side endpoint
+				type: 'POST',
+				data: formData,
+				processData: false,
+				contentType: false,
+				success: function (response) {
+					// Display the uploaded image
+					debugger;
+
+
+				},
+				error: function () {
+					alert('Image upload failed');
+				}
+			});
+		});
+		$('#mainlogo').change(function () {
+			debugger;
+			var formData = new FormData();
+			var file = this.files[0];
+			formData.append('file', file);
+			formData.append('ContentId', @Model?.Website?.WebsiteId);
+
+			// Send the file to the server using AJAX
+			$.ajax({
+				url: '/FileManager/SaveLogoMain', // Replace with your server-side endpoint
+				type: 'POST',
+				data: formData,
+				processData: false,
+				contentType: false,
+				success: function (response) {
+					// Display the uploaded image
+					debugger;
+
+
+				},
+				error: function () {
+					alert('Image upload failed');
+				}
+			});
+		});
+		$('#favIcon').change(function () {
+			debugger;
+			var formData = new FormData();
+			var file = this.files[0];
+			formData.append('file', file);
+			formData.append('ContentId', @Model?.Website?.WebsiteId);
+
+			// Send the file to the server using AJAX
+			$.ajax({
+				url: '/FileManager/SaveFavIcon', // Replace with your server-side endpoint
+				type: 'POST',
+				data: formData,
+				processData: false,
+				contentType: false,
+				success: function (response) {
+					// Display the uploaded image
+					debugger;
+
+
+				},
+				error: function () {
+					alert('Image upload failed');
+				}
+			});
 		});
 	});
-	$('#mainlogo').change(function () {
-		debugger;
-		var formData = new FormData();
-		var file = this.files[0];
-		formData.append('file', file);
-		formData.append('ContentId', @Model?.Website?.WebsiteId);
 
-		// Send the file to the server using AJAX
-		$.ajax({
-			url: '/FileManager/SaveLogoMain', // Replace with your server-side endpoint
-			type: 'POST',
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (response) {
-				// Display the uploaded image
-				debugger;
-
-
-			},
-			error: function () {
-				alert('Image upload failed');
-			}
-		});
-	});
-	$('#favIcon').change(function () {
-		debugger;
-		var formData = new FormData();
-		var file = this.files[0];
-		formData.append('file', file);
-		formData.append('ContentId', @Model?.Website?.WebsiteId);
-
-		// Send the file to the server using AJAX
-		$.ajax({
-			url: '/FileManager/SaveFavIcon', // Replace with your server-side endpoint
-			type: 'POST',
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (response) {
-				// Display the uploaded image
-				debugger;
-
-
-			},
-			error: function () {
-				alert('Image upload failed');
-			}
-		});
-	});
 </script>
 
 
@@ -288,43 +282,34 @@
 
 
 
-<div class="content">
-	<a id="createData" class="btn btn-success" href="#">Add New</a>
+<div class="content p-5">
+	<div class="card">
+		<div class="card-body">
+			<a id="createData" class="btn btn-success" href="#">Add New</a>
+		</div>
+	</div>
 
-	<div class="row">
+	
+
+	<div class="row pb-5">
 		@if (Model.Website != null)
 		{
 			foreach (var item in Model.Website.WebsiteData)
 			{
 				<div class="col-md-4">
-
-					<!-- Left aligned buttons -->
 					<div class="card">
-						<div class="card-header header-elements-inline">
-							<h6 class="card-title">Left aligned buttons</h6>
-							<div class="header-elements">
-								<div class="list-icons">
-									<a class="list-icons-item" data-action="collapse"></a>
-									<a class="list-icons-item" data-action="reload"></a>
-									<a class="list-icons-item" data-action="remove"></a>
-								</div>
-							</div>
-						</div>
-
 						<div class="card-body">
 							<form action="#">
 								<div class="form-group">
 									<label>@item.Title</label>
-									<textarea rows="3" cols="3" class="form-control" placeholder="Value">@item?.Value</textarea>
+									<textarea rows="3" cols="3" class="form-control" data-itemid="@item.WebsiteDataId" placeholder="Value">@item?.Value</textarea>
 								</div>
 								<div class="d-flex justify-content-start align-items-center">
-									<button type="submit" class="btn bg-blue ml-3">Submit <i class="icon-paperplane ml-2"></i></button>
+									<button type="submit" class="btn bg-blue ml-3 websiteDataSubmit">Submit <i class="icon-paperplane ml-2"></i></button>
 								</div>
 							</form>
 						</div>
 					</div>
-					<!-- /left aligned buttons -->
-
 				</div>
 			}
 		}
@@ -340,7 +325,49 @@
 <!-- /form action components -->
 
 
+<script>
 
+	$(document).ready(function () {
+		$(".websiteDataSubmit").click(function (e) {
+			e.preventDefault(); 
+			// Get the form in the context of the clicked button
+			var form = $(this).closest('form');
+
+			// Get the data-itemid and textarea value
+			var itemId = form.find('textarea').data('itemid');
+			var itemValue = form.find('textarea').val();
+
+			// Send the data to the server using AJAX
+			$.ajax({
+				url: '/UpdateWebsiteData', // Replace with your controller and action
+				method: 'POST',
+				data: {
+					itemId: itemId,
+					itemValue: itemValue
+				},
+				success: function (response) {
+					if(response['statusCode']==='200')
+					{
+						$('.alert-success').css('display', 'block')
+						setTimeout(function(){
+							$('.alert-success').css('display', 'none')
+
+						},1000)
+					}
+					else{
+
+					}
+					
+				},
+				error: function (error) {
+					// Handle any errors that occur
+					alert('An error occurred while saving the data.');
+				}
+			});
+		});
+	});
+
+	</script>
 
 
 <script>

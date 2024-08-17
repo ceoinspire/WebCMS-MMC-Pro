@@ -42,7 +42,10 @@ namespace MMC_Pro_Edition.Controllers
            
             return Json(new { statusCode = "200" });
         }
-        public async Task<IActionResult> Logout()
+        [Route("/Account/Logout")]
+		[Route("/Accounts/Logout")]
+
+		public async Task<IActionResult> Logout()
         {
             // Sign out the user
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme + "WEBCMS");
