@@ -110,7 +110,7 @@ namespace MMC_Pro_Edition.Repository
 			return _con.ContentType.ToList().Select(x => new ContentTypeVM()
 			{
 				Id = x.Id,
-				Name = x.Name,
+				Name = x.Name, ContentTypeSlug=x.TypeSlug
 			}).ToList();
 		}
 		public List<ContentTypeVM> ContentTypebyContentId(int Id)
