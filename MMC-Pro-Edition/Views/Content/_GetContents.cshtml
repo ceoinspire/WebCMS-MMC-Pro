@@ -84,6 +84,10 @@
 
 	$('.remove').click(function (e) {
 		e.preventDefault();
+		if (!confirm("Are you sure you want to remove this item?")) {
+			return; // If the user clicks "Cancel", do nothing
+		}
+
 		var link = $(this).attr('href');
 		$.ajax({
 			url:link,

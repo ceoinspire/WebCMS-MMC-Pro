@@ -40,24 +40,24 @@ namespace MMC_Pro_Edition.Controllers
 			int WebId = PagesViewModel.WebsiteId;
 			var userid = User.Claims.FirstOrDefault(c => c.Type == "UserId");
 			var res = HttpContext.Session.Get("LoginId");
-			
-				byte[] userarray = HttpContext.Session.Get("LoginUser");
-				var us = JsonSerializer.Deserialize<MMC_Pro_Edition.ViewModel.LoginVM>(userarray);
-			if (us.Roles.Any(x=>x.Name=="User") && us.Roles.Count == 1)
+
+			byte[] userarray = HttpContext.Session.Get("LoginUser");
+			var us = JsonSerializer.Deserialize<MMC_Pro_Edition.ViewModel.LoginVM>(userarray);
+			if (us.Roles.Any(x => x.Name == "User") && us.Roles.Count == 1)
 			{
 				vm.ContentTypeSlugs = _repo.GetContents(WebId, us.Id);
 
 			}
-			else if (us.Roles.Any(x=>x.Name=="User") && us.Roles.Any(x => x.Name == "Power User"))
+			else if (us.Roles.Any(x => x.Name == "User") && us.Roles.Any(x => x.Name == "Power User"))
 			{
-				vm.ContentTypeSlugs = _repo.GetContents(WebId,us.Id);
+				vm.ContentTypeSlugs = _repo.GetContents(WebId, us.Id);
 
 			}
 			else if (us.Roles.Any(x => x.Name == "Admin"))
 			{
 				vm.ContentTypeSlugs = _repo.GetContents(WebId);
 			}
-			
+
 			return PartialView("~/Views/Content/_GetContents.cshtml", vm);
 		}
 
@@ -70,9 +70,9 @@ namespace MMC_Pro_Edition.Controllers
 		[HttpPost]
 		public IActionResult CreateContent(string cTitle, string cType)
 		{
-			var userid = User.Claims.FirstOrDefault(c=>c.Type=="UserId");
+			var userid = User.Claims.FirstOrDefault(c => c.Type == "UserId");
 			int WebId = PagesViewModel.WebsiteId;
-			var result = _repo.CreateContent(cTitle, cType,Convert.ToInt32(userid.Value),WebId);
+			var result = _repo.CreateContent(cTitle, cType, Convert.ToInt32(userid.Value), WebId);
 			string[] res = result.Split(',');
 			if (res[0] == "true")
 			{
@@ -83,6 +83,19 @@ namespace MMC_Pro_Edition.Controllers
 			{
 				return Json(new { statusCode = "300", ResponseMessage = "Item Cannot Save" });
 			}
+		}
+		public IActionResult DeleteContent(int Id)
+		{
+			var r = _repo.RemoveContent(Id);
+			if (r)
+			{
+				return Json(new { statusCode = "200" });
+			}
+			else
+			{
+				return Json(new { statusCode = "300" });
+			}
+			
 		}
 		[HttpGet]
 		public IActionResult EditContent(int Id)
