@@ -54,20 +54,20 @@ namespace MMC_Pro_Edition.Repository
 		public async Task SigninAsync(LoginVM u, HttpContext httpcontext)
 		{
 			List<Claim> Claims = new List<Claim> {
-				new Claim("UserId",u.Id.ToString()),
+				new Claim("UserId",u.Id.ToString()??""),
 				new Claim("UserName",u.Person.FirstName??""),
 				new Claim("UserEmail", u.UserName??""),
 				new Claim("ThemeStyle", "1"),
-				new Claim(ClaimTypes.NameIdentifier,u.UserName),
+				new Claim(ClaimTypes.NameIdentifier,u.UserName??""),
 				};
 			foreach (var item in u.Roles)
 			{
-				var res = new Claim(ClaimTypes.Role, item.Name);
+				var res = new Claim(ClaimTypes.Role, item?.Name);
 				Claims.Add(res);
 			}
 			var authProperties = new AuthenticationProperties
 			{
-				ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30),
+				ExpiresUtc = DateTimeOffset.UtcNow.AddDays(30),
 				IsPersistent = true,
 				IssuedUtc = DateTimeOffset.Now,
 				RedirectUri = "/",

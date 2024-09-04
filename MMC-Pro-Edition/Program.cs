@@ -22,8 +22,10 @@ builder.Services.AddSession(options =>
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme + "WEBCMS").AddCookie(
 	CookieAuthenticationDefaults.AuthenticationScheme + "WEBCMS", option =>
 	{
-		option.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-		option.SlidingExpiration = false;
+		option.ExpireTimeSpan = TimeSpan.FromDays(30);
+		option.SlidingExpiration = true;
+		option.Cookie.HttpOnly = true;
+		option.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 		option.LoginPath = "/Accounts/Login";
 		option.AccessDeniedPath = "/Accounts/Failure";
 		
