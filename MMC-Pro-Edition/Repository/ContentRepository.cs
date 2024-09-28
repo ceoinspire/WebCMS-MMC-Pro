@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Humanizer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using MMC_Pro_Edition.Models;
 using MMC_Pro_Edition.ViewModel;
 using System.Drawing;
@@ -103,6 +104,7 @@ namespace MMC_Pro_Edition.Repository
 		}
 
 		#endregion
+		
 		#region GetContentType
 		//Get list of ContentType
 		public List<ContentTypeVM> ContentType()
@@ -198,6 +200,7 @@ namespace MMC_Pro_Edition.Repository
 			_con.SaveChanges();
 			return true;
 		}
+	
 		#region CreateContent
 		public string CreateContent(string cTitle, string cType, int UserId, int WebsiteId)
 		{
@@ -308,6 +311,7 @@ namespace MMC_Pro_Edition.Repository
 
 
 		#endregion
+		
 		#region UpdateContent
 		//Update Content
 		public bool UpdateBasicContent(ContentVM model)
@@ -561,6 +565,52 @@ namespace MMC_Pro_Edition.Repository
 
 		}
 
+		public ContentCategoryVM GetCategory(int Id)
+		{
+			using (var con = _dapper.CreateConnection())
+			{
+				string query = $"SELECT * FROM WebCms.ContentCategory where Id={Id}";
+				var result = con.Query<ContentCategoryVM>(query).FirstOrDefault();
+				return result;
+			}
+		}
+		public bool EditContentCategory(ContentCategoryVM model)
+		{
+			using (var con = _dapper.CreateConnection())
+			{
+				con.Open();
+				using (var transaction = con.BeginTransaction())
+				{
+					try
+					{
+						var parameters = new
+						{
+							Name = model.Name,
+							Slug = model.Slug,
+							Id = model.Id
+						};
+						string query = "UPDATE Webcms.ContentCategory SET Name = @Name, Slug = @Slug WHERE Id = @Id";
+						int rowsAffected = con.Execute(query, parameters, transaction: transaction);
+						if (rowsAffected > 0)
+						{
+							transaction.Commit();
+							return true;
+						}
+						else
+						{
+							transaction.Rollback();
+							return false;
+						}
+					}
+					catch (Exception ex)
+					{
+						// Rollback the transaction in case of an error
+						transaction.Rollback();
+						throw new Exception("Error updating ContentCategory", ex);
+					}
+				}
+			}
+		}
 
 		public bool UpdateContentCategory(UpdateCategoryVM model)
 		{

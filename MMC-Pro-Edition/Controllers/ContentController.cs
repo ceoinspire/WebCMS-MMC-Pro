@@ -29,11 +29,13 @@ namespace MMC_Pro_Edition.Controllers
 			_repo = new ContentRepository(_config, _con, _dapper);
 		}
 		#endregion
+	
 		[Route("/Content/ContentPage")]
 		public IActionResult ContentPage()
 		{
 			return View();
 		}
+		
 		[Route("/Content/GetContentList")]
 		public IActionResult GetContentList()
 		{
@@ -264,6 +266,29 @@ namespace MMC_Pro_Edition.Controllers
 				return Json(new { statusCode = "300", Message = "Unable to Create" });
 			}
 		}
+
+		public IActionResult SingleCategory (int Id)
+		{
+			var res = _repo.GetCategory(Id);
+			vm.Category = res;
+			return PartialView("/Views/Content/_EditContentCategory.cshtml",vm);
+		}
+		public IActionResult EditCategory(ContentCategoryVM model)
+		{
+
+			var res = _repo.EditContentCategory(model);
+			if (res)
+			{
+				return Json(new {statusCode="200" });
+
+			}
+			else
+			{
+				return Json(new { statusCode = "300" });
+
+			}
+		}
+
 		[HttpPost]
 		[Route("/Content/UpdateContentCategory")]
 		public IActionResult UpdateContentCategory(UpdateCategoryVM model)

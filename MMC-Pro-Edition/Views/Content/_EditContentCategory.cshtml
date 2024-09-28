@@ -1,0 +1,71 @@
+﻿
+@model PagesViewModel
+
+<form id="edit-contenttype" action="/Action/Controler" method="post">
+	<div class="form-group">
+		<input id="cId" type="hidden" value="@Model.Category?.Id" />
+		<div class="row">
+			<div class="col-sm-12">
+				<label>Content Heading</label>
+				<input id="catName" type="text" placeholder="Content Type" value="@Model.Category?.Name" class="form-control">
+			</div>
+			<div class="col-sm-12">
+				<label>Content Type Slug</label>
+				<input id="cattypeSlug" type="text" placeholder="Content Type" value="@Model.Category?.Slug" class="form-control">
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-12">
+				<button id="cTypesubmit" class="btn bg-success form-control"> Edit Content Type</button>
+			</div>
+		</div>
+	</div>
+</form>
+
+<script type="text/javascript">
+	$('#edit-contenttype').submit(function (e) {
+		e.preventDefault();
+		debugger;
+		var formData = {
+			Name: $('#catName').val(),
+			Id:$('#cId').val(),
+			Slug: $('#cattypeSlug').val()
+		}
+		$.ajax({
+			url: "/Content/EditCategory/",
+			type: "POST",
+			data: formData,
+			success: function (result) {
+				debugger;
+				if (result["statusCode"] === "200") {
+					setTimeout(function () {
+						$('.alert-success').css('display', 'block');
+						$('#cTypesubmit').html("Loading....");
+						setTimeout(function () {
+							$('#cTypesubmit').html('Submit');
+							$('.alert-success').css('display', 'none');
+							location.reload();
+
+						}, 3000)
+					}, 1000)
+
+				}
+				else {
+					setTimeout(function () {
+						$('.alert-danger').css('display', 'block');
+						$('#cTypesubmit').html("Loading....");
+						setTimeout(function () {
+							$('#cTypesubmit').html('Submit');
+							$('.alert-danger').css('display', 'none');
+						}, 3000)
+					}, 1000)
+				}
+			}
+		});
+
+	});
+
+
+</script>

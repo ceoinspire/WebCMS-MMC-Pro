@@ -8,9 +8,13 @@ using System.Diagnostics;
 
 namespace MMC_Pro_Edition.Controllers
 {
+	
 	public class HomeController : Controller
 	{
-		private readonly ILogger<HomeController> _logger;
+        #region Constructor
+
+     
+        private readonly ILogger<HomeController> _logger;
 		private readonly IConfiguration _config;
 		private readonly Onedb _con;
 		private readonly DapperContext _dapper;
@@ -23,7 +27,9 @@ namespace MMC_Pro_Edition.Controllers
 			_dapper= dapper;
 			PagesViewModel.WebsiteId = 1;
 		}
-		[Authorize(Roles = UserRoles.User + "," + UserRoles.Admin + "," + UserRoles.PowerUser + "," + UserRoles.Accounts)]
+        #endregion
+
+        [Authorize(Roles = UserRoles.User + "," + UserRoles.Admin + "," + UserRoles.PowerUser + "," + UserRoles.Accounts)]
 		public IActionResult Index()
 		{
 

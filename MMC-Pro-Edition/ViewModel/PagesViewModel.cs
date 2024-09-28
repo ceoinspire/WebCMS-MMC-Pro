@@ -17,6 +17,8 @@ namespace MMC_Pro_Edition.ViewModel
 
 		public ContentVM? ContentTypeSlug { get; set; }
 		public List<ContentCategoryVM>? Categories { get; set; }
+		public ContentCategoryVM? Category{ get; set; }
+
 		public int? ContentId { get; set; }
 		public List<LoginVM> LoginUsers { get; set; }
 		public LoginVM LoginUser { get; set; }

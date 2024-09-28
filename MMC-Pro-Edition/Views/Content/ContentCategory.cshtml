@@ -76,8 +76,8 @@
 											<i class="icon-menu9"></i>
 										</a>
 										<div class="dropdown-menu dropdown-menu-right">
-									@* 		<a href="/Content/EditContentType/@item.Id" class="dropdown-item edit"><i class="icon-file-pdf"></i> Edit</a>
-											<a href="#" class="dropdown-item"><i class="icon-file-excel"></i> Delete</a> *@
+											<a href="#" data-value="@item?.Id" class="dropdown-item editcategory"><i class="icon-file-pdf"></i> Edit</a>
+											<a href="#" class="dropdown-item"><i class="icon-file-excel"></i> Delete</a> 
 										</div>
 									</div>
 								</div>
@@ -104,5 +104,18 @@
 				}
 			});
 		});
+		$('.editcategory').click(function (e) {
+			e.preventDefault();
+			var Id = $(this).attr('data-value');
+			$.ajax({
+				url:'/Content/SingleCategory/'+Id,
+				method:'POST',
+				success:function(result){
+					$('.modal-title').html('Edit Content Category');
+					$('.modal-body').html(result);
+					$('#modal_theme_success').modal();
+				}
+			})
+		})
 	</script>
 }
