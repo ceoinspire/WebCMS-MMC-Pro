@@ -76,7 +76,7 @@ public partial class Content
     [StringLength(800)]
     public string FwdUrl { get; set; }
 
-    [StringLength(800)]
+    [StringLength(1500)]
     public string MetaKeyword { get; set; }
 
     public int? ParentId { get; set; }

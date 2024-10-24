@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MMC_Pro_Edition.Areas.Market.Repository;
 using MMC_Pro_Edition.Classes;
 using MMC_Pro_Edition.Models;
+using MMC_Pro_Edition.Repository;
 using MMC_Pro_Edition.ViewModel;
 using System.Diagnostics;
 
@@ -18,14 +19,17 @@ namespace MMC_Pro_Edition.Controllers
 		private readonly IConfiguration _config;
 		private readonly Onedb _con;
 		private readonly DapperContext _dapper;
-		
+		private readonly SettingsConfigurationRepository _setting;
 		public HomeController(ILogger<HomeController> logger, IConfiguration config, Onedb con, DapperContext dapper)
 		{
 			_config= config;
 			_logger = logger;
 			_con = con;
 			_dapper= dapper;
+			_setting = new SettingsConfigurationRepository(_config, _con);
 			PagesViewModel.WebsiteId = 1;
+			var res = _setting.GetWebsiteData(PagesViewModel.WebsiteId);
+			PagesViewModel.CompanyData = res;
 		}
         #endregion
 

@@ -1,30 +1,34 @@
 ﻿using MMC_Pro_Edition.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using MMC_Pro_Edition.Areas.Market.ViewModels;
+using System.Drawing.Printing;
 
 namespace MMC_Pro_Edition.ViewModel
 {
 	public class PagesViewModel
 	{
 		public static int WebsiteId { get; set; }
+		public static WebsiteVM CompanyData { get; set; }
 		// public static SetLoginVMStatic StaticLoginDetail { get; set; }
 		public List<ContentVM>? ContentTypeSlugs { get; set; }
 		public List<ChildContentVM>? ChildContents { get; set; }
 		public List<CountriesVM> Countries { get; set; }
 		public List<ContentTypeVM>? ContentTypeVM { get; set; }
-        public List<LinkedContent> LinkedItems { get; set; }
-        public ContentTypeVM? ContentType { get; set; }
-
+		public List<LinkedContent> LinkedItems { get; set; }
+		public ContentTypeVM? ContentType { get; set; }
+		public DTOCMSEmail DtoEmails { get; set; }
 		public ContentVM? ContentTypeSlug { get; set; }
 		public List<ContentCategoryVM>? Categories { get; set; }
-		public ContentCategoryVM? Category{ get; set; }
+		public ContentCategoryVM? Category { get; set; }
 
 		public int? ContentId { get; set; }
 		public List<LoginVM> LoginUsers { get; set; }
 		public LoginVM LoginUser { get; set; }
 		public List<ReviewVM> Reviews { get; set; }
-        public List<CMSEmailVM> Emails { get; set; } 
-    }
+		public List<CMSEmailVM> Emails { get; set; }
+		public CMSEmailVM Email { get; set; }
+	}
 
 
 
@@ -65,7 +69,7 @@ namespace MMC_Pro_Edition.ViewModel
 		public List<CMSContentSharecCategoryVM>? SharedCategory { get; set; }
 		public List<LinkedContent> LinkedContentItems { get; set; }
 	}
-	
+
 	public class ChildContentVM
 	{
 		public int ChildContentId { get; set; }
@@ -110,10 +114,10 @@ namespace MMC_Pro_Edition.ViewModel
 	}
 	public class LinkedContent
 	{
-        public string Key { get; set; }
-        public int Id { get; set; }
-        public int LinkedItemId { get; set; }
-        public string Name { get; set; }
+		public string Key { get; set; }
+		public int Id { get; set; }
+		public int LinkedItemId { get; set; }
+		public string Name { get; set; }
 		public string Tagline { get; set; }
 
 		public string OverView { get; set; }
@@ -140,8 +144,8 @@ namespace MMC_Pro_Edition.ViewModel
 		public string FwdUrl { get; set; }
 		public string MetaKeyword { get; set; }
 		public DateTime? Date { get; set; }
-        public List<LinkChildVM> ChildContent { get; set; }
-    }
+		public List<LinkChildVM> ChildContent { get; set; }
+	}
 	public class LinkChildVM
 	{
 		public int ChildContentId { get; set; }
@@ -354,6 +358,22 @@ namespace MMC_Pro_Edition.ViewModel
 	#endregion
 
 	#region CmsEmailVM
+	public class DTOCMSEmail
+	{
+		public int WebsiteId { get; set; }
+		public int pageNumber { get; set; } 
+		public string searchQuery { get; set; }
+		public int pageSize { get; set; }
+        public int TotalPages { get; set; }
+        public long EmailCount { get; set; } 
+        public bool ascending  { get; set; }
+        public List<CMSEmailVM> Emails { get; set; }
+       
+    }
+	public class FormDataVM
+	{
+		public int EmailId { get; set; }
+	}
 	public class CMSEmailVM
 	{
 		public int EmailId { get; set; }
@@ -368,11 +388,35 @@ namespace MMC_Pro_Edition.ViewModel
 		public string Mobile { get; set; }
 		public string LandLine { get; set; }
 		public bool? IsSend { get; set; }
+		public bool? IsRead { get; set; }
 		public string StatusMessage { get; set; }
 		public virtual Website Website { get; set; }
 		public List<CMSEmailAttachmentVM> Attachments { get; set; }
 	}
 
+	public partial class CmsemailSentVM
+	{
+		public int EmailSentId { get; set; }
+		public string ToEmailAddress { get; set; }
+
+		public string FromEmailAddress { get; set; }
+		public string Subject { get; set; }
+
+		public string Body { get; set; }
+
+		public DateTime SentDateTime { get; set; }
+
+		public bool IsSent { get; set; }
+
+		public bool IsRead { get; set; }
+
+		public int? UserId { get; set; }
+
+		public DateTime? CreatedDate { get; set; }
+
+		public int? EmailId { get; set; }
+
+	}
 	public class CMSEmailAttachmentVM
 	{
 		public int AttachmentId { get; set; }
@@ -384,7 +428,27 @@ namespace MMC_Pro_Edition.ViewModel
 
 	#endregion
 
+	#region WebsiteSettingsRelevant
+	//public class WebsiteVM
+	//{
+	//	public int WebsiteId { get; set; }
+	//	public string? WebsiteName { get; set; }
 
+	//	public string? WebsiteLogo { get; set; }
+
+	//	public string? WebsiteLogoTwo { get; set; }
+
+	//	public string? FavIcon { get; set; }
+
+	//	public string? WebsiteDescription { get; set; }
+
+	//	public string? WebsiteTitle { get; set; }
+
+	//	public string? SupportEmail { get; set; }
+
+	//}
+
+	#endregion
 }
 
 

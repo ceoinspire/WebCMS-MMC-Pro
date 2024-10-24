@@ -7,10 +7,13 @@ namespace MMC_Pro_Edition.Models
     {
         private readonly RequestDelegate _next;
 		private readonly IHttpContextAccessor _httpContextAccessor;
-		public SessionValidationMiddleware(RequestDelegate next, IHttpContextAccessor httpContextAccessor)
+        private readonly IConfiguration _config;
+
+		public SessionValidationMiddleware(RequestDelegate next, IHttpContextAccessor httpContextAccessor,IConfiguration config)
         {
             _next = next;
             _httpContextAccessor = httpContextAccessor;
+            _config = config;
         }
 
         public async Task Invoke(HttpContext context)
@@ -20,7 +23,7 @@ namespace MMC_Pro_Edition.Models
 				var user = _httpContextAccessor.HttpContext.User;
 				if (user.Identity.IsAuthenticated)
                 {
-					 await _httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme + "WEBCMS");
+					 await _httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme + _config.GetValue<string>("SystemSettings:CookieName"));
 				}
                 string customSessionId = GenerateCustomSessionId();
                 context.Session.SetString("CustomSessionId", customSessionId);

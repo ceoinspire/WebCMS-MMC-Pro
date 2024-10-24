@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMC-Pro-Edition", "MMC-Pro-Edition\MMC-Pro-Edition.csproj", "{51F95686-54EF-47B6-9E1A-8EC400B4F9CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MMC-Pro-Edition", "MMC-Pro-Edition\MMC-Pro-Edition.csproj", "{51F95686-54EF-47B6-9E1A-8EC400B4F9CD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailHandler", "..\EmailHandler\EmailHandler\EmailHandler\EmailHandler.csproj", "{CFB1BB07-644F-4412-A19B-FC67A8FC34DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{51F95686-54EF-47B6-9E1A-8EC400B4F9CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51F95686-54EF-47B6-9E1A-8EC400B4F9CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51F95686-54EF-47B6-9E1A-8EC400B4F9CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFB1BB07-644F-4412-A19B-FC67A8FC34DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFB1BB07-644F-4412-A19B-FC67A8FC34DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFB1BB07-644F-4412-A19B-FC67A8FC34DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFB1BB07-644F-4412-A19B-FC67A8FC34DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

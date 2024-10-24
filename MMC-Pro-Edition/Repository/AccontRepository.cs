@@ -72,8 +72,8 @@ namespace MMC_Pro_Edition.Repository
 				IssuedUtc = DateTimeOffset.Now,
 				RedirectUri = "/",
 			};
-			var identity = new ClaimsIdentity(Claims, CookieAuthenticationDefaults.AuthenticationScheme + "WEBCMS");
-			await httpcontext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme + "WEBCMS", new ClaimsPrincipal(identity), authProperties);
+			var identity = new ClaimsIdentity(Claims, CookieAuthenticationDefaults.AuthenticationScheme + _config.GetValue<string>("SystemSettings:CookieName"));
+			await httpcontext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme + _config.GetValue<string>("SystemSettings:CookieName"), new ClaimsPrincipal(identity), authProperties);
 		}
 
 		public List<LoginVM> GetAlUsers()

@@ -1,0 +1,184 @@
+﻿@model PagesViewModel
+
+@{
+    ViewData["Title"] = "CmsEmailReadMail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Page header -->
+<div class="page-header page-header-light">
+	<div class="page-header-content header-elements-md-inline">
+		<div class="page-title d-flex">
+			<h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold"></span>  Read Mail</h4>
+			<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+		</div>
+
+		<div class="header-elements d-none">
+			<form action="#">
+				<div class="form-group form-group-feedback form-group-feedback-right">
+					<input type="search" class="form-control wmin-200" placeholder="Search messages">
+					<div class="form-control-feedback">
+						<i class="icon-search4 font-size-base text-muted"></i>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+		<div class="d-flex">
+			<div class="breadcrumb">
+				<a href="/" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Dashboard</a>
+				<a href="/cmsemails/inbox" class="breadcrumb-item">Inbox</a>
+				<span class="breadcrumb-item active">Read mail</span>
+			</div>
+
+			<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+		</div>
+
+		
+	</div>
+</div>
+<!-- /page header -->
+<!-- Content area -->
+<div class="content">
+
+	<!-- Inner container -->
+	<div class="d-md-flex align-items-md-start">
+
+		<!-- Left sidebar component -->
+		<partial name="/Views/CmsEmail/_CMSEmailSideMenu.cshtml" />
+		<!-- /left sidebar component -->
+		<!-- Right content -->
+		<div class="flex-fill overflow-auto">
+
+			<!-- Single mail -->
+			<div class="card">
+
+				<!-- Action toolbar -->
+				<div class="navbar navbar-light navbar-expand-lg shadow-0 py-lg-2 rounded-top">
+					<div class="text-center d-lg-none w-100">
+						<button type="button" class="navbar-toggler w-100 h-100" data-toggle="collapse" data-target="#inbox-toolbar-toggle-read">
+							<i class="icon-circle-down2"></i>
+						</button>
+					</div>
+
+					<div class="navbar-collapse text-center text-lg-left flex-wrap collapse" id="inbox-toolbar-toggle-read">
+						<div class="mt-3 mt-lg-0 mr-lg-3">
+							<div class="btn-group">
+								<button type="button" class="btn btn-light">
+									<i class="icon-reply"></i>
+									<span class="d-none d-lg-inline-block ml-2">Reply</span>
+								</button>
+							
+								<button type="button" class="btn btn-light">
+									<i class="icon-forward"></i>
+									<span class="d-none d-lg-inline-block ml-2">Forward</span>
+								</button>
+								<button type="button" class="btn btn-light">
+									<i class="icon-bin"></i>
+									<span class="d-none d-lg-inline-block ml-2">Delete</span>
+								</button>
+							</div>
+						</div>
+
+						<div class="navbar-text ml-lg-auto">@TimeHelper.GetFormattedTimeSpan(Convert.ToDateTime(Model.Email.DateCreated))</div>
+
+						<div class="ml-lg-3 mb-3 mb-lg-0">
+							<div class="btn-group">
+								<button type="button" class="btn btn-light">
+									<i class="icon-printer"></i>
+									<span class="d-none d-lg-inline-block ml-2">Print</span>
+								</button>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /action toolbar -->
+				<!-- Mail details -->
+				<div class="card-body border-top">
+					<div class="media flex-column flex-md-row">
+						<a href="#" class="d-none d-md-block mr-md-3 mb-3 mb-md-0">
+							<span class="btn bg-teal-400 btn-icon btn-lg rounded-round">
+								<span class="letter-icon"></span>
+							</span>
+						</a>
+
+						<div class="media-body">
+							<h6 class="mb-0">@Model.Email.EmailSubject</h6>
+							<div class="letter-icon-title font-weight-semibold">@Model.Email.FullName  <a href="#">&lt;@Model.Email.EmailSender &gt;</a></div>
+						</div>
+					</div>
+
+				</div>
+				<!-- /mail details -->
+				<!-- Mail container -->
+				<div class="card-body">
+					<div class="overflow-auto mw-100">
+						@Html.Raw(Model.Email.EmailBody)
+					
+					</div>
+				</div>
+				<!-- /mail container -->
+				<!-- Attachments -->
+				<div class="card-body border-top">
+					<h6 class="mb-0">
+						@if (Model.Email.Attachments!=null)
+						{
+							@Model.Email.Attachments.Count
+							<span>Attachments</span>
+						}
+						 </h6>
+
+				<!--	<ul class="list-inline mb-0">
+						<li class="list-inline-item">
+							<div class="card bg-light py-2 px-3 mt-3 mb-0">
+								<div class="media my-1">
+									<div class="mr-3 align-self-center"><i class="icon-file-pdf icon-2x text-danger-400 top-0"></i></div>
+									<div class="media-body">
+										<div class="font-weight-semibold">new_december_offers.pdf</div>
+
+										<ul class="list-inline list-inline-condensed mb-0">
+											<li class="list-inline-item text-muted">174 KB</li>
+											<li class="list-inline-item"><a href="#">View</a></li>
+											<li class="list-inline-item"><a href="#">Download</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="list-inline-item">
+							<div class="card bg-light py-2 px-3 mt-3 mb-0">
+								<div class="media my-1">
+									<div class="mr-3 align-self-center"><i class="icon-file-pdf icon-2x text-danger-400 top-0"></i></div>
+									<div class="media-body">
+										<div class="font-weight-semibold">assignment_letter.pdf</div>
+
+										<ul class="list-inline list-inline-condensed mb-0">
+											<li class="list-inline-item text-muted">736 KB</li>
+											<li class="list-inline-item"><a href="#">View</a></li>
+											<li class="list-inline-item"><a href="#">Download</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+						-->
+				</div>
+				<!-- /attachments -->
+
+			</div>
+			<!-- /single mail -->
+
+		</div>
+		<!-- /right content -->
+
+	</div>
+	<!-- /inner container -->
+
+</div>
+<!-- /content area -->
+@section jq {
+}

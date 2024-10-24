@@ -1,0 +1,124 @@
+﻿	@model PagesViewModel
+@{
+	Layout = null;
+}
+
+
+
+
+		@foreach (var item in Model.DtoEmails.Emails.OrderByDescending(x => x.DateCreated))
+		{
+			if (Convert.ToBoolean(item.IsRead))
+			{
+				<tr class="unread">
+					<td class="table-inbox-checkbox rowlink-skip">
+						<input type="checkbox" class="listchkboxes" data-value="@item.EmailId" />
+					</td>
+					<td class="table-inbox-star rowlink-skip">
+						<a href="#">
+							<i class="icon-star-empty3 text-muted"></i>
+						</a>
+					</td>
+					<td class="table-inbox-image">
+						<img src="/global_assets/images/placeholders/user.png" class="rounded-circle" width="32" height="32" alt="">
+					</td>
+					<td class="table-inbox-name">
+						<a href="/cmsemail/inbox/folder/@item.EmailId">
+							@if (item.FirstName != null || item.LastName != null)
+							{
+								<div class="letter-icon-title text-default">
+									@item.FirstName
+									@item.LastName
+								</div>
+							}
+							else if (item.FullName != null)
+							{
+								<div class="letter-icon-title text-default">
+									@item.FullName
+								</div>
+							}
+							else
+							{
+								<div class="letter-icon-title text-default">
+									Annonymous
+								</div>
+							}
+						</a>
+					</td>
+					<td class="table-inbox-message">
+						<div class="table-inbox-subject">@item?.EmailSubject</div>
+						<span class="text-muted font-weight-normal">@item?.EmailBody</span>
+					</td>
+					<td class="table-inbox-attachment">
+						<i class="icon-attachment text-muted"></i>
+					</td>
+					<td class="table-inbox-time">
+						@TimeHelper.GetFormattedTimeSpan(Convert.ToDateTime(item?.DateCreated))
+					</td>
+				</tr>
+			}
+			else
+			{
+				<tr>
+					<td class="table-inbox-checkbox rowlink-skip">
+						<input type="checkbox" class="listchkboxes" />
+					</td>
+					<td class="table-inbox-star rowlink-skip">
+						<a href="#">
+							<i class="icon-star-full2 text-warning-300"></i>
+						</a>
+					</td>
+					<td class="table-inbox-image">
+						<span class="btn bg-indigo-400 rounded-circle btn-icon btn-sm">
+							<span class="letter-icon"></span>
+						</span>
+					</td>
+					<td class="table-inbox-name">
+						<a href="/cmsemail/inbox/folder/@item.EmailId">
+
+							@if (item.FirstName != null || item.LastName != null)
+							{
+								<div class="letter-icon-title text-default">
+									@item.FirstName
+									@item.LastName
+								</div>
+							}
+							else
+							{
+								<div class="letter-icon-title text-default">
+									@item.FullName
+								</div>
+							}
+
+						</a>
+					</td>
+					<td class="table-inbox-message">
+						<div class="table-inbox-subject">@item.EmailSubject</div>
+						<span class="text-muted font-weight-normal">@item.EmailBody</span>
+					</td>
+					<td class="table-inbox-attachment"></td>
+					<td class="table-inbox-time">
+						@MMC_Pro_Edition.ViewModel.TimeHelper.GetFormattedTimeSpan(Convert.ToDateTime(item.DateCreated));
+					</td>
+				</tr>
+			}
+
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

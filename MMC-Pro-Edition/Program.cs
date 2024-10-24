@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using MMC_Pro_Edition.Classes;
 using MMC_Pro_Edition.Models;
 using MMC_Pro_Edition.Repository;
+using MMC_Pro_Edition.ViewModel;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,13 +17,13 @@ builder.Services.AddScoped<ContentRepository>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession(options =>
 {
-	options.Cookie.Name = "WEBCMS";
+	options.Cookie.Name = builder.Configuration.GetValue<string>("SystemSettings:CookieName");
 	options.IdleTimeout = TimeSpan.FromMinutes(30);
 	options.Cookie.HttpOnly = true;
 	options.Cookie.IsEssential = true;
 });
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme + "WEBCMS").AddCookie(
-	CookieAuthenticationDefaults.AuthenticationScheme + "WEBCMS", option =>
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme + builder.Configuration.GetValue<string>("SystemSettings:CookieName")).AddCookie(
+	CookieAuthenticationDefaults.AuthenticationScheme + builder.Configuration.GetValue<string>("SystemSettings:CookieName"), option =>
 	{
 		option.ExpireTimeSpan = TimeSpan.FromDays(30);
 		option.SlidingExpiration = true;
@@ -30,6 +33,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 		option.AccessDeniedPath = "/Accounts/Failure";
 		
 	});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

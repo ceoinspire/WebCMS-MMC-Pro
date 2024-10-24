@@ -2,7 +2,7 @@
 @model PagesViewModel
 
 <table class="table table-hover table-striped table-responsive-lg">
-	<thead class="table-info bg-indigo">
+	<thead class="bg-indigo">
 		<tr>
 			<th>Content Title</th>
 			<th>Content Type</th>
@@ -79,7 +79,7 @@
 
 </style>
 <script>
-	$('.table-hover').dataTable();
+	 $('.table-hover').dataTable();
 	$('#itemcount').html('Total Content: ' + @Model.ContentTypeSlugs.Count);
 
 	$('.remove').click(function (e) {

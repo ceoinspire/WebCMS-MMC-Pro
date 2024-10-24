@@ -32,6 +32,9 @@ public partial class LoginUsers
     [InverseProperty("Login")]
     public virtual ICollection<AssignedRoles> AssignedRoles { get; set; } = new List<AssignedRoles>();
 
+    [InverseProperty("EmailNavigation")]
+    public virtual ICollection<CmsemailSent> CmsemailSent { get; set; } = new List<CmsemailSent>();
+
     [InverseProperty("LoginUser")]
     public virtual ICollection<Content> Content { get; set; } = new List<Content>();
 

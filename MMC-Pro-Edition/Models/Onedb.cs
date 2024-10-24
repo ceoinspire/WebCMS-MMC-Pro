@@ -23,6 +23,8 @@ public partial class Onedb : DbContext
 
     public virtual DbSet<CmsEmailAttachments> CmsEmailAttachments { get; set; }
 
+    public virtual DbSet<CmsemailSent> CmsemailSent { get; set; }
+
     public virtual DbSet<CmsleadContacts> CmsleadContacts { get; set; }
 
     public virtual DbSet<Comments> Comments { get; set; }
@@ -108,6 +110,17 @@ public partial class Onedb : DbContext
             entity.Property(e => e.AttachmentId).ValueGeneratedNever();
 
             entity.HasOne(d => d.Email).WithMany(p => p.CmsEmailAttachments).HasConstraintName("FK_CmsEmailAttachments_CmsEmail");
+        });
+
+        modelBuilder.Entity<CmsemailSent>(entity =>
+        {
+            entity.HasKey(e => e.EmailSentId).HasName("PK__CMSEmail__456E5F9BE1F9CA3D");
+
+            entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
+
+            entity.HasOne(d => d.Email).WithMany(p => p.CmsemailSent).HasConstraintName("FK_CMSEmailSent_CmsEmail");
+
+            entity.HasOne(d => d.EmailNavigation).WithMany(p => p.CmsemailSent).HasConstraintName("FK_CMSEmailSent_LoginUsers");
         });
 
         modelBuilder.Entity<CmsleadContacts>(entity =>

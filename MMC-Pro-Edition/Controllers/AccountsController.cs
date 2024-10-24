@@ -8,6 +8,7 @@ using MMC_Pro_Edition.ViewModel;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using MMC_Pro_Edition.Classes;
+using System.Drawing;
 
 namespace MMC_Pro_Edition.Controllers
 {
@@ -17,12 +18,17 @@ namespace MMC_Pro_Edition.Controllers
         private readonly AccontRepository _account;
         private readonly IConfiguration _config;
         private readonly Onedb _onedb;
-        public AccountsController(IConfiguration config, Onedb onedb)
+		private readonly SettingsConfigurationRepository _setting;
+
+		public AccountsController(IConfiguration config, Onedb onedb)
         {
             _config= config;
             _onedb = onedb;
             _account = new AccontRepository(_config, _onedb);
-        }
+			_setting = new SettingsConfigurationRepository(_config, _onedb);
+			var res = _setting.GetWebsiteData(PagesViewModel.WebsiteId);
+			PagesViewModel.CompanyData = res;
+		}
         public IActionResult Login(string returnUrl)
         {
             return View();
@@ -43,12 +49,10 @@ namespace MMC_Pro_Edition.Controllers
             return Json(new { statusCode = "200" });
         }
         [Route("/Account/Logout")]
-		[Route("/Accounts/Logout")]
-
 		public async Task<IActionResult> Logout()
         {
             // Sign out the user
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme + "WEBCMS");
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme + _config.GetValue<string>("SystemSettings:CookieName"));
 
             // Redirect to the home page or any other desired page after logout
             return RedirectToAction("Index", "Home");

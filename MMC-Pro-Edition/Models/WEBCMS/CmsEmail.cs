@@ -47,8 +47,13 @@ public partial class CmsEmail
     [StringLength(500)]
     public string StatusMessage { get; set; }
 
+    public bool? IsRead { get; set; }
+
     [InverseProperty("Email")]
     public virtual ICollection<CmsEmailAttachments> CmsEmailAttachments { get; set; } = new List<CmsEmailAttachments>();
+
+    [InverseProperty("Email")]
+    public virtual ICollection<CmsemailSent> CmsemailSent { get; set; } = new List<CmsemailSent>();
 
     [ForeignKey("WebsiteId")]
     [InverseProperty("CmsEmail")]
