@@ -148,14 +148,24 @@ namespace MMC_Pro_Edition.Repository
 
 		public void SendNotSentEmail()
 		{
-			var e = _con.CmsEmail.Where(x => x.IsSend == false && !string.IsNullOrEmpty(x.EmailSender)).FirstOrDefault();
-			MailService mailService = new MailService(_config);
-			MailData m = new MailData();
-			m.ToEmail = e.EmailSender;
-			m.EmailBody = e.EmailBody;
-			m.EmailSubject = e.EmailSubject;
-			m.ToName = "Company";
-			mailService.SendMail(m);
+			var e = _con.CmsEmail.Where(x => x.IsSend == false || x.IsSend == null).FirstOrDefault();
+			if (e!=null)
+			{
+				if (!string.IsNullOrEmpty(e.EmailSender))
+				{
+					MailService mailService = new MailService(_config);
+					MailData m = new MailData();
+					m.ToEmail = e.EmailSender;
+					m.EmailBody = e.EmailBody;
+					m.EmailSubject = e.EmailSubject;
+					m.ToName = "Company";
+					mailService.SendMail(m);
+					UpdateSendRecord(e.EmailId);
+
+				}
+			}
+			
+		
 		}
 
 

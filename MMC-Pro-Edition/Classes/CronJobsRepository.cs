@@ -1,56 +1,28 @@
 ﻿
 using MMC_Pro_Edition.Repository;
+using Quartz;
 
 namespace MMC_Pro_Edition.Classes
 {
-	public class CronJobsRepository : BackgroundService
+	public static class CronJobsRepository
 	{
-		private readonly ILogger<CronJobsRepository> _logger;
-		private readonly CmsEmailRepository _emailRepository;
-		private Timer _timer;
 
-		public CronJobsRepository(ILogger<CronJobsRepository> logger, CmsEmailRepository emailRepository)
+
+		public static void AddInfrastructure(this IServiceCollection services)
 		{
-			_logger = logger;
-			_emailRepository = emailRepository;
-		}
-		protected override Task ExecuteAsync(CancellationToken stoppingToken)
-		{
-			_logger.LogInformation("Email Cron Job Service is starting.");
-
-			// Set up the timer to trigger the SendNotSentEmail method every 10 minutes
-			_timer = new Timer(SendEmailTask, null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
-
-			return Task.CompletedTask;
-		}
-
-		private void SendEmailTask(object state)
-		{
-			try
+			services.AddQuartz(options =>
 			{
-				_logger.LogInformation("Running SendNotSentEmail at: {time}", DateTimeOffset.Now);
-				_emailRepository.SendNotSentEmail(); // Call your email sending function
-			}
-			catch (Exception ex)
+				var jobkey= JobKey.Create(nameof(LoggingCronJob));
+				options.AddJob<LoggingCronJob>(jobkey)
+				.AddTrigger(trigger => trigger.ForJob(jobkey)
+				.WithSimpleSchedule(schedule => schedule.WithIntervalInMinutes(5).RepeatForever())
+				);
+			});
+			services.AddQuartzHostedService(options =>
 			{
-				_logger.LogError(ex, "An error occurred while sending emails.");
-			}
+				options.WaitForJobsToComplete = true;
+			});
 		}
-
-		public override Task StopAsync(CancellationToken stoppingToken)
-		{
-			_logger.LogInformation("Email Cron Job Service is stopping.");
-
-			_timer?.Change(Timeout.Infinite, 0);
-			return base.StopAsync(stoppingToken);
-		}
-
-		public override void Dispose()
-		{
-			_timer?.Dispose();
-			base.Dispose();
-		}
-
 
 	}
 }

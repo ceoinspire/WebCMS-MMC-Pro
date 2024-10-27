@@ -37,7 +37,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 	});
 builder.Services.AddTransient<MailService,MailService>();
 builder.Services.AddTransient<CmsEmailRepository, CmsEmailRepository>();
-builder.Services.AddTransient<CronJobsRepository, CronJobsRepository>();
+builder.Services.AddInfrastructure();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

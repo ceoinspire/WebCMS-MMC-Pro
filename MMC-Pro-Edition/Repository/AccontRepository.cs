@@ -6,8 +6,6 @@ using MMC_Pro_Edition.Classes;
 using MMC_Pro_Edition.Models;
 using MMC_Pro_Edition.ViewModel;
 using System.Security.Claims;
-using NuGet.Packaging;
-using System.Drawing;
 
 namespace MMC_Pro_Edition.Repository
 {

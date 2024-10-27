@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Humanizer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using MMC_Pro_Edition.Models;
