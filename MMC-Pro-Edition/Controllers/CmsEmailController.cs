@@ -1,18 +1,13 @@
 ﻿using EmailHandler.Repository;
+using MailKit;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewEngines;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.Extensions.DependencyInjection;
-using MMC_Pro_Edition.Areas.Market.Repository;
-using MMC_Pro_Edition.Areas.Market.ViewModels;
-using MMC_Pro_Edition.Classes;
+
+
 using MMC_Pro_Edition.Models;
 using MMC_Pro_Edition.Repository;
 using MMC_Pro_Edition.ViewModel;
-using System.Drawing.Printing;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using MailService = EmailHandler.Repository.MailService;
 
 namespace MMC_Pro_Edition.Controllers
 {
@@ -21,17 +16,17 @@ namespace MMC_Pro_Edition.Controllers
 		private readonly IConfiguration _config;
 		private readonly Onedb _con;
 		private readonly DapperContext _dapper;
-		//private readonly ContentRepository _conRepo;
 		private readonly CmsEmailRepository _email;
 		PagesViewModel vm = new PagesViewModel();
-
 		private readonly IServiceProvider _serviceProvider;
-		public CmsEmailController(IConfiguration config, Onedb con, DapperContext dapper)
+		private readonly MailService _mailService;
+		public CmsEmailController(IConfiguration config, Onedb con, DapperContext dapper, EmailHandler.Repository.MailService mailService)
 		{
 			_config = config;
 			_con = con;
 			_dapper = new DapperContext(_config);
 			_email = new CmsEmailRepository(_config, _con);
+			_mailService = mailService;
 		}
 
 		[Route("/cmsemails/inbox")]
@@ -51,22 +46,22 @@ namespace MMC_Pro_Edition.Controllers
 		}
 
 
-
-		public IActionResult SendEmail()
+		[HttpPost]
+		public IActionResult SendEmail([FromForm]CMSEmailVM email)
 		{
-			EmailSender emailSender = new EmailSender(
-		  smtpServer: "smtp.example.com",
-		  smtpPort: 587,
-		  smtpUser: "your-email@example.com",
-		  smtpPassword: "your-email-password"
-		  );
-			emailSender.SendEmail(
-		   fromAddress: "your-email@example.com",  
-		   toAddress: "recipient-email@example.com",  
-		   subject: "Test Email",                    
-		   body: "This is a test email sent from C#." 
-	   );
-			return Json(new { });
+            var e = _email.SingleEmail(1, email.EmailId);
+			MailData m = new MailData();
+			m.ToEmail = e.EmailSender;
+			m.EmailBody = e.EmailBody;
+			m.EmailSubject = e.EmailSubject;
+			m.ToName = "Company";
+			var res =_mailService.SendMail(m);
+			if (res)
+			{
+				_email.UpdateSendRecord(email.EmailId);
+				return Json(new {statusCode="200",Message="Email Send Successfully" });
+			}
+				return Json(new {statusCode="300",Message="Unable to Send Email" });
 		}
 
 

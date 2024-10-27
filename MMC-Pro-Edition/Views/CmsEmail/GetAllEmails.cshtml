@@ -123,6 +123,45 @@
 <script>
 
 	$(document).ready(function () {
+
+		$(document).on('click', '.resendEmail', function (e) {
+			e.preventDefault();
+			$('.loader-wrapper').show();
+			var Id = $(this).attr('data-value');
+			var formData = {
+				EmailId:Id
+			}
+			$.ajax({
+				url:'/CmsEmail/SendEmail/',
+				method:'POST',
+				data:formData,
+				success: function (e) {
+					if (e['statusCode'] === '200') {
+						debugger
+						setTimeout(function () {
+							$('.alert-success').css('display', 'block');
+							setTimeout(function () {
+								$('.alert-success').css('display', 'none');
+								$('.loader-wrapper').hide();
+							}, 1500)
+						}, 0)
+					}
+					else {
+						setTimeout(function () {
+							$('.alert-danger').css('display', 'block');
+							setTimeout(function () {
+								$('.alert-danger').css('display', 'none');
+								$('.loader-wrapper').hide();
+
+							}, 1500)
+						}, 0)
+					}
+				}
+			})
+			
+		});
+
+
 		let searchTimeout;
 		fetchEmails(1);
 		$('#searchQuery').on('keyup', function () {
@@ -166,13 +205,15 @@
 		
 				
 				
-				var rowHtml = '<tr class="unread">' +
+				var rowHtml = '<tr class="' + (email.isRead ? 'read' : 'unread') + '">' +
 					'<td class="table-inbox-checkbox rowlink-skip">' +
-					'<input type="checkbox" class="listchkboxes" data-value="' + email.emailId + '" />' +
-					'</td>' +
-					'<td class="table-inbox-star rowlink-skip">' +
-					'<a href="#"><i class="icon-star-empty3 text-muted"></i></a>' +
-					'</td>' +
+					'<input type="checkbox" class="listchkboxes" data-value="' + email.emailId + '" />' + '</td>' +
+
+					'<td class="table-inbox-star rowlink-skip in-line">' +
+					'<a data-value="' + email.emailId + '"class="resendEmail" href="#"><i class="' + (email.isSend ? 'icon-database-refresh  text-success' : 'icon-cross3 text-danger') + '"></i></a>' +
+					' ' + 
+					'<a href="#"><i class="' + (email.isRead ? 'icon-envelop2  font-success ' : 'icon-envelop text-muted') + ' "></i></a>' +
+					'</td>' + 
 					'<td class="table-inbox-image">' +
 					'<img src="/global_assets/images/placeholders/user.png" class="rounded-circle" width="32" height="32" alt="">' +
 					'</td>' +
@@ -185,11 +226,11 @@
 					'</td>' +
 					'<td class="table-inbox-message">' +
 					'<div class="table-inbox-subject">' + email.emailSubject + '</div>' +
-					'' +
 					'</td>' +
-										'<td class="table-inbox-time">' + Utility.getFormattedDate(email.dateCreated) +
-					'</td>' +
+					'<td class="table-inbox-time">' + Utility.getFormattedDate(email.dateCreated) + '</td>' +
 					'</tr>';
+
+
 
 				// Append the row to the table
 				$('#emailList').append(rowHtml);

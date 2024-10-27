@@ -426,6 +426,13 @@ namespace MMC_Pro_Edition.ViewModel
 		public string AttachmentUrl { get; set; }
 	}
 
+
+
+
+
+
+
+
 	#endregion
 
 	#region WebsiteSettingsRelevant

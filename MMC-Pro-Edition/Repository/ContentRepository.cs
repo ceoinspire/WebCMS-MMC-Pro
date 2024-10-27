@@ -254,7 +254,7 @@ namespace MMC_Pro_Edition.Repository
 			c.OtherTitle = cTitle;
 			c.ParentId = int.Parse(parentId);
 			var row = cTitle.Split(' ');
-			c.ContentSlug = cTitle;
+			c.ContentSlug = _helper.CreateSlug(cTitle);
 			c.LoginUserId = UserId;
 			c.WebSiteId = WebId;
 			var contentType = _con.ContentType.Where(x => x.Id == int.Parse(cType)).FirstOrDefault();

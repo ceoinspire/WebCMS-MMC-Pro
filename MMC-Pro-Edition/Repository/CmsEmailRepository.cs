@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using EmailHandler.Repository;
 using MMC_Pro_Edition.Models;
 using MMC_Pro_Edition.ViewModel;
 
@@ -78,45 +79,34 @@ namespace MMC_Pro_Edition.Repository
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		public CMSEmailVM SingleEmail(int WebsiteId,int EmailId)
+		public CMSEmailVM SingleEmail(int WebsiteId, int EmailId)
 		{
-			return _con.CmsEmail.Where(x => x.WebsiteId == WebsiteId && x.EmailId==EmailId).Select(x => new CMSEmailVM
-			{
-				EmailId = x.EmailId,
-				EmailSender = x.EmailSender,
-				EmailBody = x.EmailBody,
-				EmailSubject = x.EmailSubject,
-				IsSend = x.IsSend,
-				DateCreated = x.DateCreated,
-				FirstName = x.FirstName,
-				LastName = x.LastName,
-				FullName = x.FullName,
-				Mobile = x.Mobile,
-				LandLine = x.LandLine
-			}).FirstOrDefault();
+			// Find the email based on the given conditions
+			var email = _con.CmsEmail.FirstOrDefault(x => x.WebsiteId == WebsiteId && x.EmailId == EmailId);
 
+			if (email != null)
+			{
+				email.IsRead = true; 
+
+				_con.SaveChanges();
+				return new CMSEmailVM
+				{
+					EmailId = email.EmailId,
+					EmailSender = email.EmailSender,
+					EmailBody = email.EmailBody,
+					EmailSubject = email.EmailSubject,
+					IsSend = email.IsSend,
+					DateCreated = email.DateCreated,
+					FirstName = email.FirstName,
+					LastName = email.LastName,
+					FullName = email.FullName,
+					Mobile = email.Mobile,
+					LandLine = email.LandLine
+				};
+			}
+			return null;
 		}
+
 		public bool RemoveEmails(DTOCMSEmail model)
 		{
 			using (var con = _dapper.CreateConnection())
@@ -146,6 +136,29 @@ namespace MMC_Pro_Edition.Repository
 				}
 			}
 		}
+
+		public bool UpdateSendRecord(int Id)
+		{
+			var res = _con.CmsEmail.Where(x => x.EmailId == Id).FirstOrDefault();
+			res.IsSend = true;
+			_con.CmsEmail.Update(res);
+			_con.SaveChanges();
+			return true;
+		}
+
+		public void SendNotSentEmail()
+		{
+			var e = _con.CmsEmail.Where(x => x.IsSend == false && !string.IsNullOrEmpty(x.EmailSender)).FirstOrDefault();
+			MailService mailService = new MailService(_config);
+			MailData m = new MailData();
+			m.ToEmail = e.EmailSender;
+			m.EmailBody = e.EmailBody;
+			m.EmailSubject = e.EmailSubject;
+			m.ToName = "Company";
+			mailService.SendMail(m);
+		}
+
+
 
 	}
 }

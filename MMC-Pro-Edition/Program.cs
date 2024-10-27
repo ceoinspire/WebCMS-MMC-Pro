@@ -1,3 +1,4 @@
+using EmailHandler.Repository;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("connectionString
 builder.Services.AddTransient<DapperContext, DapperContext>();
 builder.Services.AddScoped<ContentRepository>();
 builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddSession(options =>
 {
 	options.Cookie.Name = builder.Configuration.GetValue<string>("SystemSettings:CookieName");
@@ -33,7 +35,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 		option.AccessDeniedPath = "/Accounts/Failure";
 		
 	});
-
+builder.Services.AddTransient<MailService,MailService>();
+builder.Services.AddTransient<CmsEmailRepository, CmsEmailRepository>();
+builder.Services.AddTransient<CronJobsRepository, CronJobsRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -47,6 +51,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
 app.UseAuthorization();
 app.UseSession();
 app.UseMiddleware<SessionValidationMiddleware>();
