@@ -15,7 +15,7 @@ namespace MMC_Pro_Edition.Classes
 				var jobkey= JobKey.Create(nameof(LoggingCronJob));
 				options.AddJob<LoggingCronJob>(jobkey)
 				.AddTrigger(trigger => trigger.ForJob(jobkey)
-				.WithSimpleSchedule(schedule => schedule.WithIntervalInMinutes(5).RepeatForever())
+				.WithSimpleSchedule(schedule => schedule.WithIntervalInMinutes(30).RepeatForever())
 				);
 			});
 			services.AddQuartzHostedService(options =>

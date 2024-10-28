@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<partial name="/Views/Home/_PartialHead.cshtml"></partial>
+	<partial name="/Views/Home/_PartialHead.cshtml"></partial>
 </head>
 
 <body class="navbar-top">
@@ -16,11 +16,11 @@
 	<div class="page-content">
 		<!-- Main sidebar -->
 		<div class="sidebar sidebar-light sidebar-main sidebar-expand-md">
-		<partial name="/Views/Home/_PartialSideBar.cshtml"></partial>
+			<partial name="/Views/Home/_PartialSideBar.cshtml"></partial>
 		</div>
 		<!-- /main sidebar -->
 		<div class="content-wrapper">
-		@RenderBody()
+			@RenderBody()
 			<partial name="/Views/Home/_PartialFooter.cshtml" />
 		</div>
 	</div>
@@ -42,14 +42,14 @@
 
 			<div style="display:none" class="alert alert-danger alert-styled-left alert-dismissible bottom-right">
 				<button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
-				<span class="font-weight-semibold">Oh snap!</span> Change a few things up and <a href="#" class="alert-link">try submitting again</a>.
+				<span id="alert-fail-message" class="font-weight-semibold">Oh snap! Some Error in Processing Please Try Again</span></a>.
 			</div>
 
 			<div style="display:none" class="alert alert-success alert-styled-left alert-arrow-left alert-dismissible bottom-right">
 				<button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
-				<span class="font-weight-semibold">Well done!</span> You successfully read <a href="#" class="alert-link">this important</a> alert message.
+				<span id="alert-success-message" class="font-weight-semibold">Well done! Record Updated Successfully</span> 
 			</div>
-		
+
 		</div>
 	</div>
 	<style>
@@ -116,21 +116,18 @@
 		}
 
 		/* Animation for the activity indicator */
-		keyframes pace-spinner {
-			0%
+		@@keyframes pace-spinner {
+			0% {
+				width: 0;
+			}
 
-		{
-			width: 0;
-		}
+			50% {
+				width: 100%;
+			}
 
-		50% {
-			width: 100%;
-		}
-
-		100% {
-			width: 0;
-		}
-
+			100% {
+				width: 0;
+			}
 		}
 
 
@@ -163,10 +160,10 @@
 				//debugger;
 				idleTime++;
 				if (idleTime >= 500) { // 5 minutes of inactivity (adjust as needed)
-					window.location.href = '/Accounts/Logout'; // Replace with your actual logout endpoint
+					window.location.href = '/Account/Logout'; // Replace with your actual logout endpoint
 				}
-				else{
-					var remainingTime = formatTime(5*60 - idleTime);
+				else {
+					var remainingTime = formatTime(5 * 60 - idleTime);
 					$('#timerDisplay').text(remainingTime);
 				}
 			}, 1000); // 1 minute intervals (adjust as needed)
@@ -189,17 +186,22 @@
 			// Perform logout or clear session
 			window.location.href = '/Account/Logout'; // Replace with your actual logout endpoint
 		});
-		// function AlertSuccess() {
-		// 	setTimeout(function () {
-		// 		$('.alert-success').css('display', 'block');
-		// 	}, 1000)
-		// }
-
-		function SuccessMessage() {
+		function SuccessMessage(message) {
 			setTimeout(function () {
+				$('#alert-success-message').html(message);
 				$('.alert-success').css('display', 'block');
 				setTimeout(function () {
 					$('.alert-success').css('display', 'none');
+
+				}, 1500)
+			}, 0)
+		}
+		function FailureMessage(message) {
+			setTimeout(function () {
+				$('#alert-fail-message').html(message);
+				$('.alert-danger').css('display', 'block');
+				setTimeout(function () {
+					$('.alert-danger').css('display', 'none');
 
 				}, 1500)
 			}, 0)

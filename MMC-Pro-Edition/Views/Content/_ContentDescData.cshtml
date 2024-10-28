@@ -129,22 +129,10 @@
 			data: formData,
 			success: function (result) {
 				if (result['statusCode'] === '200') {
-					setTimeout(function () {
-						$('.alert-success').css('display', 'block');
-						setTimeout(function () {
-							$('.alert-success	').css('display', 'none');
-
-						}, 1500)
-					}, 0)
+					SuccessMessage("Record Updated Successfully");
 				}
 				else {
-					setTimeout(function () {
-						$('.alert').css('display', 'block');
-						setTimeout(function () {
-							$('.alert').css('display', 'none');
-
-						}, 1500)
-					}, 0)
+					FailureMessage('Unable to Update Record');
 				}
 
 

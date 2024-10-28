@@ -250,13 +250,11 @@
 			success: function (result) {
 				console.log(result);
 				if (result['statusCode'] === '200') {
-					setTimeout(function () {
-						$('.alert-success').css('display', 'block');
-						setTimeout(function () {
-							$('.alert-success').css('display', 'none');
-
-						}, 1500)
-					}, 0)
+					SuccessMessage('Record Updated Successfully');
+				
+				}
+				else{
+					FailureMessage('Unable to Update Record');
 				}
 
 

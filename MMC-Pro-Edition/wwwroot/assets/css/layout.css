@@ -1781,3 +1781,24 @@ body {
     .alert + .alert {
         margin-top: 10px;
     }
+
+.spinner-border {
+    width: 1rem;
+    height: 1rem;
+    border: 0.2em solid #dee2e6; /* Light border color */
+    border-top-color: green; /* Primary color */
+    border-radius: 50%;
+    animation: spin 0.75s linear infinite;
+    display: inline-block;
+}
+
+/* Keyframe animation */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

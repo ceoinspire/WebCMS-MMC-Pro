@@ -49,9 +49,10 @@
 			data: formData,
 			success: function (result) {
 				console.log(result);
-				$('#createContent').html('Loading');
+				SuccessMessage('Child Content Added');
+				
 				setTimeout(function(){
-					$('#createContent').html('Submit');
+					FailureMessage('Unable to Update Record');
 				
 				},1000)
 			}
