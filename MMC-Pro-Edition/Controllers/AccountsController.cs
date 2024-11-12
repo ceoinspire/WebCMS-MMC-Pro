@@ -31,10 +31,12 @@ namespace MMC_Pro_Edition.Controllers
 		}
         public IActionResult Login(string returnUrl)
         {
+            TempData["ReturnURL"] = returnUrl;
             return View();
         }
         public async Task<IActionResult> ValidateUser(LoginVM model)
         {
+            string url = (string)TempData["ReturnURL"];
             var enc = _account.ValidateLoginDetails(model);
             if (enc!=null)
             {
@@ -46,9 +48,9 @@ namespace MMC_Pro_Edition.Controllers
               
             }
            
-            return Json(new { statusCode = "200" });
+            return Json(new { statusCode = "200",returnUrl=url });
         }
-        [Route("/Account/Logout")]
+        [Route("/Accounts/Logout")]
 		public async Task<IActionResult> Logout()
         {
             // Sign out the user

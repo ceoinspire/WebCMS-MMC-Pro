@@ -24,27 +24,35 @@ builder.Services.AddSession(options =>
 	options.Cookie.HttpOnly = true;
 	options.Cookie.IsEssential = true;
 });
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme + builder.Configuration.GetValue<string>("SystemSettings:CookieName")).AddCookie(
-	CookieAuthenticationDefaults.AuthenticationScheme + builder.Configuration.GetValue<string>("SystemSettings:CookieName"), option =>
-	{
-		option.ExpireTimeSpan = TimeSpan.FromDays(30);
-		option.SlidingExpiration = true;
-		option.Cookie.HttpOnly = true;
-		option.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-		option.LoginPath = "/Accounts/Login";
-		option.AccessDeniedPath = "/Accounts/Failure";
-		
-	});
+var cookieScheme = CookieAuthenticationDefaults.AuthenticationScheme + builder.Configuration.GetValue<string>("SystemSettings:CookieName");
+
+builder.Services.AddAuthentication(cookieScheme).AddCookie(cookieScheme, options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromDays(30);
+    options.SlidingExpiration = true;
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.LoginPath = new PathString("/Accounts/Login");
+
+    options.AccessDeniedPath = new PathString("/Accounts/Failure");
+
+    options.ReturnUrlParameter = "ReturnUrl";
+    options.Events.OnRedirectToLogin = context =>
+    {
+        context.Response.Redirect(context.RedirectUri);
+        return Task.CompletedTask;
+    };
+    options.Cookie.SameSite = SameSiteMode.Strict; 
+    options.Cookie.Name = cookieScheme; 
+});
 builder.Services.AddTransient<MailService,MailService>();
 builder.Services.AddTransient<CmsEmailRepository, CmsEmailRepository>();
 builder.Services.AddInfrastructure();
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
+app.UseStatusCodePagesWithReExecute("/Error/{0}");
 if (!app.Environment.IsDevelopment())
 {
 	app.UseExceptionHandler("/Home/Error");
-	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 	app.UseHsts();
 }
 

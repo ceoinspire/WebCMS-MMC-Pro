@@ -124,8 +124,10 @@
 				data: formData,
 				success: function (result) {
 					if (result['statusCode'] === '200') {
+						debugger
 						console.log('login successfully');
-						window.location.href = "/";
+						console.log(result.returnUrl);
+						window.location.href = result.returnUrl;
 					}
 					else {
 						$('#passwordMessage').html('<span style="color:red">Username / Password Error, or you are not Authorized;</span>');

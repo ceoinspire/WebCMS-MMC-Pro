@@ -31,7 +31,7 @@
 		if (userarray == null)
 		{
 
-			Context.Response.Redirect("/Account/Logout");
+			Context.Response.Redirect("/Accounts/Logout");
 			return;
 		}
 		var us = JsonSerializer.Deserialize<MMC_Pro_Edition.ViewModel.LoginVM>(userarray);
@@ -174,7 +174,7 @@
 		</li>
 
 		<li class="nav-item">
-			<a href="/Account/Logout" class="navbar-nav-link">
+			<a href="/Accounts/Logout" class="navbar-nav-link">
 				<i class="icon-switch2"></i>
 				<span class="d-md-none ml-2">Logout</span>
 			</a>

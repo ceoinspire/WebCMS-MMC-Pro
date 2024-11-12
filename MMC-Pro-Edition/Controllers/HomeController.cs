@@ -55,5 +55,19 @@ namespace MMC_Pro_Edition.Controllers
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
+		[Route("Error/{statusCode}")]
+		public IActionResult HandleErrorCode(int statusCode)
+		{
+			return View();
+
+			//switch (statusCode)
+			//{
+			//	case 404:
+			//	case 500:
+			//		return View("ServerError");
+			//	default:
+			//		return View("GenericError");
+			//}
+		}
 	}
 }
