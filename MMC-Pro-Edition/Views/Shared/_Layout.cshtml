@@ -160,7 +160,7 @@
 				//debugger;
 				idleTime++;
 				if (idleTime >= 500) { // 5 minutes of inactivity (adjust as needed)
-					window.location.href = '/Account/Logout'; // Replace with your actual logout endpoint
+					window.location.href = '/Accounts/Logout'; // Replace with your actual logout endpoint
 				}
 				else {
 					var remainingTime = formatTime(5 * 60 - idleTime);
@@ -184,7 +184,7 @@
 			// For example, clear the session on browser close
 			// You might want to confirm with the user before logging out
 			// Perform logout or clear session
-			window.location.href = '/Account/Logout'; // Replace with your actual logout endpoint
+			window.location.href = '/Accounts/Logout'; // Replace with your actual logout endpoint
 		});
 		function SuccessMessage(message) {
 			setTimeout(function () {
