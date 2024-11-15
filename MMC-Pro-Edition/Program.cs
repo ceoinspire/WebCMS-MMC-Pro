@@ -43,7 +43,21 @@ builder.Services.AddAuthentication(cookieScheme).AddCookie(cookieScheme, options
         return Task.CompletedTask;
     };
     options.Cookie.SameSite = SameSiteMode.Strict; 
-    options.Cookie.Name = cookieScheme; 
+    options.Cookie.Name = cookieScheme;
+	options.Events.OnValidatePrincipal = context =>
+	{
+		if (context.Principal == null || !context.Principal.Identity.IsAuthenticated)
+		{
+			context.RejectPrincipal(); 
+			context.HttpContext.Response.Cookies.Delete(cookieScheme); 
+		}
+		return Task.CompletedTask;
+	};
+	options.Events.OnSigningOut = context =>
+	{
+		context.HttpContext.Response.Cookies.Delete(cookieScheme);
+		return Task.CompletedTask;
+	};
 });
 builder.Services.AddTransient<MailService,MailService>();
 builder.Services.AddTransient<CmsEmailRepository, CmsEmailRepository>();
