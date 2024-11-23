@@ -59,6 +59,7 @@ builder.Services.AddAuthentication(cookieScheme).AddCookie(cookieScheme, options
 		return Task.CompletedTask;
 	};
 });
+
 builder.Services.AddTransient<MailService,MailService>();
 builder.Services.AddTransient<CmsEmailRepository, CmsEmailRepository>();
 builder.Services.AddInfrastructure();

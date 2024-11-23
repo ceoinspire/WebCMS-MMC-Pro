@@ -45,10 +45,11 @@ namespace MMC_Pro_Edition.Controllers
             
                 byte[] userarray = JsonSerializer.SerializeToUtf8Bytes(enc);
                 HttpContext.Session.Set("LoginUser", userarray);
-              
-            }
-           
             return Json(new { statusCode = "200",returnUrl=url });
+
+            }
+            return Json(new { statusCode = "300", returnUrl = url });
+
         }
         [Route("/Accounts/Logout")]
 		public async Task<IActionResult> Logout()
