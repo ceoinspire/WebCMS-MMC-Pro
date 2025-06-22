@@ -5,14 +5,12 @@ using MMC_Pro_Edition.Classes;
 using MMC_Pro_Edition.Models;
 using MMC_Pro_Edition.Repository;
 using MMC_Pro_Edition.ViewModel;
-using System.Linq;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace MMC_Pro_Edition.Controllers
 {
 
-	[Authorize(Roles = UserRoles.User + "," + UserRoles.Admin + "," + UserRoles.PowerUser + "," + UserRoles.Accounts)]
+    [Authorize(Roles = UserRoles.User + "," + UserRoles.Admin + "," + UserRoles.PowerUser + "," + UserRoles.Accounts)]
 	public class ContentController : Controller
 	{
 		#region Constructor

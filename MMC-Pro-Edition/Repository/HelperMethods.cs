@@ -4,7 +4,7 @@ namespace MMC_Pro_Edition.Repository
 {
 	public class HelperMethods
 	{
-		Random random = new Random(5);
+        private readonly Random random = new Random(); 
         public string CreateSlug(string value)
         {
 			if (!string.IsNullOrEmpty(value))

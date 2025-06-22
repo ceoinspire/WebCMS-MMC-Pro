@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MMC_Pro_Edition.Areas.Market.Repository;
 using MMC_Pro_Edition.Areas.Market.ViewModels;
-using MMC_Pro_Edition.Controllers;
 using MMC_Pro_Edition.Models;
 using MMC_Pro_Edition.Repository;
 using MMC_Pro_Edition.ViewModel;

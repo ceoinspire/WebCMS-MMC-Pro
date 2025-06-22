@@ -29,10 +29,23 @@ namespace MMC_Pro_Edition.Controllers
 			var res = _setting.GetWebsiteData(PagesViewModel.WebsiteId);
 			PagesViewModel.CompanyData = res;
 		}
+
+      
         public IActionResult Login(string returnUrl)
         {
+            
             TempData["ReturnURL"] = returnUrl;
             return View();
+        }
+        public string DecryptText(string encvalue)
+        {
+            string text = EncryptionPasses.Decrypt(encvalue, PassesCore.INIT_VECTOR, PassesCore.PASS_PHRASE, PassesCore.KEY_SIZE);
+            return text;
+        }
+        public string Encrypt(string encvalue)
+        {
+            string text = EncryptionPasses.Encrypt(encvalue, PassesCore.INIT_VECTOR, PassesCore.PASS_PHRASE, PassesCore.KEY_SIZE);
+            return text;
         }
         public async Task<IActionResult> ValidateUser(LoginVM model)
         {

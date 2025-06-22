@@ -49,6 +49,7 @@ namespace MMC_Pro_Edition.Repository
 			return result;
 		}
 
+		
 		public async Task SigninAsync(LoginVM u, HttpContext httpcontext)
 		{
 			List<Claim> Claims = new List<Claim> {
@@ -76,7 +77,7 @@ namespace MMC_Pro_Edition.Repository
 
 		public List<LoginVM> GetAlUsers()
 		{
-			return _con.LoginUsers.Include("Person").Select(x => new LoginVM
+			return _con.LoginUsers.Where(l=>l.Id!=1).Include("Person").Select(x => new LoginVM
 			{
 				UserName = x.UserName,
 				Id = x.Id,

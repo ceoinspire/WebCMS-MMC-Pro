@@ -13,16 +13,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<Onedb>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("connectionString")));
+
 builder.Services.AddTransient<DapperContext, DapperContext>();
 builder.Services.AddScoped<ContentRepository>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSession(options =>
 {
-	options.Cookie.Name = builder.Configuration.GetValue<string>("SystemSettings:CookieName");
-	options.IdleTimeout = TimeSpan.FromMinutes(30);
-	options.Cookie.HttpOnly = true;
-	options.Cookie.IsEssential = true;
+    options.Cookie.Name = builder.Configuration.GetValue<string>("SystemSettings:CookieName");
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
 });
 var cookieScheme = CookieAuthenticationDefaults.AuthenticationScheme + builder.Configuration.GetValue<string>("SystemSettings:CookieName");
 
@@ -42,33 +43,33 @@ builder.Services.AddAuthentication(cookieScheme).AddCookie(cookieScheme, options
         context.Response.Redirect(context.RedirectUri);
         return Task.CompletedTask;
     };
-    options.Cookie.SameSite = SameSiteMode.Strict; 
+    options.Cookie.SameSite = SameSiteMode.Strict;
     options.Cookie.Name = cookieScheme;
-	options.Events.OnValidatePrincipal = context =>
-	{
-		if (context.Principal == null || !context.Principal.Identity.IsAuthenticated)
-		{
-			context.RejectPrincipal(); 
-			context.HttpContext.Response.Cookies.Delete(cookieScheme); 
-		}
-		return Task.CompletedTask;
-	};
-	options.Events.OnSigningOut = context =>
-	{
-		context.HttpContext.Response.Cookies.Delete(cookieScheme);
-		return Task.CompletedTask;
-	};
+    options.Events.OnValidatePrincipal = context =>
+    {
+        if (context.Principal == null || !context.Principal.Identity.IsAuthenticated)
+        {
+            context.RejectPrincipal();
+            context.HttpContext.Response.Cookies.Delete(cookieScheme);
+        }
+        return Task.CompletedTask;
+    };
+    options.Events.OnSigningOut = context =>
+    {
+        context.HttpContext.Response.Cookies.Delete(cookieScheme);
+        return Task.CompletedTask;
+    };
 });
 
-builder.Services.AddTransient<MailService,MailService>();
+builder.Services.AddTransient<MailService, MailService>();
 builder.Services.AddTransient<CmsEmailRepository, CmsEmailRepository>();
 builder.Services.AddInfrastructure();
 var app = builder.Build();
 app.UseStatusCodePagesWithReExecute("/Error/{0}");
 if (!app.Environment.IsDevelopment())
 {
-	app.UseExceptionHandler("/Home/Error");
-	app.UseHsts();
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
 }
 
 app.UseHttpsRedirection();
@@ -79,7 +80,7 @@ app.UseAuthorization();
 app.UseSession();
 app.UseMiddleware<SessionValidationMiddleware>();
 app.MapControllerRoute(
-	name: "default",
-	pattern: "{controller=Home}/{action=Index}/{id?}");
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
