@@ -373,7 +373,14 @@ namespace MMC_Pro_Edition.Repository
 				ContentTypeSlug = z.TypeSlug
 			}).FirstOrDefault();
 		}
-		public bool EditContentType(int Id, string cTitle, string typeSlug)
+        public int RemoveContentType(int Id)
+        {
+            var result =  _con.ContentType.Where(x => x.Id == Id).FirstOrDefault();
+			_con.ContentType.Remove(result);
+			var status =_con.SaveChanges();
+			return status;
+        }
+        public bool EditContentType(int Id, string cTitle, string typeSlug)
 		{
 			var content = _con.ContentType.Where(x => x.Id == Id).FirstOrDefault();
 			if (content != null)

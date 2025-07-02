@@ -78,8 +78,8 @@
 											<i class="icon-menu9"></i>
 										</a>
 										<div class="dropdown-menu dropdown-menu-right">
-											<a href="/Content/EditContentType/@item.Id" class="dropdown-item edit"><i class="icon-file-pdf"></i> Edit</a>
-											<a href="#" class="dropdown-item"><i class="icon-file-excel"></i> Delete</a>
+											<a href="/Content/EditContentType/@item.Id" class="dropdown-item edit"><i class="icon-database-edit2"></i> Edit</a>
+											<a href="/Content/RemoveContentType/@item.Id" class="dropdown-item delete"><i class="icon-database-remove delete"></i> Delete</a>
 										</div>
 									</div>
 								</div>
@@ -115,6 +115,37 @@
 					$('.modal-title').html('Edit ContentType');
 					$('.modal-body').html(result);
 					$('#modal_theme_success').modal();
+				}
+			})
+		})
+		$('.delete').click(function(e){
+			e.preventDefault();
+			debugger
+			var link = $(this).attr('href');
+			$.ajax({
+				url:link,
+				type:'POST',
+				success:function(result){
+					debugger
+					if (result["statusCode"] === "200") {
+					setTimeout(function () {
+						$('.alert-success').css('display', 'block');
+						setTimeout(function () {
+							$('.alert-success').css('display', 'none');
+							location.reload();
+
+						}, 3000)
+					}, 1000)
+
+				}
+				else {
+					setTimeout(function () {
+						$('.alert-danger').css('display', 'block');
+						setTimeout(function () {
+							$('.alert-danger').css('display', 'none');
+						}, 3000)
+					}, 1000)
+				}
 				}
 			})
 		})

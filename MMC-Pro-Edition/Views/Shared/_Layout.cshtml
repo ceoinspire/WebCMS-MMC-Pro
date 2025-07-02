@@ -147,45 +147,74 @@
 
 	@RenderSection("jq", true);
 	<script>
-		var idleTime = 0;
-
+				var idleTime = 0;
 		$(document).ready(function () {
-			// Increment idle time on user activity
 			$(document).on('mousemove keydown scroll', function () {
 				idleTime = 0;
 			});
-
-			// Check idle time every minute
-			setInterval(function () {
-				//debugger;
+			var idleInterval = setInterval(async function () {
 				idleTime++;
-				if (idleTime >= 500) { // 5 minutes of inactivity (adjust as needed)
-					window.location.href = '/Accounts/Logout'; // Replace with your actual logout endpoint
+				console.log(idleTime);
+				if (idleTime >= 4500) {
+					clearInterval(idleInterval);
+					$.get('/Accounts/LogOut', function (response) {
+					}).fail(function () {
+					});
+					await bootboxAlertAsync("Account Signed Out!", "Your application was found idle and was signed out automatically to prevent unauthorized access.<br/><br/>Please login again to continue.");
+					var pathQuery = window.location.pathname + window.location.search;
+					clearInterval(idleInterval);
+					window.location.href = '/';
 				}
-				else {
-					var remainingTime = formatTime(5 * 60 - idleTime);
-					$('#timerDisplay').text(remainingTime);
-				}
-			}, 1000); // 1 minute intervals (adjust as needed)
+			}, 500);
 
-
-			function formatTime(seconds) {
-				var mins = Math.floor(seconds / 60);
-				var secs = seconds % 60;
-				if (secs < 10) {
-					secs = '0' + secs;
-				}
-				return mins + ':' + secs;
-			}
 
 		});
-		$(window).on('beforeunload', function () {
-			// You can perform cleanup or logout actions here
-			// For example, clear the session on browser close
-			// You might want to confirm with the user before logging out
-			// Perform logout or clear session
-			window.location.href = '/Accounts/Logout'; // Replace with your actual logout endpoint
-		});
+
+
+		function bootboxAlertAsync(title, message) {
+			return new Promise((resolve) => {
+				bootbox.alert({
+					title: title,
+					message: message,
+					callback: function () {
+						resolve();
+					}
+				});
+			});
+		}
+
+		// var idleTime = 0;
+
+		// $(document).ready(function () {
+		// 	$(document).on('mousemove keydown scroll', function () {
+		// 		idleTime = 0;
+		// 	});
+
+		// 	setInterval(function () {
+		// 		idleTime++;
+		// 		if (idleTime >= 500) { 
+		// 			window.location.href = '/Accounts/Logout'; 
+		// 		}
+		// 		else {
+		// 			var remainingTime = formatTime(5 * 60 - idleTime);
+		// 			$('#timerDisplay').text(remainingTime);
+		// 		}
+		// 	}, 1000); 
+
+
+		// 	function formatTime(seconds) {
+		// 		var mins = Math.floor(seconds / 60);
+		// 		var secs = seconds % 60;
+		// 		if (secs < 10) {
+		// 			secs = '0' + secs;
+		// 		}
+		// 		return mins + ':' + secs;
+		// 	}
+
+		// });
+		// $(window).on('beforeunload', function () {
+		// 	window.location.href = '/Accounts/Logout'; 
+		// });
 		function SuccessMessage(message) {
 			setTimeout(function () {
 				$('#alert-success-message').html(message);

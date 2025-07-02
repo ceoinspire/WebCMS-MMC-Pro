@@ -48,7 +48,7 @@ namespace MMC_Pro_Edition.Controllers
 				vm.ContentTypeSlugs = _repo.GetContents(WebId, us.Id);
 
 			}
-			else if (us.Roles.Any(x => x.Name == "User") && us.Roles.Any(x => x.Name == "Power User"))
+			else if (us.Roles.Any(x => x.Name == "User") && us.Roles.Any(x => x.Name == "Admin"))
 			{
 				vm.ContentTypeSlugs = _repo.GetContents(WebId, us.Id);
 
@@ -306,8 +306,23 @@ namespace MMC_Pro_Edition.Controllers
 			vm.ContentType = _repo.GetContentTypebyId(Id);
 			return PartialView("~/Views/Content/_EditContentType.cshtml", vm);
 		}
+        public IActionResult RemoveContentType(int Id)
+        {
+            var result = _repo.RemoveContentType(Id);
+            if (result>0)
+            {
+                return Json(new { statusCode = "200" });
 
-		public IActionResult EditType(int Id, string cTitle,string TypeSlug)
+            }
+            else
+            {
+                return Json(new { statusCode = "300" });
+
+            }
+        }
+
+        
+        public IActionResult EditType(int Id, string cTitle,string TypeSlug)
 		{
 			var res = _repo.EditContentType(Id, cTitle, TypeSlug);
 			if (res)
