@@ -21,8 +21,8 @@ namespace MMC_Pro_Edition.ViewModel
 		public ContentVM? ContentTypeSlug { get; set; }
 		public List<ContentCategoryVM>? Categories { get; set; }
 		public ContentCategoryVM? Category { get; set; }
-
-		public int? ContentId { get; set; }
+        public static List<SettingVM> Settings { get; set; }
+        public int? ContentId { get; set; }
 		public List<LoginVM> LoginUsers { get; set; }
 		public LoginVM LoginUser { get; set; }
 		public List<ReviewVM> Reviews { get; set; }
@@ -240,7 +240,8 @@ namespace MMC_Pro_Edition.ViewModel
 	{
 		public int Id { get; set; }
 		public string? Name { get; set; }
-		public string? UserName { get; set; }
+        public string RoleName { get; set; }
+        public string? UserName { get; set; }
 		public string? Password { get; set; }
 		public string? ValidationToken { get; set; }
 		public bool? IsActive { get; set; }
@@ -249,23 +250,83 @@ namespace MMC_Pro_Edition.ViewModel
 		public string? Status { get; set; }
 		public PersonVM Person { get; set; }
 	}
-	public class PersonVM
-	{
-		public int Id { get; set; }
-		public string? FirstName { get; set; }
+    public partial class PersonVM
+    {
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string MobileNumber { get; set; }
 
-		public string? LastName { get; set; }
+        public string Cnic { get; set; }
+        public string SocialSecurity { get; set; }
+        public string Email { get; set; }
 
-		public string? MobileNumber { get; set; }
+        public string ImageUrl { get; set; }
 
-		public string? Cnic { get; set; }
-		public string? SocialSecurity { get; set; }
-		public string ImageUrl { get; set; }
-		public string? Email { get; set; }
-		public List<LaneAddressesVM>? Addresses { get; set; }
-	}
+        public DateTime? CreatedOn { get; set; }
+        public DateTime? ModifiedOn { get; set; }
 
-	public class LaneAddressesVM
+        public int? CreatedBy { get; set; }
+
+        public bool? IsActive { get; set; }
+        public int CityId { get; set; }
+        public string? Address { get; set; }
+        public Guid? BranchId { get; set; }
+        //public string? BranchName { get; set; }
+        //public string? BranchCode { get; set; }
+        //public string? OrganizationName { get; set; }
+        public BranchVM Branch { get; set; }
+        public List<LaneAddressesVM>? Addresses { get; set; }
+    }
+    public partial class LaneAddressVM
+    {
+        public int AddressId { get; set; }
+
+        public string LaneAddressOne { get; set; }
+
+        public string LaneAddressTwo { get; set; }
+
+        public string Area { get; set; }
+
+        public string FamousPlace { get; set; }
+
+        public int? PersonId { get; set; }
+
+        public int? CityId { get; set; }
+        public int StateProvinceId { get; set; }
+        public int CountryId { get; set; }
+        public string? AddressType { get; set; }
+        public CityVM? City { get; set; }
+    }
+    public partial class CityVM
+    {
+        public int CityId { get; set; }
+
+        public string? CityName { get; set; }
+
+        public int? StateProvinceId { get; set; }
+
+        public int? CountryId { get; set; }
+        public StateProvinceVM? StateProvince { get; set; }
+
+    }
+    public partial class StateProvinceVM
+    {
+        public int StateProvinceId { get; set; }
+
+        public string StateProvinceName { get; set; }
+
+        public int? CountryId { get; set; }
+        public CountryVM? Country { get; set; }
+    }
+    public partial class CountryVM
+    {
+        public int CountryId { get; set; }
+
+        public string CountryName { get; set; }
+
+    }
+    public class LaneAddressesVM
 	{
 		public int AddressId { get; set; }
 		public string? LaneAddressOne { get; set; }
@@ -296,11 +357,7 @@ namespace MMC_Pro_Edition.ViewModel
 	}
 
 
-	public class RolesVM
-	{
-		public int Id { get; set; }
-		public string? Name { get; set; }
-	}
+
 	public class UpdateProfileVM
 	{
 		public int Id { get; set; }
@@ -433,29 +490,80 @@ namespace MMC_Pro_Edition.ViewModel
 
 
 
-	#endregion
+    #endregion
 
-	#region WebsiteSettingsRelevant
-	//public class WebsiteVM
-	//{
-	//	public int WebsiteId { get; set; }
-	//	public string? WebsiteName { get; set; }
+    #region WebsiteSettingsRelevant
+    //public class WebsiteVM
+    //{
+    //	public int WebsiteId { get; set; }
+    //	public string? WebsiteName { get; set; }
 
-	//	public string? WebsiteLogo { get; set; }
+    //	public string? WebsiteLogo { get; set; }
 
-	//	public string? WebsiteLogoTwo { get; set; }
+    //	public string? WebsiteLogoTwo { get; set; }
 
-	//	public string? FavIcon { get; set; }
+    //	public string? FavIcon { get; set; }
 
-	//	public string? WebsiteDescription { get; set; }
+    //	public string? WebsiteDescription { get; set; }
 
-	//	public string? WebsiteTitle { get; set; }
+    //	public string? WebsiteTitle { get; set; }
 
-	//	public string? SupportEmail { get; set; }
+    //	public string? SupportEmail { get; set; }
 
-	//}
+    //}
 
-	#endregion
+    #endregion
+    public partial class SettingVM
+    {
+        public int SettingsId { get; set; }
+
+        public int? ApplicationId { get; set; }
+
+        public string ApplicationUrl { get; set; }
+
+        public bool? IsActive { get; set; }
+
+        public Guid? BranchId { get; set; }
+        public string ApplicationName { get; set; }
+
+    }
+    public partial class BranchVM
+    {
+        public Guid BranchId { get; set; }
+
+        public string BranchName { get; set; }
+        public string OrganizationName { get; set; }
+        public int? OrganizationId { get; set; }
+
+        public short? BusinessCategoryId { get; set; }
+
+        public int? BusinessStoreTypeId { get; set; }
+
+        public short? BusinessEntityTypeId { get; set; }
+
+        public string BranchCode { get; set; }
+        public OrganizationVM Organization { get; set; }
+    }
+    public  class RolesVM
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+        public bool? IsActive { get; set; }
+    }
+    public partial class OrganizationVM
+    {
+        public int OrganizationId { get; set; }
+        public string OrganizationName { get; set; }
+        public string BranchCode { get; set; }
+        public bool IsActive { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public DateTime? ModifiedOn { get; set; }
+        public int? CreatedBy { get; set; }
+        public bool IsDeleted { get; set; }
+
+    }
+
 }
 
 

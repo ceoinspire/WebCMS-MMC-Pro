@@ -49,5 +49,62 @@ namespace MMC_Pro_Edition.Classes
 				return "";
 			}
 		}
-	}
+
+
+        private static readonly string Passphrase = "MySuperSecretPassword"; // keep safe!
+        private const int Iterations = 100_000;
+        private const int KeySizeBits = 256;
+
+        public static string RandomEncrypt(string plainText)
+        {
+            using var aes = Aes.Create();
+            aes.Mode = CipherMode.CBC;
+            aes.Padding = PaddingMode.PKCS7;
+            aes.KeySize = KeySizeBits;
+
+            // Generate salt + IV
+            byte[] salt = RandomNumberGenerator.GetBytes(16);
+            var kdf = new Rfc2898DeriveBytes(Passphrase, salt, Iterations, HashAlgorithmName.SHA256);
+            aes.Key = kdf.GetBytes(KeySizeBits / 8);
+            aes.GenerateIV();
+
+            using var ms = new MemoryStream();
+            ms.Write(salt, 0, salt.Length);
+            ms.Write(aes.IV, 0, aes.IV.Length);
+
+            using (var cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
+            using (var sw = new StreamWriter(cs, Encoding.UTF8))
+                sw.Write(plainText);
+
+            return Convert.ToBase64String(ms.ToArray());
+        }
+
+        public static string RandomDecrypt(string cipherText)
+        {
+            byte[] blob = Convert.FromBase64String(cipherText);
+
+            // Extract salt + IV
+            byte[] salt = new byte[16];
+            byte[] iv = new byte[16];
+            Buffer.BlockCopy(blob, 0, salt, 0, 16);
+            Buffer.BlockCopy(blob, 16, iv, 0, 16);
+            byte[] cipher = new byte[blob.Length - 32];
+            Buffer.BlockCopy(blob, 32, cipher, 0, cipher.Length);
+
+            using var aes = Aes.Create();
+            aes.Mode = CipherMode.CBC;
+            aes.Padding = PaddingMode.PKCS7;
+            aes.KeySize = KeySizeBits;
+
+            var kdf = new Rfc2898DeriveBytes(Passphrase, salt, Iterations, HashAlgorithmName.SHA256);
+            aes.Key = kdf.GetBytes(KeySizeBits / 8);
+            aes.IV = iv;
+
+            using var ms = new MemoryStream(cipher);
+            using var cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Read);
+            using var sr = new StreamReader(cs, Encoding.UTF8);
+            return sr.ReadToEnd();
+        }
+
+    }
 }

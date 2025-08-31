@@ -121,6 +121,30 @@ namespace MMC_Pro_Edition.Controllers
             var res = _account.UpdateProfilePhoto(model);
             return Json(new { statusCode = "200" });
         }
-    
+
+        [HttpGet]
+        [Route("/sso")]
+        public async Task<IActionResult> SSO(string key)
+        {
+            string decrypted = EncryptionPasses.RandomDecrypt(key);
+            LoginVM user = Newtonsoft.Json.JsonConvert.DeserializeObject<LoginVM>(decrypted);
+            var res = await _account.SSOValidateLogin(user);
+            if (res != null)
+            {
+                await _account.SigninAsync(res, HttpContext);
+                AppDataUtility.SessionUser = res;
+                //if (res.RoleName=="SuperAdmin")
+                //{
+                //    url = "/adminPanel";
+
+                //}
+                return Redirect("/");
+
+            }
+            else
+            {
+                return View();
+            }
+        }
     }
 }

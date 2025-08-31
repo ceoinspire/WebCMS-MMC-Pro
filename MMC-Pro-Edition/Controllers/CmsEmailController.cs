@@ -1,8 +1,8 @@
 ﻿using EmailHandler.Repository;
 using MailKit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-
+using MMC_Pro_Edition.Classes;
 using MMC_Pro_Edition.Models;
 using MMC_Pro_Edition.Repository;
 using MMC_Pro_Edition.ViewModel;
@@ -11,7 +11,9 @@ using MailService = EmailHandler.Repository.MailService;
 
 namespace MMC_Pro_Edition.Controllers
 {
-	public class CmsEmailController : Controller
+    [Authorize(Roles = UserRoles.User + "," + UserRoles.Admin + "," + UserRoles.PowerUser + "," + UserRoles.Accounts)]
+
+    public class CmsEmailController : Controller
 	{
 		private readonly IConfiguration _config;
 		private readonly Onedb _con;
