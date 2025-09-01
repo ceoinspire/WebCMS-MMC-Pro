@@ -37,7 +37,7 @@ builder.Services.AddAuthentication(cookieScheme).AddCookie(cookieScheme, options
 
     options.AccessDeniedPath = new PathString("/Accounts/Failure");
 
-    options.ReturnUrlParameter = "ReturnUrl";
+    options.ReturnUrlParameter = "returnUrl";
     options.Events.OnRedirectToLogin = context =>
     {
         context.Response.Redirect(context.RedirectUri);
