@@ -8,15 +8,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MMC_Pro_Edition.Models;
 
-[Table("AssignedRoles", Schema = "SYSTEM")]
-public partial class AssignedRoles
+[Table("SupplierContact", Schema = "HRM")]
+public partial class SupplierContact
 {
     [Key]
-    public int Id { get; set; }
+    public int SpplierContactId { get; set; }
 
-    public int? RoleId { get; set; }
+    public int? PersonId { get; set; }
 
-    public int? LoginId { get; set; }
+    public int? SupplierId { get; set; }
 
     [Column(TypeName = "datetime")]
     public DateTime? CreatedOn { get; set; }
@@ -28,13 +28,11 @@ public partial class AssignedRoles
 
     public bool? IsDeleted { get; set; }
 
-    public int? Createdby { get; set; }
+    [ForeignKey("PersonId")]
+    [InverseProperty("SupplierContact")]
+    public virtual Persons Person { get; set; }
 
-    [ForeignKey("LoginId")]
-    [InverseProperty("AssignedRoles")]
-    public virtual LoginUsers Login { get; set; }
-
-    [ForeignKey("RoleId")]
-    [InverseProperty("AssignedRoles")]
-    public virtual Roles Role { get; set; }
+    [ForeignKey("SupplierId")]
+    [InverseProperty("SupplierContact")]
+    public virtual Supplier Supplier { get; set; }
 }

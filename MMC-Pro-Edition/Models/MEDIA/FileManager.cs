@@ -15,12 +15,10 @@ public partial class FileManager
     public int Id { get; set; }
 
     [Column("URL")]
-    [StringLength(8000)]
-    [Unicode(false)]
+    [StringLength(1000)]
     public string Url { get; set; }
 
-    [StringLength(8000)]
-    [Unicode(false)]
+    [StringLength(1000)]
     public string Caption { get; set; }
 
     public int? Priority { get; set; }

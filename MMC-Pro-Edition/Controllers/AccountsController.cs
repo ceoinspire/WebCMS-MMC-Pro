@@ -9,6 +9,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using MMC_Pro_Edition.Classes;
 using System.Drawing;
+using System.Web;
 
 namespace MMC_Pro_Edition.Controllers
 {
@@ -55,7 +56,7 @@ namespace MMC_Pro_Edition.Controllers
             {
                 await _account.SigninAsync(enc, HttpContext);
 
-            
+                AppDataUtility.SessionUser = enc;
                 byte[] userarray = JsonSerializer.SerializeToUtf8Bytes(enc);
                 HttpContext.Session.Set("LoginUser", userarray);
             return Json(new { statusCode = "200",returnUrl=url });
@@ -123,16 +124,19 @@ namespace MMC_Pro_Edition.Controllers
         }
 
         [HttpGet]
-        [Route("/sso")]
+        [Route("/Account/SSO/{key}")]
         public async Task<IActionResult> SSO(string key)
         {
-            string decrypted = EncryptionPasses.RandomDecrypt(key);
+            string base64 = Uri.UnescapeDataString(key);
+            string decrypted = EncryptionPasses.RandomDecrypt(base64);
             LoginVM user = Newtonsoft.Json.JsonConvert.DeserializeObject<LoginVM>(decrypted);
             var res = await _account.SSOValidateLogin(user);
             if (res != null)
             {
                 await _account.SigninAsync(res, HttpContext);
                 AppDataUtility.SessionUser = res;
+                byte[] userarray = JsonSerializer.SerializeToUtf8Bytes(res);
+                HttpContext.Session.Set("LoginUser", userarray);
                 //if (res.RoleName=="SuperAdmin")
                 //{
                 //    url = "/adminPanel";

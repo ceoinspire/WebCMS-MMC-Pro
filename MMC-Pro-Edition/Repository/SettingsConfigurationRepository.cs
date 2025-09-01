@@ -1,6 +1,8 @@
 ﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using MMC_Pro_Edition.Areas.Market.ViewModels;
 using MMC_Pro_Edition.Models;
+using MMC_Pro_Edition.ViewModel;
 
 namespace MMC_Pro_Edition.Repository
 {
@@ -25,5 +27,17 @@ namespace MMC_Pro_Edition.Repository
 				return res;
 			}
 		}
-	}
+        public async Task<List<SettingVM>> GetSettings()
+        {
+            return await _con.Settings.Where(x => x.IsActive == true).Select(x => new SettingVM
+            {
+                ApplicationId = x.ApplicationId,
+                ApplicationName = x.ApplicationName,
+                ApplicationUrl = x.ApplicationUrl,
+                SettingsId = x.SettingsId,
+                BranchId = x.BranchId,
+                IsActive = x.IsActive
+            }).ToListAsync();
+        }
+    }
 }

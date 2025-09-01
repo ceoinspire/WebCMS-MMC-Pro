@@ -28,9 +28,11 @@ public partial class Employee
 
     public int? PersonId { get; set; }
 
+    public bool? IsSalePerson { get; set; }
+
     [ForeignKey("DepartmentId")]
     [InverseProperty("Employee")]
-    public virtual Department Department { get; set; }
+    public virtual EmployeeDepartments Department { get; set; }
 
     [ForeignKey("DesignationId")]
     [InverseProperty("Employee")]

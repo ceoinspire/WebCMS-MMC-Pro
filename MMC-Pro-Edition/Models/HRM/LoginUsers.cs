@@ -17,8 +17,8 @@ public partial class LoginUsers
     [StringLength(50)]
     public string UserName { get; set; }
 
-    [StringLength(50)]
-    public string Passwords { get; set; }
+    [StringLength(1000)]
+    public string Password { get; set; }
 
     public int? PersonId { get; set; }
 
@@ -29,6 +29,13 @@ public partial class LoginUsers
     [Column(TypeName = "datetime")]
     public DateTime? CreatedOn { get; set; }
 
+    public bool? IsDeleted { get; set; }
+
+    public int? Createdby { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? ModifiedOn { get; set; }
+
     [InverseProperty("Login")]
     public virtual ICollection<AssignedRoles> AssignedRoles { get; set; } = new List<AssignedRoles>();
 
@@ -37,6 +44,9 @@ public partial class LoginUsers
 
     [InverseProperty("LoginUser")]
     public virtual ICollection<Content> Content { get; set; } = new List<Content>();
+
+    [InverseProperty("User")]
+    public virtual ICollection<ErpPermissions> ErpPermissions { get; set; } = new List<ErpPermissions>();
 
     [InverseProperty("LoginUser")]
     public virtual ICollection<LoginHistory> LoginHistory { get; set; } = new List<LoginHistory>();
@@ -54,4 +64,7 @@ public partial class LoginUsers
     [ForeignKey("SettingsId")]
     [InverseProperty("LoginUsers")]
     public virtual Settings Settings { get; set; }
+
+    [InverseProperty("LoginUser")]
+    public virtual ICollection<UserAssignedBranches> UserAssignedBranches { get; set; } = new List<UserAssignedBranches>();
 }

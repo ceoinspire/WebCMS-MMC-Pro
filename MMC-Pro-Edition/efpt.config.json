@@ -2,7 +2,6 @@
    "CodeGenerationMode": 4,
    "ContextClassName": "Onedb",
    "ContextNamespace": null,
-   "DefaultDacpacSchema": null,
    "FilterSchemas": false,
    "IncludeConnectionString": false,
    "ModelNamespace": null,
@@ -28,11 +27,11 @@
          "ObjectType": 0
       },
       {
-         "Name": "[HRM].[Department]",
+         "Name": "[HRM].[Employee]",
          "ObjectType": 0
       },
       {
-         "Name": "[HRM].[Employee]",
+         "Name": "[HRM].[EmployeeDepartments]",
          "ObjectType": 0
       },
       {
@@ -60,7 +59,19 @@
          "ObjectType": 0
       },
       {
+         "Name": "[HRM].[StateProvince]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[HRM].[Supplier]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[SupplierContact]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[HRM].[UserAssignedBranches]",
          "ObjectType": 0
       },
       {
@@ -72,11 +83,27 @@
          "ObjectType": 0
       },
       {
+         "Name": "[SYSTEM].[ErpPermissions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[Notifications]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[NotificationTypes]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[SYSTEM].[Roles]",
          "ObjectType": 0
       },
       {
          "Name": "[SYSTEM].[Settings]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[UrlMenu]",
          "ObjectType": 0
       },
       {
@@ -96,15 +123,7 @@
          "ObjectType": 0
       },
       {
-         "Name": "[WEBCMS].[CmsEmailAttachments]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[WEBCMS].[CMSEmailSent]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[WEBCMS].[CMSLeadContacts]",
          "ObjectType": 0
       },
       {
@@ -132,10 +151,12 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "developer-lap.Inspire_ERP2k23.dbo1",
+   "UiHint": null,
    "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
+   "UseDatabaseNamesForRoutines": true,
    "UseDateOnlyTimeOnly": false,
    "UseDbContextSplitting": false,
    "UseDecimalDataAnnotationForSprocResult": true,
@@ -143,6 +164,7 @@
    "UseHandleBars": false,
    "UseHierarchyId": false,
    "UseInflector": false,
+   "UseInternalAccessModifiersForSprocsAndFunctions": false,
    "UseLegacyPluralizer": false,
    "UseManyToManyEntity": false,
    "UseNoDefaultConstructor": false,
@@ -150,8 +172,10 @@
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
    "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
    "UseSchemaFolders": true,
    "UseSchemaNamespaces": false,
    "UseSpatial": false,
-   "UseT4": false
+   "UseT4": false,
+   "UseT4Split": false
 }

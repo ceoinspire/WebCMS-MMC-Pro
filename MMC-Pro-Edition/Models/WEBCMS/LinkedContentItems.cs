@@ -20,7 +20,11 @@ public partial class LinkedContentItems
 
     public int? Priority { get; set; }
 
+    [ForeignKey("ContentId")]
+    [InverseProperty("LinkedContentItemsContent")]
+    public virtual Content Content { get; set; }
+
     [ForeignKey("LinkedContentId")]
-    [InverseProperty("LinkedContentItems")]
+    [InverseProperty("LinkedContentItemsLinkedContent")]
     public virtual Content LinkedContent { get; set; }
 }

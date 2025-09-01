@@ -12,20 +12,26 @@ namespace MMC_Pro_Edition.Models;
 public partial class Customers
 {
     [Key]
-    public int Id { get; set; }
-
-    [StringLength(50)]
-    public string FirstName { get; set; }
-
-    [StringLength(50)]
-    public string LastName { get; set; }
+    public Guid CustomerId { get; set; }
 
     [StringLength(50)]
     public string CustomerCode { get; set; }
 
-    public int PersonId { get; set; }
+    public int? PersonId { get; set; }
+
+    public bool? IsDeleted { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? CreatedOn { get; set; }
+
+    public int? Createdby { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? ModifiedOn { get; set; }
 
     public bool? IsActive { get; set; }
+
+    public Guid? BranchId { get; set; }
 
     [ForeignKey("PersonId")]
     [InverseProperty("Customers")]

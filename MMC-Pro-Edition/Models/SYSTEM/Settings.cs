@@ -16,6 +16,17 @@ public partial class Settings
 
     public int? ApplicationId { get; set; }
 
+    [Column("ApplicationURL")]
+    [StringLength(1000)]
+    public string ApplicationUrl { get; set; }
+
+    public bool? IsActive { get; set; }
+
+    public Guid? BranchId { get; set; }
+
+    [StringLength(1000)]
+    public string ApplicationName { get; set; }
+
     [InverseProperty("Settings")]
     public virtual ICollection<LoginUsers> LoginUsers { get; set; } = new List<LoginUsers>();
 }

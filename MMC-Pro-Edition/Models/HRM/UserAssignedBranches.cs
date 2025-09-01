@@ -8,33 +8,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MMC_Pro_Edition.Models;
 
-[Table("AssignedRoles", Schema = "SYSTEM")]
-public partial class AssignedRoles
+[Table("UserAssignedBranches", Schema = "HRM")]
+public partial class UserAssignedBranches
 {
     [Key]
-    public int Id { get; set; }
+    [Column("UserAssignedBranches")]
+    public int UserAssignedBranches1 { get; set; }
 
-    public int? RoleId { get; set; }
+    public int? LoginUserId { get; set; }
 
-    public int? LoginId { get; set; }
-
-    [Column(TypeName = "datetime")]
-    public DateTime? CreatedOn { get; set; }
+    public Guid? BranchId { get; set; }
 
     [Column(TypeName = "datetime")]
     public DateTime? ModifiedOn { get; set; }
 
     public bool? IsActive { get; set; }
 
+    [Column(TypeName = "datetime")]
+    public DateTime? CreatedOn { get; set; }
+
     public bool? IsDeleted { get; set; }
 
     public int? Createdby { get; set; }
 
-    [ForeignKey("LoginId")]
-    [InverseProperty("AssignedRoles")]
-    public virtual LoginUsers Login { get; set; }
-
-    [ForeignKey("RoleId")]
-    [InverseProperty("AssignedRoles")]
-    public virtual Roles Role { get; set; }
+    [ForeignKey("LoginUserId")]
+    [InverseProperty("UserAssignedBranches")]
+    public virtual LoginUsers LoginUser { get; set; }
 }

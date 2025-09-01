@@ -8,13 +8,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MMC_Pro_Edition.Models;
 
-[Table("Department", Schema = "HRM")]
-public partial class Department
+[Table("EmployeeDepartments", Schema = "HRM")]
+public partial class EmployeeDepartments
 {
     [Key]
-    public int Id { get; set; }
+    public int EmployeeDepartmentId { get; set; }
 
-    [StringLength(50)]
+    [StringLength(500)]
     public string Title { get; set; }
 
     [InverseProperty("Department")]

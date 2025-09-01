@@ -196,7 +196,7 @@ namespace MMC_Pro_Edition.Repository
 			u.Id = maxId;
 			p.Id = personId;
 			u.UserName = email;
-			u.Passwords = EncryptionPasses.Encrypt(Password, PassesCore.INIT_VECTOR, PassesCore.PASS_PHRASE, PassesCore.KEY_SIZE);
+			u.Password = EncryptionPasses.Encrypt(Password, PassesCore.INIT_VECTOR, PassesCore.PASS_PHRASE, PassesCore.KEY_SIZE);
 			p.FirstName = FirstName;
 			p.LastName = LastName;
 			p.Email = p.Email;
@@ -241,7 +241,7 @@ namespace MMC_Pro_Edition.Repository
 						LaneAddressTwo = y.LaneAddressTwo,
 						FamousPlace = y.FamousPlace,
 						AddressType = y.AddressType,
-						City = new CitiesVM { CityId = y.City.CityId, CityName = y.City.CityName, Country = new CountriesVM { CountryId = y.City.Country.CountryId, CountryName = y.City.Country.CountryName } }
+						City = new CitiesVM { CityId = y.City.CityId, CityName = y.City.CityName, Country = new CountriesVM { CountryId = y.City.StateProvince.Country.CountryId, CountryName = y.City.StateProvince.Country.CountryName } }
 					}).ToList()
 				}
 
@@ -267,7 +267,7 @@ namespace MMC_Pro_Edition.Repository
 			user.UserName = model.Email;
 			if (model.Password != null)
 			{
-				user.Passwords = EncryptionPasses.Encrypt(model.Password, PassesCore.INIT_VECTOR, PassesCore.PASS_PHRASE, PassesCore.KEY_SIZE);
+				user.Password = EncryptionPasses.Encrypt(model.Password, PassesCore.INIT_VECTOR, PassesCore.PASS_PHRASE, PassesCore.KEY_SIZE);
 			}
 			user.Person.FirstName = model.FirstName;
 			user.Person.LastName = model.LastName;

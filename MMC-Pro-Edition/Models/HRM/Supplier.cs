@@ -15,6 +15,9 @@ public partial class Supplier
     public int SupplierId { get; set; }
 
     [StringLength(500)]
+    public string SupplierBusinessName { get; set; }
+
+    [StringLength(500)]
     public string SupplierCode { get; set; }
 
     [Column(TypeName = "date")]
@@ -27,11 +30,8 @@ public partial class Supplier
     [StringLength(500)]
     public string CompanyLogo { get; set; }
 
-    public int? PersonId { get; set; }
-
     public bool? IsActive { get; set; }
 
-    [ForeignKey("PersonId")]
     [InverseProperty("Supplier")]
-    public virtual Persons Person { get; set; }
+    public virtual ICollection<SupplierContact> SupplierContact { get; set; } = new List<SupplierContact>();
 }

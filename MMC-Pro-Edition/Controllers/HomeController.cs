@@ -30,7 +30,12 @@ namespace MMC_Pro_Edition.Controllers
 			PagesViewModel.WebsiteId = 1;
 			var res = _setting.GetWebsiteData(PagesViewModel.WebsiteId);
 			PagesViewModel.CompanyData = res;
-		}
+            if (PagesViewModel.Settings == null)
+            {
+                PagesViewModel.Settings = _setting.GetSettings().GetAwaiter().GetResult();
+
+            }
+        }
         #endregion
 
         [Authorize(Roles = UserRoles.User + "," + UserRoles.Admin + "," + UserRoles.PowerUser + "," + UserRoles.Accounts)]

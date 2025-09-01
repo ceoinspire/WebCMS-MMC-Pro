@@ -72,7 +72,6 @@ public partial class Content
     [StringLength(1000)]
     public string ContentSlug { get; set; }
 
-    [Column("FwdURL")]
     [StringLength(800)]
     public string FwdUrl { get; set; }
 
@@ -86,7 +85,6 @@ public partial class Content
 
     public int? LoginUserId { get; set; }
 
-    [Column("IPAddress")]
     [StringLength(500)]
     public string Ipaddress { get; set; }
 
@@ -102,8 +100,11 @@ public partial class Content
     [InverseProperty("Content")]
     public virtual ICollection<FileManager> FileManager { get; set; } = new List<FileManager>();
 
+    [InverseProperty("Content")]
+    public virtual ICollection<LinkedContentItems> LinkedContentItemsContent { get; set; } = new List<LinkedContentItems>();
+
     [InverseProperty("LinkedContent")]
-    public virtual ICollection<LinkedContentItems> LinkedContentItems { get; set; } = new List<LinkedContentItems>();
+    public virtual ICollection<LinkedContentItems> LinkedContentItemsLinkedContent { get; set; } = new List<LinkedContentItems>();
 
     [ForeignKey("LoginUserId")]
     [InverseProperty("Content")]

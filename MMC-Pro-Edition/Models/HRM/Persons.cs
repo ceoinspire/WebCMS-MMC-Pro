@@ -36,6 +36,20 @@ public partial class Persons
     [Column("ImageURL")]
     public string ImageUrl { get; set; }
 
+    public bool? IsDeleted { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? CreatedOn { get; set; }
+
+    public int? Createdby { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? ModifiedOn { get; set; }
+
+    public bool? IsActive { get; set; }
+
+    public Guid? BranchId { get; set; }
+
     [InverseProperty("Person")]
     public virtual ICollection<Customers> Customers { get; set; } = new List<Customers>();
 
@@ -49,5 +63,5 @@ public partial class Persons
     public virtual ICollection<LoginUsers> LoginUsers { get; set; } = new List<LoginUsers>();
 
     [InverseProperty("Person")]
-    public virtual ICollection<Supplier> Supplier { get; set; } = new List<Supplier>();
+    public virtual ICollection<SupplierContact> SupplierContact { get; set; } = new List<SupplierContact>();
 }

@@ -1,4 +1,5 @@
-﻿using MMC_Pro_Edition.Classes;
+﻿using System.Web;
+using MMC_Pro_Edition.Classes;
 using MMC_Pro_Edition.ViewModel;
 using Newtonsoft.Json;
 
@@ -12,7 +13,7 @@ namespace MMC_Pro_Edition.Repository
             string encrypted = EncryptionPasses.RandomEncrypt(JsonConvert.SerializeObject(AppDataUtility.SessionUser));
             string safeEncrypted = Uri.EscapeDataString(encrypted);
 
-            string url = $"{setting.ApplicationUrl}/sso?key={safeEncrypted}";
+            string url = $"{setting.ApplicationUrl}Account/SSO/{safeEncrypted}";
             return url;
         }
     }

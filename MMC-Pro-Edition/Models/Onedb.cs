@@ -21,11 +21,7 @@ public partial class Onedb : DbContext
 
     public virtual DbSet<CmsEmail> CmsEmail { get; set; }
 
-    public virtual DbSet<CmsEmailAttachments> CmsEmailAttachments { get; set; }
-
     public virtual DbSet<CmsemailSent> CmsemailSent { get; set; }
-
-    public virtual DbSet<CmsleadContacts> CmsleadContacts { get; set; }
 
     public virtual DbSet<Comments> Comments { get; set; }
 
@@ -39,11 +35,13 @@ public partial class Onedb : DbContext
 
     public virtual DbSet<Customers> Customers { get; set; }
 
-    public virtual DbSet<Department> Department { get; set; }
-
     public virtual DbSet<Employee> Employee { get; set; }
 
+    public virtual DbSet<EmployeeDepartments> EmployeeDepartments { get; set; }
+
     public virtual DbSet<EmployeeDesignation> EmployeeDesignation { get; set; }
+
+    public virtual DbSet<ErpPermissions> ErpPermissions { get; set; }
 
     public virtual DbSet<FileManager> FileManager { get; set; }
 
@@ -57,6 +55,10 @@ public partial class Onedb : DbContext
 
     public virtual DbSet<LoginUsers> LoginUsers { get; set; }
 
+    public virtual DbSet<NotificationTypes> NotificationTypes { get; set; }
+
+    public virtual DbSet<Notifications> Notifications { get; set; }
+
     public virtual DbSet<Persons> Persons { get; set; }
 
     public virtual DbSet<Reviews> Reviews { get; set; }
@@ -65,7 +67,15 @@ public partial class Onedb : DbContext
 
     public virtual DbSet<Settings> Settings { get; set; }
 
+    public virtual DbSet<StateProvince> StateProvince { get; set; }
+
     public virtual DbSet<Supplier> Supplier { get; set; }
+
+    public virtual DbSet<SupplierContact> SupplierContact { get; set; }
+
+    public virtual DbSet<UrlMenu> UrlMenu { get; set; }
+
+    public virtual DbSet<UserAssignedBranches> UserAssignedBranches { get; set; }
 
     public virtual DbSet<Website> Website { get; set; }
 
@@ -75,79 +85,81 @@ public partial class Onedb : DbContext
     {
         modelBuilder.Entity<AssignedRoles>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK__Assigned__3214EC079F2A4CCC");
+
             entity.Property(e => e.Id).ValueGeneratedNever();
 
-            entity.HasOne(d => d.Login).WithMany(p => p.AssignedRoles).HasConstraintName("FK_AssignedRoles_LoginUsers");
+            entity.HasOne(d => d.Login).WithMany(p => p.AssignedRoles).HasConstraintName("FK__AssignedR__Login__3587F3E0");
 
-            entity.HasOne(d => d.Role).WithMany(p => p.AssignedRoles).HasConstraintName("FK_AssignedRoles_Roles");
+            entity.HasOne(d => d.Role).WithMany(p => p.AssignedRoles).HasConstraintName("FK__AssignedR__RoleI__367C1819");
         });
 
         modelBuilder.Entity<Cities>(entity =>
         {
+            entity.HasKey(e => e.CityId).HasName("PK__Cities__F2D21B764D606662");
+
             entity.Property(e => e.CityId).ValueGeneratedNever();
 
-            entity.HasOne(d => d.Country).WithMany(p => p.Cities).HasConstraintName("FK_Cities_Countries");
+            entity.HasOne(d => d.StateProvince).WithMany(p => p.Cities).HasConstraintName("FK_Cities_StateProvince");
         });
 
         modelBuilder.Entity<CmsContentSharedCategory>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK__CmsConte__3214EC073ACDA7FC");
+
             entity.Property(e => e.Id).ValueGeneratedNever();
 
-            entity.HasOne(d => d.Category).WithMany(p => p.CmsContentSharedCategory).HasConstraintName("FK_CmsContentSharedCategory_ContentCategory");
+            entity.HasOne(d => d.Category).WithMany(p => p.CmsContentSharedCategory).HasConstraintName("FK__CmsConten__Categ__3A4CA8FD");
 
-            entity.HasOne(d => d.Content).WithMany(p => p.CmsContentSharedCategory).HasConstraintName("FK_CmsContentSharedCategory_Content");
+            entity.HasOne(d => d.Content).WithMany(p => p.CmsContentSharedCategory).HasConstraintName("FK__CmsConten__Conte__3B40CD36");
         });
 
         modelBuilder.Entity<CmsEmail>(entity =>
         {
+            entity.HasKey(e => e.EmailId).HasName("PK__CmsEmail__7ED91ACF12AA153A");
+
             entity.Property(e => e.EmailId).ValueGeneratedNever();
 
-            entity.HasOne(d => d.Website).WithMany(p => p.CmsEmail).HasConstraintName("FK_CmsEmail_Website");
-        });
-
-        modelBuilder.Entity<CmsEmailAttachments>(entity =>
-        {
-            entity.Property(e => e.AttachmentId).ValueGeneratedNever();
-
-            entity.HasOne(d => d.Email).WithMany(p => p.CmsEmailAttachments).HasConstraintName("FK_CmsEmailAttachments_CmsEmail");
+            entity.HasOne(d => d.Website).WithMany(p => p.CmsEmail).HasConstraintName("FK__CmsEmail__Websit__3C34F16F");
         });
 
         modelBuilder.Entity<CmsemailSent>(entity =>
         {
-            entity.HasKey(e => e.EmailSentId).HasName("PK__CMSEmail__456E5F9BE1F9CA3D");
+            entity.HasKey(e => e.EmailSentId).HasName("PK__CMSEmail__456E5F9B17DB4AF3");
 
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.EmailSentId).ValueGeneratedNever();
 
-            entity.HasOne(d => d.Email).WithMany(p => p.CmsemailSent).HasConstraintName("FK_CMSEmailSent_CmsEmail");
+            entity.HasOne(d => d.Email).WithMany(p => p.CmsemailSent).HasConstraintName("FK__CMSEmailS__Email__3D2915A8");
 
-            entity.HasOne(d => d.EmailNavigation).WithMany(p => p.CmsemailSent).HasConstraintName("FK_CMSEmailSent_LoginUsers");
-        });
-
-        modelBuilder.Entity<CmsleadContacts>(entity =>
-        {
-            entity.Property(e => e.LeadContactId).ValueGeneratedNever();
+            entity.HasOne(d => d.EmailNavigation).WithMany(p => p.CmsemailSent).HasConstraintName("FK__CMSEmailS__Email__3E1D39E1");
         });
 
         modelBuilder.Entity<Comments>(entity =>
         {
+            entity.HasKey(e => e.CommentId).HasName("PK__Comments__C3B4DFCAC79F5C92");
+
             entity.Property(e => e.CommentId).ValueGeneratedNever();
 
-            entity.HasOne(d => d.Review).WithMany(p => p.Comments).HasConstraintName("FK_Comments_Reviews");
+            entity.HasOne(d => d.Review).WithMany(p => p.Comments).HasConstraintName("FK__Comments__Review__3F115E1A");
         });
 
         modelBuilder.Entity<Content>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK__Content__3214EC0768F46D1C");
+
             entity.Property(e => e.Id).ValueGeneratedNever();
 
-            entity.HasOne(d => d.ContentType).WithMany(p => p.Content).HasConstraintName("FK_Content_ContentType");
+            entity.HasOne(d => d.ContentType).WithMany(p => p.Content).HasConstraintName("FK__Content__Content__40058253");
 
-            entity.HasOne(d => d.LoginUser).WithMany(p => p.Content).HasConstraintName("FK_Content_LoginUsers");
+            entity.HasOne(d => d.LoginUser).WithMany(p => p.Content).HasConstraintName("FK__Content__LoginUs__40F9A68C");
 
-            entity.HasOne(d => d.WebSite).WithMany(p => p.Content).HasConstraintName("FK_Content_Website");
+            entity.HasOne(d => d.WebSite).WithMany(p => p.Content).HasConstraintName("FK__Content__WebSite__41EDCAC5");
         });
 
         modelBuilder.Entity<ContentCategory>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK__ContentC__3214EC07ACE3C490");
+
             entity.Property(e => e.Id).ValueGeneratedNever();
 
             entity.HasOne(d => d.Type).WithMany(p => p.ContentCategory)
@@ -157,48 +169,65 @@ public partial class Onedb : DbContext
 
         modelBuilder.Entity<ContentType>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK__ContentT__3214EC07422DDA5D");
+
             entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<Countries>(entity =>
         {
+            entity.HasKey(e => e.CountryId).HasName("PK__Countrie__10D1609FE5FEC5C0");
+
             entity.Property(e => e.CountryId).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<Customers>(entity =>
         {
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.CustomerId).ValueGeneratedNever();
 
-            entity.HasOne(d => d.Person).WithMany(p => p.Customers)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Customers_Persons");
-        });
-
-        modelBuilder.Entity<Department>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK_Department_1");
-
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.HasOne(d => d.Person).WithMany(p => p.Customers).HasConstraintName("FK_Customers_Persons");
         });
 
         modelBuilder.Entity<Employee>(entity =>
         {
+            entity.HasKey(e => e.EmployeeId).HasName("PK__Employee__7AD04F11C218845C");
+
             entity.Property(e => e.EmployeeId).ValueGeneratedNever();
 
-            entity.HasOne(d => d.Department).WithMany(p => p.Employee).HasConstraintName("FK_Employee_Department");
+            entity.HasOne(d => d.Department).WithMany(p => p.Employee).HasConstraintName("FK_Employee_EmployeeDepartments");
 
             entity.HasOne(d => d.Designation).WithMany(p => p.Employee).HasConstraintName("FK_Employee_EmployeeDesignation");
 
             entity.HasOne(d => d.Person).WithMany(p => p.Employee).HasConstraintName("FK_Employee_Persons");
         });
 
+        modelBuilder.Entity<EmployeeDepartments>(entity =>
+        {
+            entity.Property(e => e.EmployeeDepartmentId).ValueGeneratedNever();
+        });
+
         modelBuilder.Entity<EmployeeDesignation>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK__Employee__3214EC07D5D46053");
+
             entity.Property(e => e.Id).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<ErpPermissions>(entity =>
+        {
+            entity.HasKey(e => e.PermissionId).HasName("PK__ErpPermi__EFA6FB2FEE76B178");
+
+            entity.Property(e => e.PermissionId).ValueGeneratedNever();
+
+            entity.HasOne(d => d.UrlMenu).WithMany(p => p.ErpPermissions).HasConstraintName("FK__ErpPermis__UrlMe__37703C52");
+
+            entity.HasOne(d => d.User).WithMany(p => p.ErpPermissions).HasConstraintName("FK__ErpPermis__UserI__3864608B");
         });
 
         modelBuilder.Entity<FileManager>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK__FileMana__3214EC078B0E1999");
+
             entity.Property(e => e.Id).ValueGeneratedNever();
 
             entity.HasOne(d => d.Content).WithMany(p => p.FileManager).HasConstraintName("FK_FileManager_Content");
@@ -206,22 +235,30 @@ public partial class Onedb : DbContext
 
         modelBuilder.Entity<LaneAddresses>(entity =>
         {
+            entity.HasKey(e => e.AddressId).HasName("PK__LaneAddr__091C2AFB0350FDCB");
+
             entity.Property(e => e.AddressId).ValueGeneratedNever();
 
-            entity.HasOne(d => d.City).WithMany(p => p.LaneAddresses).HasConstraintName("FK_LaneAddresses_Cities");
+            entity.HasOne(d => d.City).WithMany(p => p.LaneAddresses).HasConstraintName("FK_LaneAddresses_Cities1");
 
             entity.HasOne(d => d.Person).WithMany(p => p.LaneAddresses).HasConstraintName("FK_LaneAddresses_Persons");
         });
 
         modelBuilder.Entity<LinkedContentItems>(entity =>
         {
+            entity.HasKey(e => e.LinkedItemId).HasName("PK__LinkedCo__6F9EA4BA4F9AEC90");
+
             entity.Property(e => e.LinkedItemId).ValueGeneratedNever();
 
-            entity.HasOne(d => d.LinkedContent).WithMany(p => p.LinkedContentItems).HasConstraintName("FK_LinkedContentItems_Content");
+            entity.HasOne(d => d.Content).WithMany(p => p.LinkedContentItemsContent).HasConstraintName("FK__LinkedCon__Conte__43D61337");
+
+            entity.HasOne(d => d.LinkedContent).WithMany(p => p.LinkedContentItemsLinkedContent).HasConstraintName("FK__LinkedCon__Linke__44CA3770");
         });
 
         modelBuilder.Entity<LoginHistory>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK__LoginHis__3214EC079BF58EC4");
+
             entity.Property(e => e.Id).ValueGeneratedNever();
 
             entity.HasOne(d => d.LoginUser).WithMany(p => p.LoginHistory).HasConstraintName("FK_LoginHistory_LoginUsers");
@@ -229,6 +266,8 @@ public partial class Onedb : DbContext
 
         modelBuilder.Entity<LoginUserDeviceDetail>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK__LoginUse__3214EC07E48F7649");
+
             entity.Property(e => e.Id).ValueGeneratedNever();
 
             entity.HasOne(d => d.LoginUser).WithMany(p => p.LoginUserDeviceDetail).HasConstraintName("FK_LoginUserDeviceDetail_LoginUsers");
@@ -236,6 +275,8 @@ public partial class Onedb : DbContext
 
         modelBuilder.Entity<LoginUsers>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK__LoginUse__3214EC076C4E1330");
+
             entity.Property(e => e.Id).ValueGeneratedNever();
 
             entity.HasOne(d => d.Person).WithMany(p => p.LoginUsers).HasConstraintName("FK_LoginUsers_Persons");
@@ -243,52 +284,105 @@ public partial class Onedb : DbContext
             entity.HasOne(d => d.Settings).WithMany(p => p.LoginUsers).HasConstraintName("FK_LoginUsers_Settings");
         });
 
+        modelBuilder.Entity<NotificationTypes>(entity =>
+        {
+            entity.Property(e => e.NotificationTypeId).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<Notifications>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Notifica__3214EC07C4159632");
+
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getutcdate())");
+
+            entity.HasOne(d => d.NotificationType).WithMany(p => p.Notifications).HasConstraintName("FK_Notifications_NotificationTypes");
+        });
+
         modelBuilder.Entity<Persons>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK__Persons__3214EC0730ACEE27");
+
             entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.SocialSecurity).IsFixedLength();
         });
 
         modelBuilder.Entity<Reviews>(entity =>
         {
+            entity.HasKey(e => e.ReviewId).HasName("PK__Reviews__74BC79CEDF63D3BA");
+
             entity.Property(e => e.ReviewId).ValueGeneratedNever();
 
-            entity.HasOne(d => d.Content).WithMany(p => p.Reviews).HasConstraintName("FK_Reviews_Content");
+            entity.HasOne(d => d.Content).WithMany(p => p.Reviews).HasConstraintName("FK__Reviews__Content__45BE5BA9");
 
-            entity.HasOne(d => d.LoginUser).WithMany(p => p.Reviews).HasConstraintName("FK_Reviews_LoginUsers");
+            entity.HasOne(d => d.LoginUser).WithMany(p => p.Reviews).HasConstraintName("FK__Reviews__LoginUs__46B27FE2");
         });
 
         modelBuilder.Entity<Roles>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK__Roles__3214EC07BCE7C156");
+
             entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<Settings>(entity =>
         {
+            entity.HasKey(e => e.SettingsId).HasName("PK__Settings__991B19FC516B0BB6");
+
             entity.Property(e => e.SettingsId).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<StateProvince>(entity =>
+        {
+            entity.HasKey(e => e.StateProvinceId).HasName("PK__StatePro__9122A951D4833E19");
+
+            entity.Property(e => e.StateProvinceId).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Country).WithMany(p => p.StateProvince).HasConstraintName("FK_StateProvince_Countries");
         });
 
         modelBuilder.Entity<Supplier>(entity =>
         {
-            entity.Property(e => e.SupplierId).ValueGeneratedNever();
+            entity.HasKey(e => e.SupplierId).HasName("PK__Supplier__4BE666B48F48E7DA");
 
-            entity.HasOne(d => d.Person).WithMany(p => p.Supplier).HasConstraintName("FK_Supplier_Persons");
+            entity.Property(e => e.SupplierId).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<SupplierContact>(entity =>
+        {
+            entity.Property(e => e.SpplierContactId).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Person).WithMany(p => p.SupplierContact).HasConstraintName("FK_SupplierContact_Persons");
+
+            entity.HasOne(d => d.Supplier).WithMany(p => p.SupplierContact).HasConstraintName("FK_SupplierContact_Supplier");
+        });
+
+        modelBuilder.Entity<UrlMenu>(entity =>
+        {
+            entity.HasKey(e => e.UrlMenuId).HasName("PK__UrlMenu__1E1429F7BC8DD63A");
+
+            entity.Property(e => e.UrlMenuId).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<UserAssignedBranches>(entity =>
+        {
+            entity.HasOne(d => d.LoginUser).WithMany(p => p.UserAssignedBranches).HasConstraintName("FK_UserAssignedBranches_LoginUsers");
         });
 
         modelBuilder.Entity<Website>(entity =>
         {
-            entity.HasKey(e => e.WebsiteId).HasName("PK_InfoValues");
+            entity.HasKey(e => e.WebsiteId).HasName("PK__Website__3F146DA9C3C22F69");
 
             entity.Property(e => e.WebsiteId).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<WebsiteData>(entity =>
         {
+            entity.HasKey(e => e.WebsiteDataId).HasName("PK__WebsiteD__E06C88F0846D487E");
+
             entity.Property(e => e.WebsiteDataId).ValueGeneratedNever();
 
             entity.HasOne(d => d.Website).WithMany(p => p.WebsiteData)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_WebsiteData_Website");
+                .HasConstraintName("FK__WebsiteDa__Websi__395884C4");
         });
 
         OnModelCreatingPartial(modelBuilder);

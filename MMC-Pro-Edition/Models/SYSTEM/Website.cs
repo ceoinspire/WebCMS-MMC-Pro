@@ -27,6 +27,7 @@ public partial class Website
 
     public string WebsiteTitle { get; set; }
 
+    [StringLength(255)]
     public string SupportEmail { get; set; }
 
     [InverseProperty("Website")]

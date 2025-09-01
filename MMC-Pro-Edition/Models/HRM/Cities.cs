@@ -17,12 +17,14 @@ public partial class Cities
     [StringLength(1000)]
     public string CityName { get; set; }
 
-    public int? CountryId { get; set; }
+    public int? StateProvinceId { get; set; }
 
-    [ForeignKey("CountryId")]
-    [InverseProperty("Cities")]
-    public virtual Countries Country { get; set; }
+    public int? CountryId { get; set; }
 
     [InverseProperty("City")]
     public virtual ICollection<LaneAddresses> LaneAddresses { get; set; } = new List<LaneAddresses>();
+
+    [ForeignKey("StateProvinceId")]
+    [InverseProperty("Cities")]
+    public virtual StateProvince StateProvince { get; set; }
 }
