@@ -32,12 +32,50 @@ namespace MMC_Pro_Edition.Controllers
 		}
 
       
-        public IActionResult Login(string returnUrl)
+        public async Task<IActionResult> Login(string returnUrl)
         {
-            
+            if (CheckEncryption(returnUrl))
+            {
+                string base64 = Uri.UnescapeDataString(returnUrl);
+                string decrypted = EncryptionPasses.RandomDecrypt(base64);
+                LoginVM user = Newtonsoft.Json.JsonConvert.DeserializeObject<LoginVM>(decrypted);
+                var res =  _account.ValidateLoginDetails(user);
+                if (res != null)
+                {
+                    await _account.SigninAsync(res, HttpContext);
+                    AppDataUtility.SessionUser = res;
+                    byte[] userarray = JsonSerializer.SerializeToUtf8Bytes(res);
+                    HttpContext.Session.Set("LoginUser", userarray);
+                }
+            }
             TempData["ReturnURL"] = returnUrl;
             return View();
         }
+        private bool CheckEncryption(string returnUrl)
+        {
+            bool isEncrypted = false;
+            string decrypted = null;
+
+            if (!string.IsNullOrEmpty(returnUrl))
+            {
+                try
+                {
+                    string unescaped = Uri.UnescapeDataString(returnUrl);
+                    decrypted = EncryptionPasses.RandomDecrypt(unescaped);
+
+                    // if decryption didn't throw, assume it's valid
+                    if (!string.IsNullOrEmpty(decrypted))
+                        isEncrypted = true;
+                }
+                catch
+                {
+                    isEncrypted = false; // not encrypted
+                }
+            }
+
+            return isEncrypted;
+        }
+
         public string DecryptText(string encvalue)
         {
             string text = EncryptionPasses.Decrypt(encvalue, PassesCore.INIT_VECTOR, PassesCore.PASS_PHRASE, PassesCore.KEY_SIZE);

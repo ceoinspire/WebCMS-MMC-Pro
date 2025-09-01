@@ -77,6 +77,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+AppDataUtility.Configure(app.Services.GetRequiredService<IHttpContextAccessor>());
+
 app.UseSession();
 app.UseMiddleware<SessionValidationMiddleware>();
 app.MapControllerRoute(
