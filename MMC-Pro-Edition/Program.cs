@@ -43,7 +43,7 @@ builder.Services.AddAuthentication(cookieScheme).AddCookie(cookieScheme, options
         context.Response.Redirect(context.RedirectUri);
         return Task.CompletedTask;
     };
-    options.Cookie.SameSite = SameSiteMode.Strict;
+    options.Cookie.SameSite = SameSiteMode.None;
     options.Cookie.Name = cookieScheme;
     options.Events.OnValidatePrincipal = context =>
     {

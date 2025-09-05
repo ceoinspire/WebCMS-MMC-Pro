@@ -46,6 +46,8 @@ namespace MMC_Pro_Edition.Controllers
                     AppDataUtility.SessionUser = res;
                     byte[] userarray = JsonSerializer.SerializeToUtf8Bytes(res);
                     HttpContext.Session.Set("LoginUser", userarray);
+                    return Redirect("/");
+
                 }
             }
             TempData["ReturnURL"] = returnUrl;
