@@ -138,7 +138,7 @@ namespace MMC_Pro_Edition.Controllers
 		public IActionResult UpdateDescContent(ContentVM model)
 		{
 			var response = _repo.UpdateDescContent(model);
-			return Json(new { statusCode = "OK" });
+			return Json(new { statusCode = "200",Message="Description Section Updated Success" });
 		}
 		[Route("/Content/GetPhotoUpdatePage/{ContentId}")]
 		public IActionResult GetPhotoUpdatePage(int ContentId)

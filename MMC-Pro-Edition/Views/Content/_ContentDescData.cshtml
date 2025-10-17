@@ -1,7 +1,5 @@
 ﻿@model PagesViewModel
-<script src="~/global_assets/js/plugins/editors/ckeditor/ckeditor.js"></script>
-<script src="~/global_assets/js/plugins/forms/selects/select2.min.js"></script>
-<script src="~/global_assets/js/demo_pages/editor_ckeditor.js"></script>
+
 <div class="card shadow">
 	<div class="card-body">
 		<div class="col-md-11">
@@ -11,7 +9,7 @@
 					<div class="col-md-12">
 						<form action="#">
 							<div class="row">
-								
+
 								<div class="col-lg-6 form-group">
 									<label class="form-group-label">Content Note</label>
 									<textarea id="note" class="form-control" rows="3">@Model?.ContentTypeSlug?.Note</textarea>
@@ -21,7 +19,7 @@
 									<textarea id="oview" class="form-control" rows="3">@Model?.ContentTypeSlug?.OverView</textarea>
 								</div>
 							</div>
-						<div class="row">
+							<div class="row">
 								<div class="col-lg-6 form-group">
 									<label class="form-group-label">Tagline</label>
 									<textarea id="tline" class="form-control" rows="3">@Model?.ContentTypeSlug?.Tagline</textarea>
@@ -30,11 +28,12 @@
 									<label class="form-group-label">Video link</label>
 									<input id="vlink" class="form-control" value="@Model?.ContentTypeSlug?.VideoLink" />
 								</div>
-						</div>
-						
+							</div>
+
 							<div class="form-group">
 								<label class="form-group-label">Short Description</label>
-								<textarea id="shortDescription" class="editor-full" rows="3">@Model?.ContentTypeSlug?.ShortDescription</textarea>
+								<textarea id="shortDescription">@Model?.ContentTypeSlug?.ShortDescription</textarea>
+								@* <textarea id="" class="editor-full" rows="3"></textarea> *@
 							</div>
 							<div class="form-group">
 								<label class="form-group-label">Description</label>
@@ -85,28 +84,33 @@
 <style>
 	#bottom-right {
 		position: fixed;
-		bottom: 20px; /* You can adjust this value to change the vertical position */
-		right: 20px; /* You can adjust this value to change the horizontal position */
+		bottom: 20px; 
+		right: 20px; 
 	}
 </style>
 
 
 <script type="text/javascript">
-	CKEDITOR.replace('description');
-	CKEDITOR.replace('otherDescription');
-	CKEDITOR.replace('shortDescription');
-	CKEDITOR.replace('othershortDescription');
-
 	
+	$(document).ready(function() {
+			 $('#shortDescription').summernote();
+			 $('#description').summernote();
+			 $('#otherDescription').summernote();
+			 $('#othershortDescription').summernote();
+
+
+	});
+	
+
+
 
 	$('#descSubmit').click(function (e) {
 		e.preventDefault();
 		debugger;
-		var desc = CKEDITOR.instances.description;
-		var otherDesc = CKEDITOR.instances.otherDescription;
-		var shortDesc = CKEDITOR.instances.shortDescription;
-		var othershortDesc = CKEDITOR.instances.othershortDescription;
-
+		var desc = $('#description').summernote();
+		var otherDesc = $('#otherDescription').summernote();
+		var shortDesc = $('#shortDescription').summernote();
+		var othershortDesc =$('#othershortDescription').summernote(); 
 
 		var formData = {
 			Note:$('#note').val(),
@@ -114,10 +118,10 @@
 			Tagline:$('#tline').val(),
 			Videolink: $('#vlink').val(),
 
-			Description: desc.getData(),
-			ShortDescription: shortDesc.getData(),
-			OtherDescription: otherDesc.getData(),
-			OtherShortDescription: othershortDesc.getData(),
+			 Description: desc.summernote('code'),
+			 ShortDescription: shortDesc.summernote('code'),
+			 OtherDescription: otherDesc.summernote('code'),
+			 OtherShortDescription: othershortDesc.summernote('code'),
 
 			Id: $('input[name=contentId]').val()
 
