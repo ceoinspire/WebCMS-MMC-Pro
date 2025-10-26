@@ -154,8 +154,7 @@
 			});
 			var idleInterval = setInterval(async function () {
 				idleTime++;
-				console.log(idleTime);
-				if (idleTime >= 4500) {
+				if (idleTime >= 16000) {
 					clearInterval(idleInterval);
 					$.get('/Accounts/LogOut', function (response) {
 					}).fail(function () {
@@ -183,38 +182,7 @@
 			});
 		}
 
-		// var idleTime = 0;
-
-		// $(document).ready(function () {
-		// 	$(document).on('mousemove keydown scroll', function () {
-		// 		idleTime = 0;
-		// 	});
-
-		// 	setInterval(function () {
-		// 		idleTime++;
-		// 		if (idleTime >= 500) { 
-		// 			window.location.href = '/Accounts/Logout'; 
-		// 		}
-		// 		else {
-		// 			var remainingTime = formatTime(5 * 60 - idleTime);
-		// 			$('#timerDisplay').text(remainingTime);
-		// 		}
-		// 	}, 1000); 
-
-
-		// 	function formatTime(seconds) {
-		// 		var mins = Math.floor(seconds / 60);
-		// 		var secs = seconds % 60;
-		// 		if (secs < 10) {
-		// 			secs = '0' + secs;
-		// 		}
-		// 		return mins + ':' + secs;
-		// 	}
-
-		// });
-		// $(window).on('beforeunload', function () {
-		// 	window.location.href = '/Accounts/Logout'; 
-		// });
+		
 		function SuccessMessage(message) {
 			setTimeout(function () {
 				$('#alert-success-message').html(message);
