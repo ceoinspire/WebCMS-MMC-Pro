@@ -1,0 +1,94 @@
+﻿
+<div class="card shadow">
+	<div class="card-body">
+
+		<!-- Prompt Input -->
+		<div class="row mb-3">
+			<div class="col-lg-12">
+				<label for="prompt" class="form-label fw-bold">AI Prompt</label>
+				<input id="prompt" type="text" placeholder="Enter Prompt" class="form-control" />
+			</div>
+		</div>
+
+		<!-- Checkbox + Generate Button -->
+		<div class="row  mb-3">
+			<div class="col-lg-1"></div>
+			<div class="col-lg-2 d-flex align-items-center">
+				<input type="checkbox" id="isHtml" class="form-check-input me-2" />
+				<label for="isHtml" class="form-check-label">HTML Output</label>
+			</div>
+
+			<div class="col-lg-9">
+				<button id="fetchAi" class="btn btn-outline-success w-auto px-4">
+					Generate
+				</button>
+			</div>
+		</div>
+
+		<!-- Response (Summernote) -->
+		<div class="row mb-3">
+			<div class="col-lg-12">
+				<label for="response" class="form-label fw-bold">AI Response</label>
+				<textarea id="response" class="form-control" rows="10"></textarea>
+			</div>
+		</div>
+
+		<!-- Copy Button -->
+		<div class="row">
+			<div class="col-lg-12 text-end">
+				<button id="copyText" class="btn btn-outline-primary px-4">
+					Copy
+				</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+<script>
+
+
+	$(document).ready(function(){
+		 $('#response').summernote();
+		$('#fetchAi').click(async function(e){
+				e.preventDefault();
+				var prompt = $('#prompt').val();
+				if (!prompt) {
+					alert("Please enter a prompt first.");
+					return;
+				}
+				cycleMessages('#fetchAi', [
+		'Initializing...',
+		'Preparing Content...',
+		'Getting AI Content...',
+		'Applying Bootstrap Design...',
+		'Finalizing...',
+		'Creating Content'
+	], 1500);
+				var isHtml = $('#isHtml').is(':checked');
+				$.ajax({
+					url:`/Content/CreateAIContent/${isHtml}/${encodeURIComponent(prompt)} `,
+					type:'GET',
+					success:function(res){
+						$('#response').summernote('code', res.message);
+						$('#fetchAi').html('Generate');
+					}
+				})
+
+		});
+			$("#copyText").click(function () {
+					// Get summernote HTML content
+					let text = $('#response').summernote('code');
+
+					// Copy to clipboard
+					navigator.clipboard.writeText(text)
+					.then(() => {
+						alert("Copied to clipboard!");
+					})
+					.catch(err => {
+						console.error("Failed to copy: ", err);
+					});
+			});
+	})
+</script>

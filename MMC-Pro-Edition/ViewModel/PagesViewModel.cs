@@ -46,6 +46,7 @@ namespace MMC_Pro_Edition.ViewModel
 		public string Description { get; set; }
 		public string ImageSource { get; set; }
 		public string Thumbnail { get; set; }
+		public string? ContentTypeName { get; set; }
 		public DateTime? CreatedOn { get; set; }
 		public DateTime? ModifiedOn { get; set; }
 		public int? WebSiteId { get; set; }

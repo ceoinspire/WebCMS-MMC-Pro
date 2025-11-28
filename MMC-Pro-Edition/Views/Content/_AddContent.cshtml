@@ -35,10 +35,19 @@
 	</div>
 </form>
 <script>
+	
+	
 	$('#addnew-content').submit(function(e){
 		e.preventDefault();
-			debugger
-
+			$('#createContent').attr('disabled', true);
+			cycleMessages('#createContent', [
+		'Initializing...',
+		'Preparing Content...',
+		'Getting AI Content...',
+		'Applying Bootstrap Design...',
+		'Finalizing...',
+		'Creating Content'
+	], 2000);
 			var formData = {
 				cTitle: $('#contentTitle').val(),
 				cType: $('#contenttypeSelect').val()

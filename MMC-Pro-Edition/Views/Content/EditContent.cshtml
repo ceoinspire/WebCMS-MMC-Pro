@@ -111,7 +111,12 @@
 								Reviews
 							</a>
 						</li>
-
+						<li class="nav-item dropdown">
+							<a id="ai" href="#ai" class="navbar-nav-link " data-toggle="">
+								<i class="icon-file-check mr-2"></i>
+								AI Content
+							</a>
+						</li>
 
 					</ul>
 
@@ -152,6 +157,16 @@
 
 				}
 			});
+			$('#ai').click(function () {
+				$.ajax({
+					url: "/Content/GetAIContent/",
+					type: "POST",
+					success: function (result) {
+						$('#tab-1').html(result);
+					}
+				})
+
+			})
 			$('#tabone').click(function () {
 				$.ajax({
 					url: "/Content/ContentData/" + ContentId,

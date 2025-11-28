@@ -6,6 +6,7 @@ using MMC_Pro_Edition.Classes;
 using MMC_Pro_Edition.Models;
 using MMC_Pro_Edition.Repository;
 using MMC_Pro_Edition.ViewModel;
+using Mscc.GenerativeAI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,10 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("connectionString
 builder.Services.AddTransient<DapperContext, DapperContext>();
 builder.Services.AddScoped<ContentRepository>();
 builder.Services.AddHttpContextAccessor();
-
+var apiKey = builder.Configuration.GetValue<string>("SystemSettings:GeminiAIKey");
+builder.Services.AddSingleton(new GoogleAI(apiKey));
+builder.Services.AddScoped<GeminiAIRepository>();
+builder.Services.AddScoped<IDataRepository, DataRepository>();
 builder.Services.AddSession(options =>
 {
     options.Cookie.Name = builder.Configuration.GetValue<string>("SystemSettings:CookieName");

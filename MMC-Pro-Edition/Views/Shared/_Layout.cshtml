@@ -203,6 +203,19 @@
 				}, 1500)
 			}, 0)
 		}
+			function cycleMessages(elementId, messages, delay = 1000) {
+			let index = 0;
+
+			const interval = setInterval(() => {
+				$(elementId).html(`<div class="spinner-border"></div> ${messages[index]}`);
+				index++;
+
+				if (index >= messages.length) {
+					clearInterval(interval);
+				}
+			}, delay);
+		}
+
 	</script>
 </body>
 </html>

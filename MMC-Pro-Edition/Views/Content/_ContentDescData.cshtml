@@ -5,6 +5,10 @@
 		<div class="col-md-11">
 			<form id="updatedesc">
 				<input type="hidden" id="contentId" name="contentId" value="@Model.ContentTypeSlug?.Id" />
+				<input type="hidden" id="contntTitle" name="contentId" value="@Model.ContentTypeSlug?.Name" />
+				<input type="hidden" id="ctntypeName" name="contentId" value="@Model.ContentTypeSlug?.ContentTypeName" />
+
+
 				<div class="row">
 					<div class="col-md-12">
 						<form action="#">
@@ -84,23 +88,23 @@
 <style>
 	#bottom-right {
 		position: fixed;
-		bottom: 20px; 
-		right: 20px; 
+		bottom: 20px;
+		right: 20px;
 	}
 </style>
 
 
 <script type="text/javascript">
-	
+
 	$(document).ready(function() {
 			 $('#shortDescription').summernote();
 			 $('#description').summernote();
 			 $('#otherDescription').summernote();
 			 $('#othershortDescription').summernote();
 
-
+			
 	});
-	
+
 
 
 
@@ -110,7 +114,7 @@
 		var desc = $('#description').summernote();
 		var otherDesc = $('#otherDescription').summernote();
 		var shortDesc = $('#shortDescription').summernote();
-		var othershortDesc =$('#othershortDescription').summernote(); 
+		var othershortDesc =$('#othershortDescription').summernote();
 
 		var formData = {
 			Note:$('#note').val(),
