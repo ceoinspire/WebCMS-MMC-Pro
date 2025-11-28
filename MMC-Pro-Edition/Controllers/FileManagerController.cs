@@ -13,9 +13,6 @@ namespace MMC_Pro_Edition.Controllers
 	{
 		private readonly IWebHostEnvironment _environment;
 		private readonly ContentRepository _repo;
-		private readonly IConfiguration _config;
-		private readonly Onedb _con;
-		private readonly DapperContext _dapper;
 
 
 		public FileManagerController(IWebHostEnvironment environment, ContentRepository repo)

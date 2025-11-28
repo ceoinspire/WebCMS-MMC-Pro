@@ -15,9 +15,7 @@ namespace MMC_Pro_Edition.Repository
 {
     public class GeminiAIRepository
     {
-        private readonly IConfiguration _config;
-        private readonly string _apiKey;
-
+        
         private readonly GoogleAI _googleAI;
 
         public GeminiAIRepository(GoogleAI googleAI)

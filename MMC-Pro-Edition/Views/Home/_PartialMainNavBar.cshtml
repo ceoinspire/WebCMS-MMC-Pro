@@ -27,7 +27,7 @@
 	</ul>
 	 
 	@{
-		byte[] userarray = Context.Session.Get("LoginUser");
+		byte[]? userarray = Context.Session.Get("LoginUser");
 		if (userarray == null)
 		{
 
@@ -88,7 +88,7 @@
 								var marketsetting = PagesViewModel.Settings.Where(x => x.ApplicationId == 1002).FirstOrDefault();
 								<a href="@AppHelper.CreateSSOURL(1002)" class="d-block text-default text-center ripple-dark rounded p-3">
 									<i class="icon-store text-pink-400 icon-2x"></i>
-									<div class="font-size-sm font-weight-semibold text-uppercase mt-2">@marketsetting.ApplicationName</div>
+									<div class="font-size-sm font-weight-semibold text-uppercase mt-2">@marketsetting?.ApplicationName</div>
 								</a>
 
 							}

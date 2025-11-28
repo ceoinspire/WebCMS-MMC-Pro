@@ -13,7 +13,7 @@ namespace MMC_Pro_Edition.Models
 
             _dap = new DapperContext(_config);
         }
-        public async Task<IEnumerable<T>> GetDataListWithQueryAndParam<T>(string query, object parameters = null)
+        public async Task<IEnumerable<T>> GetDataListWithQueryAndParam<T>(string query, object? parameters = null)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace MMC_Pro_Edition.Models
                 throw new Exception("Error executing query.", ex);
             }
         }
-        public async Task<T> GetSingleItemDatatWithQueryAndParam<T>(string query, object parameters = null)
+        public async Task<T> GetSingleItemDatatWithQueryAndParam<T>(string query, object? parameters = null)
         {
             try
             {
@@ -147,7 +147,7 @@ namespace MMC_Pro_Edition.Models
                 throw new Exception($"Error retrieving max ID from {tableName}.", ex);
             }
         }
-        public async Task<int> ExecuteInsertQueryandParam(string query, object param = null)
+        public async Task<int> ExecuteInsertQueryandParam(string query, object? param = null)
         {
             try
             {

@@ -18,13 +18,13 @@ namespace MMC_Pro_Edition.Controllers
         private readonly ContentRepository _repo;
         private readonly IConfiguration _config;
         private readonly Onedb _con;
-        private readonly DapperContext _dapper;
+        private readonly DapperContext _dapper; 
         private readonly IDataRepository dataRepository;
         public ContentController(IConfiguration config, Onedb con, DapperContext dapper, IDataRepository dataRepository)
         {
             _config = config;
             _con = con;
-
+            _dapper = dapper;
             _repo = new ContentRepository(_config, _con, _dapper);
             this.dataRepository = dataRepository;
         }

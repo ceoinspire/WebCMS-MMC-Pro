@@ -20,7 +20,6 @@ namespace MMC_Pro_Edition.Controllers
 		private readonly DapperContext _dapper;
 		private readonly CmsEmailRepository _email;
 		PagesViewModel vm = new PagesViewModel();
-		private readonly IServiceProvider _serviceProvider;
 		private readonly MailService _mailService;
 		public CmsEmailController(IConfiguration config, Onedb con, DapperContext dapper, EmailHandler.Repository.MailService mailService)
 		{
