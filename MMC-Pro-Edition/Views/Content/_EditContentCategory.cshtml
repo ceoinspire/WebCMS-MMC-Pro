@@ -1,71 +1,99 @@
-﻿
-@model PagesViewModel
+﻿@model PagesViewModel
 
-<form id="edit-contenttype" action="/Action/Controler" method="post">
+<form id="edit-contenttype" method="post" enctype="multipart/form-data">
 	<div class="form-group">
 		<input id="cId" type="hidden" value="@Model.Category?.Id" />
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-sm-6">
 				<label>Content Heading</label>
-				<input id="catName" type="text" placeholder="Content Type" value="@Model.Category?.Name" class="form-control">
+				<input id="catName" type="text" value="@Model.Category?.Name" class="form-control">
 			</div>
-			<div class="col-sm-12">
+			<div class="col-sm-6">
 				<label>Content Type Slug</label>
-				<input id="cattypeSlug" type="text" placeholder="Content Type" value="@Model.Category?.Slug" class="form-control">
+				<input id="cattypeSlug" type="text" value="@Model.Category?.Slug" class="form-control">
 			</div>
 		</div>
 	</div>
-	<div class="form-group">
-		<div class="row">
-			<div class="col-sm-12">
-				<button id="cTypesubmit" class="btn bg-success form-control"> Edit Content Type</button>
+
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label>Icon Class</label>
+				<input id="icon" type="text" value="@Model.Category?.Icon" class="form-control">
 			</div>
 		</div>
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label>Update Image</label>
+				<input id="imageFile" type="file" class="form-control">
+				@if (!string.IsNullOrEmpty(Model.Category?.ImageUrl))
+				{
+					<div class="mt-2">
+						<small>Current Image:</small><br />
+						<img src="@Model.Category.ImageUrl" style="max-height: 80px; border-radius: 5px;" alt="preview" />
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label>Short Description</label>
+		<input id="shortDescription" type="text" value="@Model.Category?.ShortDescription" class="form-control">
+	</div>
+
+	<div class="form-group">
+		<label>Description</label>
+		<textarea id="description" rows="3" class="form-control">@Model.Category?.Description</textarea>
+	</div>
+
+	<div class="form-group">
+		<button id="cTypesubmit" class="btn btn-success form-control">Save Changes</button>
 	</div>
 </form>
+<script>
 
-<script type="text/javascript">
-	$('#edit-contenttype').submit(function (e) {
-		e.preventDefault();
-		debugger;
-		var formData = {
-			Name: $('#catName').val(),
-			Id:$('#cId').val(),
-			Slug: $('#cattypeSlug').val()
-		}
-		$.ajax({
-			url: "/Content/EditCategory/",
-			type: "POST",
-			data: formData,
-			success: function (result) {
-				debugger;
-				if (result["statusCode"] === "200") {
-					setTimeout(function () {
-						$('.alert-success').css('display', 'block');
-						$('#cTypesubmit').html("Loading....");
-						setTimeout(function () {
-							$('#cTypesubmit').html('Submit');
-							$('.alert-success').css('display', 'none');
-							location.reload();
 
-						}, 3000)
-					}, 1000)
+$('#edit-contenttype').submit(function (e) {
+    e.preventDefault();
+    var btn = $('#cTypesubmit');
+    btn.html("Processing...").prop('disabled', true);
 
-				}
-				else {
-					setTimeout(function () {
-						$('.alert-danger').css('display', 'block');
-						$('#cTypesubmit').html("Loading....");
-						setTimeout(function () {
-							$('#cTypesubmit').html('Submit');
-							$('.alert-danger').css('display', 'none');
-						}, 3000)
-					}, 1000)
-				}
-			}
-		});
+    // Using FormData to handle strings + files
+    var formData = new FormData();
+    formData.append("Id", $('#cId').val());
+    formData.append("Name", $('#catName').val());
+    formData.append("Slug", $('#cattypeSlug').val());
+    formData.append("Icon", $('#icon').val());
+    formData.append("ShortDescription", $('#shortDescription').val());
+    formData.append("Description", $('#description').val());
 
-	});
+    // Append file if selected
+    var fileInput = $('#imageFile')[0].files[0];
+    if (fileInput) {
+        formData.append("ImageFile", fileInput);
+    }
 
+    $.ajax({
+        url: "/Content/EditCategory/",
+        type: "POST",
+        data: formData,
+        processData: false, // Required for FormData
+        contentType: false, // Required for FormData
+        success: function (result) {
+            if (result["statusCode"] === "200") {
+                $('.alert-success').fadeIn();
+                setTimeout(function () { location.reload(); }, 2000);
+            } else {
+                $('.alert-danger').fadeIn();
+                btn.html("Edit Content Type").prop('disabled', false);
+            }
+        },
+        error: function() {
+            alert("An error occurred while saving.");
+            btn.html("Edit Content Type").prop('disabled', false);
+        }
+    });
+});
 
 </script>

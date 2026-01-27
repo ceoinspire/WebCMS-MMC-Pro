@@ -1,8 +1,5 @@
 ﻿using MMC_Pro_Edition.Models;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 using MMC_Pro_Edition.Areas.Market.ViewModels;
-using System.Drawing.Printing;
 
 namespace MMC_Pro_Edition.ViewModel
 {
@@ -211,7 +208,12 @@ namespace MMC_Pro_Edition.ViewModel
 		public string? Name { get; set; }
 		public string? Slug { get; set; }
 		public string TypeName { get; set; }
-	}
+        public string ImageUrl { get; set; }
+
+        public string ShortDescription { get; set; }
+        public string Description { get; set; }
+        public string Icon { get; set; }
+    }
 	public class CMSContentSharecCategoryVM
 	{
 		public int Id { get; set; }

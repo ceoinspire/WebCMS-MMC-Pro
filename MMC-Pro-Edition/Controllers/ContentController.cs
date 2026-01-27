@@ -1,11 +1,12 @@
 ﻿
+using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MMC_Pro_Edition.Classes;
 using MMC_Pro_Edition.Models;
 using MMC_Pro_Edition.Repository;
 using MMC_Pro_Edition.ViewModel;
-using System.Text.Json;
+using Mscc.GenerativeAI;
 
 namespace MMC_Pro_Edition.Controllers
 {
@@ -18,7 +19,7 @@ namespace MMC_Pro_Edition.Controllers
         private readonly ContentRepository _repo;
         private readonly IConfiguration _config;
         private readonly Onedb _con;
-        private readonly DapperContext _dapper; 
+        private readonly DapperContext _dapper;
         private readonly IDataRepository dataRepository;
         public ContentController(IConfiguration config, Onedb con, DapperContext dapper, IDataRepository dataRepository)
         {
@@ -95,9 +96,9 @@ namespace MMC_Pro_Edition.Controllers
         }
         [HttpGet]
         [Route("Content/CreateAIContent/{isHtml}/{title}")]
-        public async Task<IActionResult> CreateAIContent(bool isHtml,string title)
+        public async Task<IActionResult> CreateAIContent(bool isHtml, string title)
         {
-            var res = await dataRepository.AnalyzeTextAsync(title,isHtml);
+            var res = await dataRepository.AnalyzeTextAsync(title, isHtml);
             return Json(new { message = res });
         }
         public IActionResult DeleteContent(int Id)
@@ -268,9 +269,11 @@ namespace MMC_Pro_Edition.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateCategory(string cTitle, string cType)
+        public IActionResult CreateCategory(string cTitle, string cType, string icon, string shortDescription, string description, IFormFile imageFile)
         {
-            var res = _repo.CreateCategory(cTitle, cType);
+            var url = new FileRepository().SaveImageMethod(imageFile);
+
+            var res = _repo.CreateCategory(cTitle, cType, icon, shortDescription, description, url);
             if (res)
             {
                 return Json(new { statusCode = "200", Message = "Successfully Created" });
@@ -287,10 +290,18 @@ namespace MMC_Pro_Edition.Controllers
             vm.Category = res;
             return PartialView("/Views/Content/_EditContentCategory.cshtml", vm);
         }
-        public IActionResult EditCategory(ContentCategoryVM model)
+        public IActionResult EditCategory(ContentCategoryVM model, IFormFile ImageFile)
         {
-
-            var res = _repo.EditContentCategory(model);
+            var url = new FileRepository().SaveImageMethod(ImageFile);
+           if(string.IsNullOrEmpty(url))
+            {
+                url = model.ImageUrl;
+            }
+            else
+            {
+                model.ImageUrl = url;
+            }
+                var res = _repo.EditContentCategory(model);
             if (res)
             {
                 return Json(new { statusCode = "200" });

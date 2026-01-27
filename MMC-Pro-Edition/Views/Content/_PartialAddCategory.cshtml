@@ -1,65 +1,78 @@
 ﻿@model PagesViewModel
 
 <form id="addnew-category" method="post">
-	<div class="form-group">
-		<div class="row">
-			<div class="col-sm-12">
-				<label>Content Heading</label>
-				<input id="contentCategory" name="contentCategory" type="text" placeholder="Content Category" class="form-control">
-			</div>
-		</div>
-	</div>
+    <div class="form-group">
+        <label>Content Heading</label>
+        <input id="contentCategory" name="contentCategory" type="text" placeholder="Content Category" class="form-control">
+    </div>
 
-	<div class="form-group">
-		<div class="row">
-			<div class="col-sm-12">
-				<label>Content Type</label>
-				<select id="contenttypeSelect" name="contenttypeSelect" class="form-control">
-					@foreach (var item in Model.ContentTypeVM)
-					{
-						<option value="@item.Id">
-							@item.Name
-						</option>
-					}
-				</select>
-			</div>
-		</div>
-	</div>
-	<div class="form-group">
-		<div class="row">
-			<div class="col-sm-12">
-				<button id="createCategory" class="btn btn-success">Submit</button>
-			</div>
-		</div>
-	</div>
+    <div class="form-group">
+        <label>Content Type</label>
+        <select id="contenttypeSelect" name="contenttypeSelect" class="form-control">
+            @foreach (var item in Model.ContentTypeVM)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+    </div>
+
+    <hr /> <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Icon Class/Link</label>
+                <input id="icon" name="icon" type="text" placeholder="e.g. fa-home" class="form-control">
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Upload Image</label>
+                <input id="imageFile" name="imageFile" type="file" class="form-control">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Short Description</label>
+        <input id="shortDescription" name="shortDescription" type="text" placeholder="Brief summary..." class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label>Full Description</label>
+        <textarea id="description" name="description" rows="3" placeholder="Detailed category info..." class="form-control"></textarea>
+    </div>
+    <div class="form-group text-right">
+        <button id="createCategory" class="btn btn-success">Submit</button>
+    </div>
 </form>
 <script>
-	$('#addnew-category').submit(function (e) {
-		e.preventDefault();
-		var formData = {
-			cTitle: $('#contentCategory').val(),
-			cType: $('#contenttypeSelect').val()
-		}
-		$.ajax({
-			url: "/Content/CreateCategory/",
-			method: "POST",
-			data: formData,
-			success: function (result) {
-				debugger;
-				console.log(result);
-				if (result['statusCode'] === "200") {
-					setTimeout(function () {
-						$('.alert-success').css('display', 'block');
-						setTimeout(function () {
-							$('.alert-success').css('display', 'none');
+          $('#addnew-category').submit(function (e) {
+        e.preventDefault();
 
-						}, 3000)
-					}, 1000)
-				
-				}
-			}
-		});
+        // Use FormData to capture file data
+        var formData = new FormData();
+        formData.append("cTitle", $('#contentCategory').val());
+        formData.append("cType", $('#contenttypeSelect').val());
+        formData.append("icon", $('#icon').val());
+        formData.append("shortDescription", $('#shortDescription').val());
+        formData.append("description", $('#description').val());
 
+        // Append the file
+        var fileInput = $('#imageFile')[0].files[0];
+        if (fileInput) {
+            formData.append("imageFile", fileInput);
+        }
 
-	});
+        $.ajax({
+            url: "/Content/CreateCategory/",
+            method: "POST",
+            data: formData,
+            processData: false, // Required for FormData
+            contentType: false, // Required for FormData
+            success: function (result) {
+                if (result['statusCode'] === "200") {
+                    $('.alert-success').fadeIn().delay(3000).fadeOut();
+                }
+            }
+        });
+    });
 </script>

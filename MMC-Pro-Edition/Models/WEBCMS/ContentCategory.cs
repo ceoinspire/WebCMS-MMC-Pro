@@ -25,6 +25,19 @@ public partial class ContentCategory
     [StringLength(501)]
     public string Slug { get; set; }
 
+    [Column("ImageURL")]
+    [StringLength(2048)]
+    public string ImageUrl { get; set; }
+
+    [StringLength(3000)]
+    public string ShortDescription { get; set; }
+
+    [StringLength(4000)]
+    public string Description { get; set; }
+
+    [StringLength(255)]
+    public string Icon { get; set; }
+
     [InverseProperty("Category")]
     public virtual ICollection<CmsContentSharedCategory> CmsContentSharedCategory { get; set; } = new List<CmsContentSharedCategory>();
 

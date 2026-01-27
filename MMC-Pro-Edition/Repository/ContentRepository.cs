@@ -1,9 +1,10 @@
-﻿using Dapper;
+﻿using System;
+using System.Drawing;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using MMC_Pro_Edition.Models;
 using MMC_Pro_Edition.ViewModel;
-using System.Drawing;
 
 namespace MMC_Pro_Edition.Repository
 {
@@ -89,7 +90,8 @@ namespace MMC_Pro_Edition.Repository
                 OtherDescription = x.OtherDescription,
                 OtherTitle = x.OtherTitle,
                 ShortDescription = x.ShortDescription,
-                Thumbnail = x.Thumbnail,ContentTypeName = x.ContentType.Name
+                Thumbnail = x.Thumbnail,
+                ContentTypeName = x.ContentType.Name
                 ,
                 SharedCategory = _con.CmsContentSharedCategory.Where(w => w.ContentId == Id).Select(y => new CMSContentSharecCategoryVM
                 {
@@ -553,7 +555,7 @@ namespace MMC_Pro_Edition.Repository
             return result;
         }
 
-        public bool CreateCategory(string cTitle, string cType)
+        public bool CreateCategory(string cTitle, string cType, string icon, string shortDescription, string description, string url)
         {
             var Ctype = _con.ContentCategory.Where(x => x.Name == cTitle).FirstOrDefault();
             if (Ctype == null)
@@ -571,6 +573,10 @@ namespace MMC_Pro_Edition.Repository
                 c.Id = maxId;
                 c.Name = cTitle;
                 c.TypeId = int.Parse(cType);
+                c.Icon = icon;
+                c.ShortDescription = shortDescription;
+                c.Description = description;
+                c.ImageUrl = url;
                 c.Slug = cTitle.ToLower();
 
                 _con.ContentCategory.Add(c);
@@ -609,14 +615,31 @@ namespace MMC_Pro_Edition.Repository
                 {
                     try
                     {
+                        // Prepare parameters
                         var parameters = new
                         {
                             Name = model.Name,
                             Slug = model.Slug,
+                            Icon = model.Icon,
+                            ShortDescription = model.ShortDescription,
+                            Description = model.Description,
+                            ImageURL = model.ImageUrl, // This is the path generated in the Controller
                             Id = model.Id
                         };
-                        string query = "UPDATE Webcms.ContentCategory SET Name = @Name, Slug = @Slug WHERE Id = @Id";
+
+                        // Build the Query
+                        // Note: We use COALESCE or a conditional check if we don't want to overwrite the image with NULL
+                        string query = @"UPDATE webcms.ContentCategory 
+                                SET Name = @Name, 
+                                    Slug = @Slug, 
+                                    Icon = @Icon, 
+                                    ShortDescription = @ShortDescription, 
+                                    Description = @Description,
+                                    ImageUrl = ISNULL(@ImageUrl, ImageUrl) 
+                                WHERE Id = @Id";
+
                         int rowsAffected = con.Execute(query, parameters, transaction: transaction);
+
                         if (rowsAffected > 0)
                         {
                             transaction.Commit();
@@ -630,14 +653,12 @@ namespace MMC_Pro_Edition.Repository
                     }
                     catch (Exception ex)
                     {
-                        // Rollback the transaction in case of an error
                         transaction.Rollback();
                         throw new Exception("Error updating ContentCategory", ex);
                     }
                 }
             }
         }
-
         public bool UpdateContentCategory(UpdateCategoryVM model)
         {
 

@@ -23,7 +23,7 @@ public partial class Notifications
 
     public string Params { get; set; }
 
-    public string UserId { get; set; }
+    public int? UserId { get; set; }
 
     [StringLength(255)]
     public string GroupName { get; set; }

@@ -50,6 +50,10 @@ public partial class Persons
 
     public Guid? BranchId { get; set; }
 
+    public bool? IsVerifiedUser { get; set; }
+
+    public string PasswordResetToken { get; set; }
+
     [InverseProperty("Person")]
     public virtual ICollection<Customers> Customers { get; set; } = new List<Customers>();
 

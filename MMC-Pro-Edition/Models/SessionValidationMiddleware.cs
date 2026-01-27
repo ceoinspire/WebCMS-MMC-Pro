@@ -39,4 +39,5 @@ namespace MMC_Pro_Edition.Models
             return Guid.NewGuid().ToString();
         }
     }
+
 }
