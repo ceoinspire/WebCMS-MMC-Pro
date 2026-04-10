@@ -1,5 +1,4 @@
-﻿
-using System.Text.Json;
+﻿using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MMC_Pro_Edition.Classes;
@@ -15,7 +14,7 @@ namespace MMC_Pro_Edition.Controllers
     public class ContentController : Controller
     {
         #region Constructor
-        PagesViewModel vm = new PagesViewModel();
+        PagesViewModel vm = new();
         private readonly ContentRepository _repo;
         private readonly IConfiguration _config;
         private readonly Onedb _con;
@@ -44,19 +43,33 @@ namespace MMC_Pro_Edition.Controllers
             var userid = User.Claims.FirstOrDefault(c => c.Type == "UserId");
             var res = HttpContext.Session.Get("LoginId");
 
-            byte[] userarray = HttpContext.Session.Get("LoginUser");
+            byte[]? userarray = HttpContext.Session.Get("LoginUser");
+            if (userarray == null)
+            {
+                // Session missing: return partial with empty viewmodel (or handle as appropriate)
+                return PartialView("~/Views/Content/_GetContents.cshtml", vm);
+            }
+
             var us = JsonSerializer.Deserialize<MMC_Pro_Edition.ViewModel.LoginVM>(userarray);
-            if (us.Roles.Any(x => x.Name == "User") && us.Roles.Count == 1)
+            if (us == null)
+            {
+                // Deserialization failed: return partial (or handle as appropriate)
+                return PartialView("~/Views/Content/_GetContents.cshtml", vm);
+            }
+
+            // normalize roles to avoid null-reference warnings
+            var roles = us.Roles ?? new List<RolesVM>();
+
+            if (roles.Any(x => x.Name == "User") && roles.Count == 1)
+            {
+                vm.ContentTypeSlugs = _repo.GetContents(WebId, us.Id);
+            }
+            else if (roles.Any(x => x.Name == "User") && roles.Any(x => x.Name == "Admin"))
             {
                 vm.ContentTypeSlugs = _repo.GetContents(WebId, us.Id);
 
             }
-            else if (us.Roles.Any(x => x.Name == "User") && us.Roles.Any(x => x.Name == "Admin"))
-            {
-                vm.ContentTypeSlugs = _repo.GetContents(WebId, us.Id);
-
-            }
-            else if (us.Roles.Any(x => x.Name == "Admin"))
+            else if (roles.Any(x => x.Name == "Admin"))
             {
                 vm.ContentTypeSlugs = _repo.GetContents(WebId);
             }
