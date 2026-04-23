@@ -1,7 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-  
+
 }
+@model MMC_Pro_Edition.ViewModel.DashboardViewModel
 
 
 		<!-- Main content -->
@@ -50,13 +51,13 @@
 					<div class="card bg-teal-400">
 						<div class="card-body">
 							<div class="d-flex">
-								<h3 class="font-weight-semibold mb-0">3,450</h3>
-								<span class="badge bg-teal-800 badge-pill align-self-center ml-auto">+53,6%</span>
+								<h3 class="font-weight-semibold mb-0">@Model.MembersOnline.ToString("N0")</h3>
+								<span class="badge bg-teal-800 badge-pill align-self-center ml-auto">@(Model.MembersOnlineChangePercent >= 0 ? "+" : "")@Model.MembersOnlineChangePercent.ToString("0.0")%</span>
 							</div>
 
 							<div>
 								Members online
-								<div class="font-size-sm opacity-75">489 avg</div>
+								<div class="font-size-sm opacity-75">@Model.MembersAvg avg</div>
 							</div>
 						</div>
 
@@ -74,7 +75,7 @@
 					<div class="card bg-pink-400">
 						<div class="card-body">
 							<div class="d-flex">
-								<h3 class="font-weight-semibold mb-0">49.4%</h3>
+								<h3 class="font-weight-semibold mb-0">@Model.ServerLoadPercent.ToString("0.0")%</h3>
 								<div class="list-icons ml-auto">
 									<div class="list-icons-item dropdown">
 										<a href="#" class="list-icons-item dropdown-toggle" data-toggle="dropdown"><i class="icon-cog3"></i></a>
@@ -90,7 +91,7 @@
 
 							<div>
 								Current server load
-								<div class="font-size-sm opacity-75">34.6% avg</div>
+								<div class="font-size-sm opacity-75">@Model.ServerLoadAvgPercent.ToString("0.0")% avg</div>
 							</div>
 						</div>
 
@@ -106,7 +107,7 @@
 					<div class="card bg-blue-400">
 						<div class="card-body">
 							<div class="d-flex">
-								<h3 class="font-weight-semibold mb-0">$18,390</h3>
+								<h3 class="font-weight-semibold mb-0">@Model.TodaysRevenue.ToString("N0")</h3>
 								<div class="list-icons ml-auto">
 									<a class="list-icons-item" data-action="reload"></a>
 								</div>
@@ -114,7 +115,7 @@
 
 							<div>
 								Today's revenue
-								<div class="font-size-sm opacity-75">$37,578 avg</div>
+								<div class="font-size-sm opacity-75">@Model.TodaysRevenueAvg.ToString("N0") avg</div>
 							</div>
 						</div>
 
@@ -130,7 +131,7 @@
 							<div class="card-header header-elements-sm-inline">
 								<h6 class="card-title">Marketing campaigns</h6>
 								<div class="header-elements">
-									<span class="badge bg-success badge-pill">28 active</span>
+									<span class="badge bg-success badge-pill">@Model.ActiveCampaignsCount active</span>
 									<div class="list-icons ml-3">
 										<div class="list-icons-item dropdown">
 											<a href="#" class="list-icons-item dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
@@ -1004,8 +1005,8 @@
 										<div class="svg-center position-relative" id="hours-available-progress"></div>
 										<!-- /progress counter -->
 										<!-- Bars -->
-										<div id="hours-available-bars"></div>
-										<!-- /bars -->
+                            <div id="hours-available-bars"></div>
+                            <!-- /bars -->
 
 									</div>
 								</div>
@@ -1038,7 +1039,7 @@
 							<div class="card-header header-elements-inline">
 								<h6 class="card-title">Daily sales stats</h6>
 								<div class="header-elements">
-									<span class="font-weight-bold text-danger-600 ml-2">$4,378</span>
+									<span class="font-weight-bold text-danger-600 ml-2">@Model.DailySalesTotal.ToString("N0")</span>
 									<div class="list-icons ml-3">
 										<div class="list-icons-item dropdown">
 											<a href="#" class="list-icons-item dropdown-toggle" data-toggle="dropdown"><i class="icon-cog3"></i></a>

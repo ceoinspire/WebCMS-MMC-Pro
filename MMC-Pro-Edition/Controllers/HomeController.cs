@@ -20,7 +20,8 @@ namespace MMC_Pro_Edition.Controllers
 		private readonly Onedb _con;
 		private readonly DapperContext _dapper;
 		private readonly SettingsConfigurationRepository _setting;
-		public HomeController(ILogger<HomeController> logger, IConfiguration config, Onedb con, DapperContext dapper)
+        private readonly IDashboardRepository _dashboardRepo;
+        public HomeController(ILogger<HomeController> logger, IConfiguration config, Onedb con, DapperContext dapper, IDashboardRepository dashboardRepo)
 		{
 			_config= config;
 			_logger = logger;
@@ -30,16 +31,13 @@ namespace MMC_Pro_Edition.Controllers
 			PagesViewModel.WebsiteId = 1;
 			var res = _setting.GetWebsiteData(PagesViewModel.WebsiteId);
 			PagesViewModel.CompanyData = res;
-            if (PagesViewModel.Settings == null)
-            {
-                PagesViewModel.Settings = _setting.GetSettings().GetAwaiter().GetResult();
-
-            }
+            PagesViewModel.Settings ??= _setting.GetSettings().GetAwaiter().GetResult();
+			_dashboardRepo = dashboardRepo;
         }
         #endregion
 
         [Authorize(Roles = UserRoles.User + "," + UserRoles.Admin + "," + UserRoles.PowerUser + "," + UserRoles.Accounts)]
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
 		{
 
             var web = new WebsiteSetupRepository(_config, _con, _dapper).Websites();
@@ -47,7 +45,8 @@ namespace MMC_Pro_Edition.Controllers
 			{
 				return RedirectToAction("SetupAdmin", "WebsiteSetup");	
 			}
-			return View();
+			var model = await _dashboardRepo.GetDashboardDataAsync();
+            return View(model);
 		}
 
 		public IActionResult Privacy()
