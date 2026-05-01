@@ -21,6 +21,7 @@ builder.Services.AddHttpContextAccessor();
 var apiKey = builder.Configuration.GetValue<string>("SystemSettings:GeminiAIKey");
 builder.Services.AddSingleton(new GoogleAI(apiKey));
 builder.Services.AddScoped<GeminiAIRepository>();
+builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 builder.Services.AddScoped<IDataRepository, DataRepository>();
 builder.Services.AddSession(options =>
 {

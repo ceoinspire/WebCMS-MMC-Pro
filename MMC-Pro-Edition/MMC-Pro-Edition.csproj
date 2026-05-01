@@ -12,12 +12,16 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="9.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.6" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.12" />
     <PackageReference Include="Mscc.GenerativeAI" Version="2.9.3" />
     <PackageReference Include="Quartz.Extensions.Hosting" Version="3.14.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\DashboardArea\Controllers\" />
+    <Folder Include="Areas\DashboardArea\Data\" />
+    <Folder Include="Areas\DashboardArea\Models\" />
+    <Folder Include="Areas\DashboardArea\Views\" />
     <Folder Include="Areas\Market\Data\" />
     <Folder Include="Areas\Market\Models\" />
     <Folder Include="wwwroot\uploads\" />
