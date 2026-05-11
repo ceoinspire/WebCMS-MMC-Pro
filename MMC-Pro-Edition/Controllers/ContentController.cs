@@ -14,7 +14,7 @@ namespace MMC_Pro_Edition.Controllers
     public class ContentController : Controller
     {
         #region Constructor
-        PagesViewModel vm = new();
+        PagesViewModel vm = new PagesViewModel();
         private readonly ContentRepository _repo;
         private readonly IConfiguration _config;
         private readonly Onedb _con;

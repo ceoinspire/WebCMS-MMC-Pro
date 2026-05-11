@@ -235,7 +235,7 @@ namespace MMC_Pro_Edition.Repository
             }
 
             c.Name = cTitle;
-            c.MetaTitle = aiRes.MetaTitle;
+            c.MetaTitle = aiRes.MetaTitle ?? "";
             c.MetaDescription = aiRes.MetaDescription;
             c.MetaKeyword = aiRes.MetaTags;
             c.CreatedOn = DateTime.Now;

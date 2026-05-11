@@ -1,4 +1,5 @@
-﻿using MMC_Pro_Edition.Models;
+﻿using MMC_Pro_Edition.Areas.Market.ViewModels;
+using MMC_Pro_Edition.Models;
 using MMC_Pro_Edition.ViewModel;
 using Newtonsoft.Json;
 
@@ -31,6 +32,7 @@ namespace MMC_Pro_Edition.Repository
             }
         }
       
+        public static List<WebsiteVM>? Websites { get; set; } = new List<WebsiteVM>();
     }
 
 

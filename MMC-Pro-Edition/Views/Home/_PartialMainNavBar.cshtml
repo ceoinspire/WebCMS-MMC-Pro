@@ -45,6 +45,36 @@
 		<li class="nav-item dropdown">
 			<a href="#" class="navbar-nav-link  dropdown-toggle" data-toggle="dropdown">
 				<i class="icon-make-group mr-2"></i>
+				Select Web
+			</a>
+
+			<div class="dropdown-menu dropdown-menu-right dropdown-content wmin-md-350">
+				<div class="dropdown-content-body p-2">
+					<div class="row no-gutters">
+						
+						<div class="col-12 col-sm-4">
+							@foreach (var item in AppDataUtility.Websites)
+							{
+								<a href="#" class="d-block text-default text-center ripple-dark rounded p-3">
+									<i class="icon-versions icon-2x"></i>
+									<div class="font-size-sm font-weight-semibold text-uppercase mt-2">@item.WebsiteName</div>
+								</a>
+							}
+						
+
+
+						</div>
+						
+
+					</div>
+				</div>
+			</div>
+		</li>
+
+
+		<li class="nav-item dropdown">
+			<a href="#" class="navbar-nav-link  dropdown-toggle" data-toggle="dropdown">
+				<i class="icon-make-group mr-2"></i>
 				Applications
 			</a>
 

@@ -1,5 +1,5 @@
-﻿using MMC_Pro_Edition.Models;
-using MMC_Pro_Edition.Areas.Market.ViewModels;
+﻿using MMC_Pro_Edition.Areas.Market.ViewModels;
+using MMC_Pro_Edition.Models;
 
 namespace MMC_Pro_Edition.ViewModel
 {
@@ -566,7 +566,11 @@ namespace MMC_Pro_Edition.ViewModel
         public bool IsDeleted { get; set; }
 
     }
-
+    public partial class CmssettingsDTO
+    {
+        public int CmssettingId { get; set; }
+        public bool IsAiEnabled { get; set; }
+    }
 }
 
 

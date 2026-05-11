@@ -25,10 +25,10 @@ namespace MMC_Pro_Edition.Repository
 
         public async Task<string> GenerateContent(string prompt)
         {
-            var model = _googleAI.GenerativeModel(Model.Gemini25Flash);
+            var model = _googleAI.GenerativeModel("gemini-2.5-flash");
 
-            var request = new GenerateContentRequest(prompt);
-            var response = await model.GenerateContent(request);
+            var response = await model.GenerateContent(prompt);
+
             return response.Text;
         }
     }

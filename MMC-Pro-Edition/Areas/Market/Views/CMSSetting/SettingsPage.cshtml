@@ -1,0 +1,87 @@
+﻿@using MMC_Pro_Edition.Areas.Market.ViewModels
+@model WebsiteModels
+@{
+	ViewData["Title"] = "SetupAdmin";
+	Layout = "~/Views/Shared/_SetupLayout.cshtml";
+}
+
+<!-- Page header -->
+<div class="page-header page-header-light">
+	<div class="page-header-content header-elements-md-inline">
+		
+	</div>
+
+	<div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+		<div class="d-flex">
+			<div class="breadcrumb">
+				<a href="/WebsiteSetup/SetupAdmin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+				<span class="breadcrumb-item active">Setting Page</span>
+			</div>
+
+			<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+		</div>
+
+		<div class="header-elements d-none">
+		</div>
+	</div>
+</div>
+<!-- /page header -->
+<!-- Content area -->
+<div class="content">
+	<!-- Text inputs -->
+	<div class="card shadow">
+		<div class="card-header header-elements-inline">
+			<h5 class="card-title">Update System Settings</h5>
+			<div class="header-elements">
+				<div class="list-icons">
+					<a class="list-icons-item" data-action="collapse"></a>
+					<a class="list-icons-item" data-action="reload"></a>
+					<a class="list-icons-item" data-action="remove"></a>
+				</div>
+			</div>
+		</div>
+		<form id="websiteinfoForm">
+			<input type="hidden" value="Model.Website?.WebsiteId" id="WebsiteId" />
+			<div class="card-body">
+				<div class="row">
+					<div class="col-1">
+						<div class="form-group text-center ">
+							<label class="label">Use AI</label>
+							<input id="useAi" type="checkbox" class="form-control" />
+
+						</div>
+
+					</div>
+					<div class="col-6">
+					</div>
+				</div>
+				
+				<div class="form-group form-group-float">
+					<button class="btn btn-success">Submit</button>
+				</div>
+			</div>
+
+
+		</form>
+	</div>
+	<!-- /text inputs -->
+
+
+
+</div>
+
+<!-- /content area -->
+<script>
+	$('#websiteinfoForm').click(async function (e) {
+		e.preventDefault();
+		
+		var formData = {
+			useAi: $('#useAi').is(':checked')
+		};
+		var result = await Utility.RequestDataAjax({
+			url:'/CMSSetting/UpdateSetting',
+			data:formData
+		});
+		
+	})
+</script>

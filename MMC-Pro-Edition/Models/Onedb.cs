@@ -23,6 +23,8 @@ public partial class Onedb : DbContext
 
     public virtual DbSet<CmsemailSent> CmsemailSent { get; set; }
 
+    public virtual DbSet<Cmssettings> Cmssettings { get; set; }
+
     public virtual DbSet<Comments> Comments { get; set; }
 
     public virtual DbSet<Content> Content { get; set; }
@@ -132,6 +134,11 @@ public partial class Onedb : DbContext
             entity.HasOne(d => d.Email).WithMany(p => p.CmsemailSent).HasConstraintName("FK__CMSEmailS__Email__3D2915A8");
 
             entity.HasOne(d => d.EmailNavigation).WithMany(p => p.CmsemailSent).HasConstraintName("FK__CMSEmailS__Email__3E1D39E1");
+        });
+
+        modelBuilder.Entity<Cmssettings>(entity =>
+        {
+            entity.HasKey(e => e.CmssettingId).HasName("PK__CMSSetti__DE2938843CBB7AE1");
         });
 
         modelBuilder.Entity<Comments>(entity =>
@@ -293,7 +300,8 @@ public partial class Onedb : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__Notifica__3214EC07C4159632");
 
-            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getutcdate())");
+            entity.Property(e => e.CreatedAt)
+         .HasDefaultValueSql("GETUTCDATE()");
 
             entity.HasOne(d => d.NotificationType).WithMany(p => p.Notifications).HasConstraintName("FK_Notifications_NotificationTypes");
         });

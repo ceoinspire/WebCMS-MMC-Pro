@@ -1,17 +1,21 @@
 ﻿{
-   "CodeGenerationMode": 4,
+   "CodeGenerationMode": 6,
    "ContextClassName": "Onedb",
    "ContextNamespace": null,
    "FilterSchemas": false,
    "IncludeConnectionString": false,
+   "IrregularWords": null,
+   "MinimumProductVersion": "2.6.1382",
    "ModelNamespace": null,
    "OutputContextPath": null,
    "OutputPath": "Models",
+   "PluralRules": null,
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "MMC_Pro_Edition",
    "Schemas": null,
    "SelectedHandlebarsLanguage": 2,
    "SelectedToBeGenerated": 0,
+   "SingularRules": null,
    "T4TemplatePath": null,
    "Tables": [
       {
@@ -80,6 +84,10 @@
       },
       {
          "Name": "[SYSTEM].[AssignedRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[SYSTEM].[CMSSettings]",
          "ObjectType": 0
       },
       {
@@ -177,5 +185,6 @@
    "UseSchemaNamespaces": false,
    "UseSpatial": false,
    "UseT4": false,
-   "UseT4Split": false
+   "UseT4Split": false,
+   "UseTypedTvpParameters": true
 }
