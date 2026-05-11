@@ -18,7 +18,7 @@ namespace MMC_Pro_Edition.Repository
             _dapper = new DapperContext(_config);
         }
        
-        public DashBoardSettings DashboardWidgets(int ContentId)
+        public DashBoardSettings DashboardWidgets()
         {
             using (var con = _dapper.CreateConnection())
             {
@@ -32,6 +32,27 @@ namespace MMC_Pro_Edition.Repository
                 return res;
             }
         }
+        public List<ContentVM> GetRecentTenContents()
+        {
+            return _con.Content
+                // Sorts descending by ModifiedOn. If ModifiedOn is null, it uses CreatedOn.
+                .OrderByDescending(c => c.ModifiedOn ?? c.CreatedOn)
+                .Take(10)
+                .Select(c => new ContentVM
+                {
+                    Id=c.Id,
+                    Name = c.Name,
+                    ImageSource=c.ImageSource,
+                    OtherTitle = c.OtherTitle,
+                    ContentSlug = c.ContentSlug
+                })
+                .ToList();
+        }
+
+
+
+
+
 
     }
 
