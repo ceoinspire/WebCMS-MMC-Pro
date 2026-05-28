@@ -88,9 +88,16 @@ namespace MMC_Pro_Edition.Controllers
         {
             var userid = User.Claims.FirstOrDefault(c => c.Type == "UserId");
             var contentType = _repo.ContentNameByContentId(int.Parse(cType));
-            var aiRes = await dataRepository.AnalyzeTextAsync(cTitle, contentType);
+            var aiRes = new GeneratedContentModel();
+            if (PagesViewModel.CMSSettings.IsAiEnabled)
+            {
+                aiRes = await dataRepository.AnalyzeTextAsync(cTitle, contentType);
+            }
             int WebId = PagesViewModel.WebsiteId;
+
             var result = _repo.CreateContent(cTitle, cType, Convert.ToInt32(userid.Value), WebId, aiRes);
+
+
             string[] res = result.Split(',');
             if (res[0] == "true")
             {

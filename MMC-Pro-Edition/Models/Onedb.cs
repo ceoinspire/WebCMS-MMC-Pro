@@ -300,8 +300,7 @@ public partial class Onedb : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__Notifica__3214EC07C4159632");
 
-            entity.Property(e => e.CreatedAt)
-         .HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getutcdate())", "DF__Notificat__Creat__2F9A1060");
 
             entity.HasOne(d => d.NotificationType).WithMany(p => p.Notifications).HasConstraintName("FK_Notifications_NotificationTypes");
         });

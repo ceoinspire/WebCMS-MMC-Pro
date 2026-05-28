@@ -47,17 +47,30 @@
 					<div class="col-1">
 						<div class="form-group text-center ">
 							<label class="label">Use AI</label>
-							<input id="useAi" type="checkbox" class="form-control" />
+							@if (Model.CmsSettings.IsAiEnabled)
+							{
+								<input id="useAi" type="checkbox" checked class="form-control" />
+
+							}
+							else
+							{
+								<input id="useAi" type="checkbox" class="form-control" />
+
+							}
 
 						</div>
 
 					</div>
-					<div class="col-6">
-					</div>
+					@* <div class="col-3">
+						<div class="form-group text-center ">
+							<label class="label">APIKEY</label>
+						<input type="text" id="apiKey" value="@Model.CmsSettings.Aiapikey" class="form-control" />	
+						</div>
+					</div> *@
 				</div>
 				
 				<div class="form-group form-group-float">
-					<button class="btn btn-success">Submit</button>
+					<button id="btnsubmit" class="btn btn-success">Submit</button>
 				</div>
 			</div>
 
@@ -72,16 +85,22 @@
 
 <!-- /content area -->
 <script>
-	$('#websiteinfoForm').click(async function (e) {
-		e.preventDefault();
+	$('#btnsubmit').click(function (e) {
+		debugger
 		
 		var formData = {
-			useAi: $('#useAi').is(':checked')
+			IsAiEnabled: $('#useAi').is(':checked')
+			
 		};
-		var result = await Utility.RequestDataAjax({
+		$.ajax({
 			url:'/CMSSetting/UpdateSetting',
-			data:formData
-		});
+			data:formData,
+			method:'POST',
+			success:function(e){
+
+			}
+		})
+		
 		
 	})
 </script>

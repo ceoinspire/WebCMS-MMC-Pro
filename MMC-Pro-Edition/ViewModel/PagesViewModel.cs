@@ -8,6 +8,7 @@ namespace MMC_Pro_Edition.ViewModel
     {
         public static int WebsiteId { get; set; }
         public static WebsiteVM CompanyData { get; set; }
+        public static CmssettingsDTO CMSSettings { get; set; }
         // public static SetLoginVMStatic StaticLoginDetail { get; set; }
         public List<ContentVM>? ContentTypeSlugs { get; set; }
         public List<ChildContentVM>? ChildContents { get; set; }
@@ -573,6 +574,7 @@ namespace MMC_Pro_Edition.ViewModel
     {
         public int CmssettingId { get; set; }
         public bool IsAiEnabled { get; set; }
+        public string? Aiapikey { get; set; }
     }
 }
 

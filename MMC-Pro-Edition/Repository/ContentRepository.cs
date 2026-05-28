@@ -235,16 +235,16 @@ namespace MMC_Pro_Edition.Repository
             }
 
             c.Name = cTitle;
-            c.MetaTitle = aiRes.MetaTitle ?? "";
-            c.MetaDescription = aiRes.MetaDescription;
-            c.MetaKeyword = aiRes.MetaTags;
+            c.MetaTitle = aiRes?.MetaTitle ?? cTitle;
+            c.MetaDescription = aiRes?.MetaDescription ?? cTitle;
+            c.MetaKeyword = aiRes?.MetaTags ??cTitle;
             c.CreatedOn = DateTime.Now;
-            c.OtherTitle = aiRes.OtherTitle;
+            c.OtherTitle = aiRes?.OtherTitle ??cTitle;
             c.LoginUserId = UserId;
-            c.ShortDescription = aiRes.ShortDescription;
-            c.Description = aiRes.Description;
-            c.OtherShortDescription = aiRes.OtherShortDescription;
-            c.OtherDescription = aiRes.OtherDescription;
+            c.ShortDescription = aiRes?.ShortDescription;
+            c.Description = aiRes?.Description;
+            c.OtherShortDescription = aiRes?.OtherShortDescription;
+            c.OtherDescription = aiRes?.OtherDescription;
             c.WebSiteId = WebsiteId;
             c.Date = DateTime.Now.Date;
             c.ModifiedOn = DateTime.Now;

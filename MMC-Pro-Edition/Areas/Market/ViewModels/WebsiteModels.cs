@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using MMC_Pro_Edition.ViewModel;
 
 namespace MMC_Pro_Edition.Areas.Market.ViewModels
 {
@@ -8,7 +9,8 @@ namespace MMC_Pro_Edition.Areas.Market.ViewModels
         public List<WebsiteVM> Websites { get; set; }
 		public WebsiteVM Website { get; set; }
 		public int WebsiteId { get; set; }
-	}
+        public CmssettingsDTO? CmsSettings { get;  set; }
+    }
 	public class WebsiteVM
 	{
 		public int WebsiteId { get; set; }

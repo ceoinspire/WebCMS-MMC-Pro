@@ -21,6 +21,7 @@ namespace MMC_Pro_Edition.Controllers
 		private readonly DapperContext _dapper;
 		private readonly SettingsConfigurationRepository _setting;
 		private readonly DashboardRepository _dashboard;
+		private readonly CMSSettingRepository _cmssettings;
 		PagesViewModel vm = new PagesViewModel();
 		public HomeController(ILogger<HomeController> logger, IConfiguration config, Onedb con, DapperContext dapper)
 		{
@@ -30,8 +31,15 @@ namespace MMC_Pro_Edition.Controllers
 			_dapper= dapper;
 			_dashboard = new DashboardRepository(_config, _con, _dapper);
             _setting = new SettingsConfigurationRepository(_config, _con);
+			_cmssettings = new CMSSettingRepository(_config, _con, _dapper);
 			PagesViewModel.WebsiteId = 1;
 			var res = _setting.GetWebsiteData(PagesViewModel.WebsiteId);
+			if (PagesViewModel.CMSSettings==null)
+			{
+                var cmssettiings = _cmssettings.GetCMSSetting().GetAwaiter().GetResult();
+                PagesViewModel.CMSSettings = cmssettiings;
+            }
+			
 			PagesViewModel.CompanyData = res;
             if (PagesViewModel.Settings == null)
             {

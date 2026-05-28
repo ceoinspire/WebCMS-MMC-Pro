@@ -23,7 +23,7 @@ namespace MMC_Pro_Edition.Repository
                 .Select(x => new CmssettingsDTO
                 {
                     CmssettingId = x.CmssettingId,
-                    IsAiEnabled = x.IsAiEnabled,
+                    IsAiEnabled = x.IsAiEnabled,  Aiapikey=x.Aiapikey
                 })
                 .FirstOrDefaultAsync();
 
@@ -33,5 +33,21 @@ namespace MMC_Pro_Edition.Repository
                 IsAiEnabled = false
             };
         }
+    
+        public async Task<bool> UpdateCMSSettings(CmssettingsDTO cmssettingsDTO)
+        {
+            var settings = _con.Cmssettings.FirstOrDefault();
+            if (settings == null)
+            {
+                settings = new Cmssettings();
+            }
+            settings.IsAiEnabled = cmssettingsDTO.IsAiEnabled;
+            
+            _con.Cmssettings.Update(settings);
+            _con.SaveChanges();
+            return true;
+        }
+            
+    
     }
 }

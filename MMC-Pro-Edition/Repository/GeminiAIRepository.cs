@@ -50,7 +50,7 @@ namespace MMC_Pro_Edition.Repository
         public async Task<GeneratedContentModel> AnalyzeTextAsync(string title, string type)
         {
             string prompt = @"
-You are an expert e-commerce copywriter and frontend UI designer.
+You are an expert Content Writer and Designer and frontend UI designer.
 
 Generate structured content for:
 Title: '" + title + @"'

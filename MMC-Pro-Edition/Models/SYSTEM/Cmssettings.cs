@@ -16,4 +16,7 @@ public partial class Cmssettings
     public int CmssettingId { get; set; }
 
     public bool IsAiEnabled { get; set; }
+
+    [Column("AIAPIKEY")]
+    public string Aiapikey { get; set; }
 }
