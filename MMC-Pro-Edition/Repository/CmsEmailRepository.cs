@@ -119,8 +119,8 @@ namespace MMC_Pro_Edition.Repository
 						var ss = model.Emails;
 						string emailIds = string.Join(", ", ss.Select(e => $"'{e.EmailId}'"));
 						string query = $"DELETE FROM Webcms.CmsEmail WHERE EmailId IN ({emailIds})";
-						string queryTwo = $"DELETE FROM Webcms.CmsEmailAttachments where EmailId in ({emailIds})";
-						int affectedRowsOne = con.Execute(queryTwo, transaction: transaction);
+						//string queryTwo = $"DELETE FROM Webcms.CmsEmailAttachments where EmailId in ({emailIds})";
+						//int affectedRowsOne = con.Execute(queryTwo, transaction: transaction);
 
 						int affectedRows = con.Execute(query, transaction: transaction);
 

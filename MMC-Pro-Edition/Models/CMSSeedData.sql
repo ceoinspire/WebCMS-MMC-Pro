@@ -48,24 +48,7 @@ select * from hrm.countries
 --(7, 'Cooperative', GETDATE(), 1, 1),
 --(8, 'Joint Venture', GETDATE(), 1, 1);
 
---insert into Business.Organizations (OrganizationName,IsActive,CreatedOn,ModifiedOn,IsDeleted)
---Values('FANCO',1,GetDate(),GetDate(),0)
 
---INSERT INTO System.Roles (Id, Name, IsActive)
---VALUES(1, 'SuperAdmin', 1),
---(2, 'Admin', 1),
---(3, 'PowerUser', 1),
---(4, 'DataEntry', 1),
---(5, 'Product', 1),
---(6, 'Purchase', 1),
---(7, 'Accounts', 1),
---(8, 'POSUser', 1),
---(9, 'Sales', 1),
---(10, 'CustomerSupport', 1),
---(11, 'Delivery', 1),
---(12, 'Marketing', 1),
---(13, 'User', 1),
---(14, 'Customer', 1);
 
  --insert into hrm.persons (id,firstname,lastname,mobilenumber,cnic,socialsecurity,email)
  --values(1,'admin','manager','0000','0000','0000','admin@fanco.com.pk')

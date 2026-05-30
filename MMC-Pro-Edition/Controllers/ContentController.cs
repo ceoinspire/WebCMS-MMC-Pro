@@ -84,14 +84,17 @@ namespace MMC_Pro_Edition.Controllers
             return PartialView("~/Views/Content/_AddContent.cshtml", vm);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateContent(string cTitle, string cType)
+        public async Task<IActionResult> CreateContent(string cTitle, string cType,bool isAIRequired)
         {
             var userid = User.Claims.FirstOrDefault(c => c.Type == "UserId");
             var contentType = _repo.ContentNameByContentId(int.Parse(cType));
             var aiRes = new GeneratedContentModel();
             if (PagesViewModel.CMSSettings.IsAiEnabled)
             {
-                aiRes = await dataRepository.AnalyzeTextAsync(cTitle, contentType);
+                if (isAIRequired)
+                {
+                    aiRes = await dataRepository.AnalyzeTextAsync(cTitle, contentType);
+                }
             }
             int WebId = PagesViewModel.WebsiteId;
 

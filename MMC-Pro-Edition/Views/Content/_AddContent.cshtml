@@ -28,6 +28,14 @@
 	</div>
 	<div class="form-group">
 		<div class="row">
+			<div class="col-sm-4">
+				<label>AI-Content Required?</label>
+				<input id="isAIRequired" name="isAIRequired" type="checkbox" class="form-control">
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="row">
 			<div class="col-sm-12">
 				<button id="createContent" class="btn btn-success">Submit</button>
 			</div>
@@ -50,7 +58,8 @@
 	], 2000);
 			var formData = {
 				cTitle: $('#contentTitle').val(),
-				cType: $('#contenttypeSelect').val()
+				cType: $('#contenttypeSelect').val(),
+                isAIRequired: $('#isAIRequired').is(':checked')
 			}
 			$.ajax({
 				url: "/Content/CreateContent/",
